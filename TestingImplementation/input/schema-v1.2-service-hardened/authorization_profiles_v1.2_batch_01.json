@@ -1,0 +1,987 @@
+[
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/amf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/amf-3gpp-access",
+      "operation_id": "Get3GppRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_consumer_retrieves_ue_amf_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF",
+            "NWDAF",
+            "NSSAAF",
+            "DCCF",
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_consumer_for_ue_registration",
+          "relation_statement": "An authorized consumer NF may retrieve the AMF 3GPP-access registration information belonging to the UE identified by the ueId path parameter.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification defines retrieval of the UE registration selected by ueId, but does not require a check that the authenticated NF service consumer is authorized for that UE or its AMF registration resource."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies consumer NF types for registration-information retrieval"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "binds the operation to the addressed UE registration resource"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "defines the resource and UE identifier accepted by GET"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "defines the GET resource subject identifier"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET procedure showing resource addressing without requester-to-resource authorization binding"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "Endpoint response definition showing no binding-specific failure"
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/dereg-amf",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "POST",
+      "path": "/{ueId}/registrations/amf-3gpp-access/dereg-amf",
+      "operation_id": "deregAMF"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:amf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "hss_deregisters_ue_registered_amf",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "hss_deregistration_trigger_for_ue",
+          "relation_statement": "An authenticated HSS may invoke dereg-amf against the AMF 3GPP access registration belonging to the UE identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies HSS as the consumer and the UE's registered AMF as the operation target, but it does not require the UDM to verify that the authenticated HSS is authorized for the addressed UE or its AMF registration."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/dereg-amf::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "identifies the permitted consumer and operation purpose"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/dereg-amf::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "binds the HSS request to the addressed UE registration"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/dereg-amf::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies the resource subject"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/dereg-amf::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "Defines the intended consumer and purpose without a requester-to-resource binding check."
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/dereg-amf::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Describes the request and resulting resource action."
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/dereg-amf::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Shows the only operation-specific failure condition stated in the supplied procedure."
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/pei-update",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "POST",
+      "path": "/{ueId}/registrations/amf-3gpp-access/pei-update",
+      "operation_id": "PeiUpdate"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:amf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "hss_updates_addressed_ue_pei",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "designated_consumer_for_addressed_ue_context",
+          "relation_statement": "The authenticated requester shall be an HSS acting as the designated consumer of this operation, and may update the stored PEI only in the 3GPP access registration context for the UE identified by ueId.",
+          "strength": "explicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies HSS as the consumer and the IMSI-addressed UE registration as the target, but does not require the UDM to verify that the authenticated HSS is authorized to update the PEI for that particular UE."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/pei-update::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies the requester NF type assigned to the operation"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/pei-update::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "binds the operation to the addressed UE registration resource"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/pei-update::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies the subject identifier required by the procedure"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/pei-update::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Defines the requester and addressed resource without specifying a requester-to-resource binding check."
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/pei-update::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Shows the only endpoint-specific failure condition stated in the supplied procedure."
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/pei-update::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "Defines the custom operation purpose and request content."
+          }
+        ]
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/roaming-info-update",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "POST",
+      "path": "/{ueId}/registrations/amf-3gpp-access/roaming-info-update",
+      "operation_id": "UpdateRoamingInformation"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:roaming-info-update:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "hss_updates_addressed_ue_roaming_information",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "designated_consumer_to_addressed_ue_resource",
+          "relation_statement": "An authenticated HSS may update or create the Roaming Information associated with the UE identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies HSS as the consumer and the UE identity as the addressed resource identifier, but does not require the UDM to verify that the authenticated HSS is authorized for that specific UE or its roaming-information resource."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/roaming-info-update::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "operation consumer and resource purpose"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/roaming-info-update::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and UE subject identification"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/roaming-info-update::TS29503:6.2.3.1:overview",
+            "role": "method and addressed resource confirmation"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/roaming-info-update::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Identifies the requester and addressed UE identifier without defining a requester-to-resource binding check."
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/roaming-info-update::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "Defines the custom operation but states no resource-instance authorization check."
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/amf-3gpp-access/roaming-info-update::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+            "role": "Shows the only operation-specific application error identified in the supplied resource definition."
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PATCH",
+      "path": "/{ueId}/registrations/amf-non-3gpp-access",
+      "operation_id": "UpdateNon3GppRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:amf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_amf_parameter_update",
+        "applies_when": [
+          "The PATCH request modifies the AMF non-3GPP registration without invoking the deregistration procedure that sets purgeFlag."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "currently_registered_amf",
+          "relation_statement": "The authenticated requesting AMF may modify the addressed UE's AMF non-3GPP access registration only when it is the AMF currently registered for that UE.",
+          "strength": "explicit"
+        },
+        "existing_protection": {
+          "coverage": "explicit_binding_check",
+          "mechanism": "The UDM checks that the requesting AMF is the AMF currently registered for the UE before permitting the parameter update.",
+          "failure_codes": [
+            422
+          ],
+          "failure_causes": [
+            "UNPROCESSABLE_REQUEST"
+          ],
+          "protected_relation": "The requesting AMF must be the AMF currently registered for the addressed UE's non-3GPP access registration.",
+          "coverage_notes": "The protection is expressly defined for parameter updates to an existing AmfNon3GppAccessRegistration resource. The specification states the requester-to-registration relation directly, although it does not describe how the requesting AMF identity is obtained or compared."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester-to-resource binding"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:6.2.3.3:resource-amfnon3gppaccessregistration-document:resource-with-children",
+            "role": "resource and subject identification"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Direct requester-to-resource binding requirement and failure response"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:6.2.3.3:resource-amfnon3gppaccessregistration-document:resource-with-children",
+            "role": "Associated PATCH failure cause"
+          }
+        ]
+      },
+      {
+        "case_id": "registered_amf_non_3gpp_deregistration",
+        "applies_when": [
+          "The PATCH request invokes AMF deregistration for non-3GPP access by instructing the UDM to set purgeFlag."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "GUAMI"
+          ],
+          "relation_type": "registered_amf_guami_match",
+          "relation_statement": "The requesting AMF may purge the addressed UE's non-3GPP AMF registration only when the GUAMI supplied for the deregistration corresponds to the GUAMI stored in that registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM compares the GUAMI received in the deregistration request with the GUAMI stored in the addressed non-3GPP AMF registration and sets purgeFlag only when they match.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [],
+          "protected_relation": "The deregistration request's GUAMI must match the GUAMI stored for the addressed UE's non-3GPP AMF registration.",
+          "coverage_notes": "The GUAMI comparison protects the purge operation against a request carrying a different AMF registration identity. It is condition-scoped rather than a direct requester binding because the supplied text does not require the authenticated caller identity to be bound to the received GUAMI."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "condition selecting the deregistration binding"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "resource-binding check"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester NF type and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Condition-scoped stored-state comparison protecting deregistration"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Failure response for GUAMI mismatch"
+          }
+        ]
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{ueId}/registrations/amf-non-3gpp-access",
+      "operation_id": "Non3GppRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:amf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "selected_amf_registers_for_ue",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "selected_serving_amf_registration",
+          "relation_statement": "The authenticated requester is expected to be the AMF selected to provide access and mobility management service to the UE identified by ueId and registering itself for that UE's non-3GPP access.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes the Registration service operation as being invoked by an NF selected to serve the UE, but does not require the UDM to verify that the authenticated requesting AMF is the AMF selected for the addressed UE. The stated authorization failures concern UE subscription and access restrictions rather than requester-to-UE resource binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies the semantic relationship between the registering NF and the UE"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies the requester NF type for access and mobility registration"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "binds the AMF procedure to the addressed UE-specific resource"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:6.2.3.3:resource-amfnon3gppaccessregistration-document:resource-with-children",
+            "role": "defines the resource and its UE identifier"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "defines the UE identifier required by this PUT procedure"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "describes the intended requester-to-UE relation"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "shows the defined authorization basis for this PUT"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-non-3gpp-access::TS29503:6.2.3.3:resource-amfnon3gppaccessregistration-document:resource-with-children",
+            "role": "confirms endpoint-specific failure causes"
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/amf-non-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/amf-non-3gpp-access",
+      "operation_id": "GetNon3GppRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "consumer_retrieves_ue_amf_non_3gpp_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF",
+            "NWDAF",
+            "NSSAAF",
+            "DCCF",
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "consumer_access_to_ue_registration",
+          "relation_statement": "An authenticated consumer NF using the Get service operation may retrieve the AMF non-3GPP-access registration resource belonging to the UE identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification context defines retrieval of the UE's non-3GPP AMF registration using the request-supplied ueId, but does not require a check binding the authenticated NF service consumer to that UE or registration resource."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies consumer NF types for registration-information retrieval"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "binds the addressed resource to the UE identified by ueId"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-non-3gpp-access::TS29503:6.2.3.3:resource-amfnon3gppaccessregistration-document:resource-with-children",
+            "role": "defines the resource and UE identifier"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET procedure behavior"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "successful disclosure behavior"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/amf-non-3gpp-access::TS29503:6.2.3.3:resource-amfnon3gppaccessregistration-document:resource-with-children",
+            "role": "endpoint response definition"
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/smf-registrations",
+      "operation_id": "GetSmfRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_smf_registrations_binding_not_identified",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NWDAF",
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "requester_resource_binding_not_identified",
+          "relation_statement": "The supplied TS context identifies NWDAF and SMF as example consumers retrieving the addressed UE's SMF registrations, but does not bind the authenticated requester identity to ueId or to any stored SMF registration.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification context defines retrieval using the requested UE identity and optional filters, but does not require the UDM to verify that the authenticated NF service consumer is authorized for the addressed UE's SMF registrations."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations::TS29503:6.2.3.4:resource-smfregistrations:resource-with-children",
+            "role": "identifies the addressed resource and UE identifier"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies procedure participants and retrieval semantics"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "confirms the resource selected by the GET request"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "endpoint-specific retrieval behavior"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "specified success and failure behavior"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations::TS29503:6.2.3.4:resource-smfregistrations:resource-with-children",
+            "role": "resource definition"
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "DELETE",
+      "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+      "operation_id": "SmfDeregistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:smf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "same_smf_set",
+        "applies_when": [
+          "The smf-set-id query parameter is present and the UDM applies the specified SMF Set deletion guard."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId",
+            "smf-set-id"
+          ],
+          "relation_type": "same_smf_set_as_registered_smf",
+          "relation_statement": "The authenticated requesting SMF may delete the addressed individual SMF registration only if it belongs to the same SMF Set as the SMF registered for that resource.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "explicit_binding_check",
+          "mechanism": "When smf-set-id is present and the guard is applied, the UDM checks that the deleting NF belongs to the same NF set as the SMF registered for the addressed individual SMF registration.",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "Deleting NF and the SMF stored in the addressed registration belong to the same SMF Set.",
+          "coverage_notes": "The specification expressly defines this as a deletion guard, but makes its use optional and does not specify how the request-provided smf-set-id is bound to the authenticated NF identity or what failure response applies."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "conditional SMF Set binding"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "Defines the conditional same-set deletion guard."
+          }
+        ]
+      },
+      {
+        "case_id": "registered_smf_instance",
+        "applies_when": [
+          "The smf-set-id query parameter is absent, the smf-instance-id query parameter is present, and the UDM applies the specified SMF instance deletion guard."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId",
+            "smf-instance-id"
+          ],
+          "relation_type": "registered_smf_instance",
+          "relation_statement": "The authenticated requesting SMF may delete the addressed individual SMF registration only if it is the SMF instance registered for that resource.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "explicit_binding_check",
+          "mechanism": "When smf-set-id is absent, smf-instance-id is present, and the guard is applied, the UDM checks that the deleting NF is the SMF registered in the addressed individual SMF registration.",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "Deleting NF is the SMF instance stored in the addressed registration.",
+          "coverage_notes": "The specification expressly defines this as a deletion guard, but makes its use optional and does not specify how the request-provided smf-instance-id is bound to the authenticated NF identity or what failure response applies."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "conditional SMF instance binding"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "Defines the conditional registered-SMF deletion guard."
+          }
+        ]
+      },
+      {
+        "case_id": "registered_smf_deregistration",
+        "applies_when": [
+          "Neither smf-set-id nor smf-instance-id is used as a deletion guard."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId"
+          ],
+          "relation_type": "registered_smf",
+          "relation_statement": "The authenticated requesting SMF is expected to be the registered consumer NF associated with the addressed UE and PDU-session SMF registration.",
+          "strength": "explicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The service description characterizes deregistration as being used by registered Consumer NFs, but the DELETE procedure does not require the UDM to verify that the requester is the SMF stored in the addressed registration when neither deletion guard is used."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "registered-consumer authorization relation"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "endpoint-specific requester and resource"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Describes the intended registered-consumer role without defining an enforcing check."
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Shows that the SMF DELETE procedure lacks a requester-binding verification step."
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Shows the specified success behavior without an intervening binding check."
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PATCH /{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PATCH",
+      "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+      "operation_id": "UpdateSmfRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:smf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_smf_updates_own_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId"
+          ],
+          "relation_type": "registered_smf_ownership",
+          "relation_statement": "The requesting SMF may modify the addressed IndividualSmfRegistration only when it is the SMF currently registered for the UE for that addressed registration.",
+          "strength": "explicit"
+        },
+        "existing_protection": {
+          "coverage": "explicit_binding_check",
+          "mechanism": "The UDM checks whether the requesting SMF is the SMF currently registered for the addressed UE registration resource and rejects a mismatch.",
+          "failure_codes": [
+            422
+          ],
+          "failure_causes": [
+            "UNPROCESSABLE_REQUEST"
+          ],
+          "protected_relation": "The requesting SMF must be the SMF currently registered for the UE whose individual SMF registration is addressed.",
+          "coverage_notes": "The Update procedure directly protects the requester-to-registration relation. The specification does not state the precise requester identity attribute or comparison algorithm used to establish that the requester is the currently registered SMF."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and addressed-resource binding"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "explicit ownership restriction"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "resource-instance identification"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Direct requester-to-resource binding requirement and mismatch response"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Identification of the protected individual resource"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "Associated failure cause"
+          }
+        ]
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+      "operation_id": "Registration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:smf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "selected_smf_registers_ue_pdu_session",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId"
+          ],
+          "relation_type": "selected_serving_smf",
+          "relation_statement": "The authenticated SMF requester is expected to be the SMF selected to provide session management service for the UE and PDU session identified by ueId and pduSessionId, and may create or replace that IndividualSmfRegistration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes registration as being invoked by an NF selected to serve the UE, but it does not require the UDM to verify that the authenticated requester is that selected SMF for the addressed UE and PDU session. The stated 403 handling concerns subscription data, access barring, and roaming restrictions rather than requester-to-resource binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and service-selection semantics"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "method-specific requester and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "resource-instance identification"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "replacement authorization semantics"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "describes the intended requester relationship without defining an enforcement check"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "shows that the specified authorization rejection is subscriber-service authorization rather than requester binding"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "shows replacement behavior without a stated selected-SMF requester check"
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+      "operation_id": "RetrieveSmfRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "consumer_retrieves_addressed_smf_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF",
+            "DCCF",
+            "NEF",
+            "NSSAAF",
+            "NWDAF",
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId"
+          ],
+          "relation_type": "authorized_consumer_to_addressed_ue_session_registration",
+          "relation_statement": "An authorized NF service consumer may retrieve the individual SMF registration belonging to the UE identified by ueId and the PDU session identified by pduSessionId; the supplied TS does not require the requester to be the SMF registered in that resource.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The GET specification describes retrieval of the SMF registration selected by ueId and pduSessionId, but does not require checking that the authenticated NF service consumer is related to or authorized for that resource instance. The specified 404 response concerns absence of valid registration data, not requester-to-resource binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies the requester role for this exact retrieval procedure"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "identifies consumer NF types for the Get service operation"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "defines the addressed resource identifiers"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "confirms the response is bound to the indicated PDU session"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET procedure and requester description"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET success behavior"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smf-registrations/{pduSessionId}::TS29503:6.2.3.5:resource-individualsmfregistration-document:resource-with-children",
+            "role": "GET error behavior"
+          }
+        ]
+      }
+    ],
+    "confidence": "medium"
+  }
+]

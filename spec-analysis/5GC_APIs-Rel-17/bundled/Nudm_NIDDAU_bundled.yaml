@@ -1,0 +1,612 @@
+openapi: 3.0.0
+info:
+  version: 1.1.1
+  title: Nudm_NIDDAU
+  description: "Nudm NIDD Authorization Service.  \n\xA9 2022, 3GPP Organizational\
+    \ Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  \nAll rights reserved.\n"
+servers:
+- url: http://udm:8000/nudm-niddau/v1
+security:
+- oAuth2ClientCredentials:
+  - nudm-niddau
+- {}
+externalDocs:
+  description: 3GPP TS 29.503 Unified Data Management Services, version 17.8.0
+  url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.503/
+paths:
+  /{ueIdentity}/authorize:
+    post:
+      summary: Authorize the NIDD configuration request.
+      operationId: AuthorizeNiddData
+      tags:
+      - Authorize the NIDD configuration request
+      parameters:
+      - name: ueIdentity
+        in: path
+        description: Represents the scope of the UE for which the NIDD configuration
+          are authorized. Contains the GPSI of the user or the external group ID.
+        required: true
+        schema:
+          type: string
+          pattern: ^(msisdn-[0-9]{5,15}|.+|extid-[^@]+@[^@]+|extgroupid-[^@]+@[^@]+)$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizationInfo'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationData'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+      callbacks:
+        niddAuthUpdateNotification:
+          '{request.body#/authUpdateCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/NiddAuthUpdateNotification'
+              responses:
+                '204':
+                  description: Expected response to a valid request
+components:
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: http://nrf:8000/oauth2/token
+          scopes:
+            nudm-niddau: Access to the nudm-niddau API
+  schemas:
+    AuthorizationData:
+      description: Represents NIDD authorization data.
+      type: object
+      required:
+      - authorizationData
+      properties:
+        authorizationData:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserIdentifier'
+          minItems: 1
+          uniqueItems: true
+        validityTime:
+          $ref: '#/components/schemas/DateTime'
+    UserIdentifier:
+      description: Represents the user identifier.
+      type: object
+      required:
+      - supi
+      properties:
+        supi:
+          $ref: '#/components/schemas/Supi'
+        gpsi:
+          $ref: '#/components/schemas/Gpsi'
+        validityTime:
+          $ref: '#/components/schemas/DateTime'
+    NiddAuthUpdateInfo:
+      description: Represents NIDD authorization update information.
+      type: object
+      required:
+      - authorizationData
+      properties:
+        authorizationData:
+          $ref: '#/components/schemas/AuthorizationData'
+        invalidityInd:
+          type: boolean
+        snssai:
+          $ref: '#/components/schemas/Snssai'
+        dnn:
+          $ref: '#/components/schemas/Dnn'
+        niddCause:
+          $ref: '#/components/schemas/NiddCause'
+    NiddAuthUpdateNotification:
+      description: Represents a NIDD authorization update notification.
+      type: object
+      required:
+      - niddAuthUpdateInfoList
+      properties:
+        niddAuthUpdateInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NiddAuthUpdateInfo'
+          minItems: 1
+    AuthorizationInfo:
+      description: Represents NIDD authorization information.
+      type: object
+      required:
+      - snssai
+      - dnn
+      - mtcProviderInformation
+      - authUpdateCallbackUri
+      properties:
+        snssai:
+          $ref: '#/components/schemas/Snssai'
+        dnn:
+          $ref: '#/components/schemas/Dnn'
+        mtcProviderInformation:
+          $ref: '#/components/schemas/MtcProviderInformation'
+        authUpdateCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        afId:
+          type: string
+        nefId:
+          $ref: '#/components/schemas/NefId'
+        validityTime:
+          $ref: '#/components/schemas/DateTime'
+        contextInfo:
+          $ref: '#/components/schemas/ContextInfo'
+    NiddCause:
+      anyOf:
+      - type: string
+        enum:
+        - SUBSCRIPTION_WITHDRAWAL
+        - DNN_REMOVED
+      - type: string
+    Snssai:
+      type: object
+      properties:
+        sst:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: "Unsigned integer, within the range 0 to 255, representing\
+            \ the Slice/Service Type.  It indicates the expected Network Slice behaviour\
+            \ in terms of features and services. Values 0 to 127 correspond to the\
+            \ standardized SST range. Values 128 to 255 correspond  to the Operator-specific\
+            \ range. See clause 28.4.2 of 3GPP TS 23.003. Standardized values are\
+            \ defined in clause 5.15.2.2 of 3GPP TS 23.501. \n"
+        sd:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: '3-octet string, representing the Slice Differentiator, in
+            hexadecimal representation. Each character in the string shall take a
+            value of "0" to "9", "a" to "f" or "A" to "F" and shall represent 4 bits.
+            The most significant character representing the 4 most significant bits
+            of the SD shall appear first in the string, and the character representing
+            the 4 least significant bit of the SD shall appear last in the string.
+            This is an optional parameter that complements the Slice/Service type(s)
+            to allow to  differentiate amongst multiple Network Slices of the same
+            Slice/Service type. This IE shall be absent if no SD value is associated
+            with the SST.
+
+            '
+      description: 'When Snssai needs to be converted to string (e.g. when used in
+        maps as key), the string shall be composed of one to three digits "sst" optionally
+        followed by "-" and 6 hexadecimal digits "sd".
+
+        '
+      required:
+      - sst
+    Dnn:
+      type: string
+      description: 'String representing a Data Network as defined in clause 9A of
+        3GPP TS 23.003;  it shall contain either a DNN Network Identifier, or a full
+        DNN with both the Network  Identifier and Operator Identifier, as specified
+        in 3GPP TS 23.003 clause 9.1.1 and 9.1.2. It shall be coded as string in which
+        the labels are separated by dots  (e.g. "Label1.Label2.Label3").
+
+        '
+    MtcProviderInformation:
+      type: string
+      description: String uniquely identifying MTC provider information.
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+    NefId:
+      description: Identity of the NEF
+      type: string
+    DateTime:
+      format: date-time
+      type: string
+      description: string with format 'date-time' as defined in OpenAPI.
+    ContextInfo:
+      type: object
+      properties:
+        origHeaders:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        requestHeaders:
+          type: array
+          items:
+            type: string
+          minItems: 1
+    Supi:
+      type: string
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|gci-.+|gli-.+|.+)$
+      description: "String identifying a Supi that shall contain either an IMSI, a\
+        \ network specific identifier,\na Global Cable Identifier (GCI) or a Global\
+        \ Line Identifier (GLI) as specified in clause \n2.2A of 3GPP TS 23.003. It\
+        \ shall be formatted as follows\n - for an IMSI \"imsi-<imsi>\", where <imsi>\
+        \ shall be formatted according to clause 2.2\n   of 3GPP TS 23.003 that describes\
+        \ an IMSI.\n - for a network specific identifier \"nai-<nai>, where <nai>\
+        \ shall be formatted\n   according to clause 28.7.2 of 3GPP TS 23.003 that\
+        \ describes an NAI.\n - for a GCI \"gci-<gci>\", where <gci> shall be formatted\
+        \ according to clause 28.15.2\n   of 3GPP TS 23.003.\n - for a GLI \"gli-<gli>\"\
+        , where <gli> shall be formatted according to clause 28.16.2 of\n   3GPP TS\
+        \ 23.003.To enable that the value is used as part of an URI, the string shall\n\
+        \   only contain characters allowed according to the \"lower-with-hyphen\"\
+        \ naming convention\n   defined in 3GPP TS 29.501.\n"
+    Gpsi:
+      type: string
+      pattern: ^(msisdn-[0-9]{5,15}|extid-[^@]+@[^@]+|.+)$
+      description: "String identifying a Gpsi shall contain either an External Id\
+        \ or an MSISDN.  It shall be formatted as follows -External Identifier= \"\
+        extid-'extid', where 'extid'  shall be formatted according to clause 19.7.2\
+        \ of 3GPP TS 23.003 that describes an  External Identifier. \n"
+    InvalidParam:
+      type: object
+      properties:
+        param:
+          type: string
+          description: 'If the invalid parameter is an attribute in a JSON body, this
+            IE shall contain the  attribute''s name and shall be encoded as a JSON
+            Pointer. If the invalid parameter is  an HTTP header, this IE shall be
+            formatted as the concatenation of the string "header "  plus the name
+            of such header. If the invalid parameter is a query parameter, this IE  shall
+            be formatted as the concatenation of the string "query " plus the name
+            of such  query parameter. If the invalid parameter is a variable part
+            in the path of a resource  URI, this IE shall contain the name of the
+            variable, including the symbols "{" and "}"  used in OpenAPI specification
+            as the notation to represent variable path segments.
+
+            '
+        reason:
+          type: string
+          description: 'A human-readable reason, e.g. "must be a positive integer".
+            In cases involving failed  operations in a PATCH request, the reason string
+            should identify the operation that  failed using the operation''s array
+            index to assist in correlation of the invalid  parameter with the failed
+            operation, e.g." Replacement value invalid for attribute  (failed operation
+            index= 4)"
+
+            '
+      required:
+      - param
+      description: It contains an invalid parameter and a related description.
+    SupportedFeatures:
+      type: string
+      pattern: ^[A-Fa-f0-9]*$
+      description: "A string used to indicate the features supported by an API that\
+        \ is used as defined in clause  6.6 in 3GPP TS 29.500. The string shall contain\
+        \ a bitmask indicating supported features in  hexadecimal representation Each\
+        \ character in the string shall take a value of \"0\" to \"9\",  \"a\" to\
+        \ \"f\" or \"A\" to \"F\" and shall represent the support of 4 features as\
+        \ described in  table\_5.2.2-3. The most significant character representing\
+        \ the highest-numbered features shall  appear first in the string, and the\
+        \ character representing features 1 to 4 shall appear last  in the string.\
+        \ The list of features and their numbering (starting with 1) are defined \
+        \ separately for each API. If the string contains a lower number of characters\
+        \ than there are  defined features for an API, all features that would be\
+        \ represented by characters that are not  present in the string are not supported.\n"
+    AccessTokenErr:
+      description: Error returned in the access token response message
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+          - invalid_scope
+        error_description:
+          type: string
+        error_uri:
+          type: string
+    NfInstanceId:
+      type: string
+      format: uuid
+      description: "String uniquely identifying a NF instance. The format of the NF\
+        \ Instance ID shall be a  Universally Unique Identifier (UUID) version 4,\
+        \ as described in IETF RFC 4122. \n"
+    NFType:
+      description: NF types known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - NRF
+        - UDM
+        - AMF
+        - SMF
+        - AUSF
+        - NEF
+        - PCF
+        - SMSF
+        - NSSF
+        - UDR
+        - LMF
+        - GMLC
+        - 5G_EIR
+        - SEPP
+        - UPF
+        - N3IWF
+        - AF
+        - UDSF
+        - BSF
+        - CHF
+        - NWDAF
+        - PCSCF
+        - CBCF
+        - HSS
+        - UCMF
+        - SOR_AF
+        - SPAF
+        - MME
+        - SCSAS
+        - SCEF
+        - SCP
+        - NSSAAF
+        - ICSCF
+        - SCSCF
+        - DRA
+        - IMS_AS
+        - AANF
+        - 5G_DDNMF
+        - NSACF
+        - MFAF
+        - EASDF
+        - DCCF
+        - MB_SMF
+        - TSCTSF
+        - ADRF
+        - GBA_BSF
+        - CEF
+        - MB_UPF
+        - NSWOF
+        - PKMF
+        - MNPF
+        - SMS_GMSC
+        - SMS_IWMSC
+        - MBSF
+        - MBSTF
+        - PANF
+        - IP_SM_GW
+        - SMS_ROUTER
+      - type: string
+    Mcc:
+      type: string
+      pattern: ^\d{3}$
+      description: "Mobile Country Code part of the PLMN, comprising 3 digits, as\
+        \ defined in clause 9.3.3.5 of 3GPP TS 38.413. \n"
+    Mnc:
+      type: string
+      pattern: ^\d{2,3}$
+      description: Mobile Network Code part of the PLMN, comprising 2 or 3 digits,
+        as defined in clause 9.3.3.5 of 3GPP TS 38.413.
+    PlmnId:
+      type: object
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+      description: 'When PlmnId needs to be converted to string (e.g. when used in
+        maps as key), the string  shall be composed of three digits "mcc" followed
+        by "-" and two or three digits "mnc".
+
+        '
+      required:
+      - mcc
+      - mnc
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: ^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$
+      minLength: 4
+      maxLength: 253
+    Nid:
+      type: string
+      pattern: ^[A-Fa-f0-9]{11}$
+      description: "This represents the Network Identifier, which together with a\
+        \ PLMN ID is used to identify an SNPN (see 3GPP TS 23.003 and 3GPP TS 23.501\
+        \ clause 5.30.2.1). \n"
+    PlmnIdNid:
+      description: 'Contains the serving core network operator PLMN ID and, for an
+        SNPN, the NID that together with the PLMN ID identifies the SNPN.
+
+        '
+      type: object
+      required:
+      - mcc
+      - mnc
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+        nid:
+          $ref: '#/components/schemas/Nid'
+    NfSetId:
+      type: string
+      description: "NF Set Identifier (see clause 28.12 of 3GPP TS 23.003), formatted\
+        \ as the following string \"set<Set ID>.<nftype>set.5gc.mnc<MNC>.mcc<MCC>\"\
+        , or  \"set<SetID>.<NFType>set.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\" with  <MCC>\
+        \ encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)  <MNC>\
+        \ encoding the Mobile Network Code part of the PLMN, comprising 3 digits.\
+        \ \n  If there are only 2 significant digits in the MNC, one \"0\" digit shall\
+        \ be inserted \n  at the left side to fill the 3 digits coding of MNC.  Pattern:\
+        \ '^[0-9]{3}$'\n<NFType> encoded as a value defined in Table 6.1.6.3.3-1 of\
+        \ 3GPP TS 29.510 but \n  with lower case characters <Set ID> encoded as a\
+        \ string of characters consisting of \n  alphabetic characters (A-Z and a-z),\
+        \ digits (0-9) and/or the hyphen (-) and that \n  shall end with either an\
+        \ alphabetic character or a digit. \n"
+    NfServiceSetId:
+      type: string
+      description: "NF Service Set Identifier (see clause 28.12 of 3GPP TS 23.003)\
+        \ formatted as the following  string \"set<Set ID>.sn<Service Name>.nfi<NF\
+        \ Instance ID>.5gc.mnc<MNC>.mcc<MCC>\", or  \"set<SetID>.sn<ServiceName>.nfi<NFInstanceID>.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\"\
+        \ with  <MCC> encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)\
+        \   <MNC> encoding the Mobile Network Code part of the PLMN, comprising 3\
+        \ digits. \n  If there are only 2 significant digits in the MNC, one \"0\"\
+        \ digit shall be inserted \n  at the left side to fill the 3 digits coding\
+        \ of MNC.  Pattern: '^[0-9]{3}$'\n<NID> encoded as defined in clause\_5.4.2\
+        \ (\"Nid\" data type definition)  <NFInstanceId> encoded as defined in clause\
+        \ 5.3.2  <ServiceName> encoded as defined in 3GPP TS 29.510  <Set ID> encoded\
+        \ as a string of characters consisting of alphabetic \n  characters (A-Z and\
+        \ a-z), digits (0-9) and/or the hyphen (-) and that shall end \n  with either\
+        \ an alphabetic character or a digit.\n"
+    AccessTokenReq:
+      description: Contains information related to the access token request
+      type: object
+      required:
+      - grant_type
+      - nfInstanceId
+      - scope
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfType:
+          $ref: '#/components/schemas/NFType'
+        targetNfType:
+          $ref: '#/components/schemas/NFType'
+        scope:
+          type: string
+          pattern: ^([a-zA-Z0-9_:-]+)( [a-zA-Z0-9_:-]+)*$
+        targetNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        requesterPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        requesterPlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 2
+        requesterSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        requesterFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        requesterSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        targetPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        targetSnpn:
+          $ref: '#/components/schemas/PlmnIdNid'
+        targetSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        targetNsiList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        targetNfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        targetNfServiceSetId:
+          $ref: '#/components/schemas/NfServiceSetId'
+        hnrfAccessTokenUri:
+          $ref: '#/components/schemas/Uri'
+        sourceNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+    ProblemDetails:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+        instance:
+          $ref: '#/components/schemas/Uri'
+        cause:
+          type: string
+          description: 'A machine-readable application error cause specific to this
+            occurrence of the problem.  This IE should be present and provide application-related
+            error information, if available.
+
+            '
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+          minItems: 1
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        accessTokenError:
+          $ref: '#/components/schemas/AccessTokenErr'
+        accessTokenRequest:
+          $ref: '#/components/schemas/AccessTokenReq'
+        nrfId:
+          $ref: '#/components/schemas/Fqdn'
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '403':
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '404':
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '500':
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '501':
+      description: Not Implemented
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '503':
+      description: Service Unavailable
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'

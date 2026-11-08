@@ -1,0 +1,669 @@
+[
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{ueId}/registrations/amf-3gpp-access",
+      "operation_id": "3GppRegistration"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueId"
+      ],
+      "relation_type": "serving_amf",
+      "relation_statement": "An authorized requester should be the AMF registering as, or updating itself as, the serving registered AMF for 3GPP access for the UE identified by ueId.",
+      "strength": "explicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-uecm",
+          "nudm-uecm:amf-registration:write"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "procedural_eligibility_only",
+        "mechanism": "The specification describes authorization failure for AMF 3GPP registration based on UE subscription/access eligibility conditions and returns 403 with ProblemDetails causes; no explicit caller-to-ueId or NF-instance-to-resource binding check is specified in the supplied text.",
+        "applies_when": [
+          "PUT is used by an AMF to create or update the UE's AMF registration for 3GPP access",
+          "The UE does not have required subscription data or is subject to access, roaming, RAT, SNPN, reauthentication, or related restrictions"
+        ],
+        "failure_codes": [
+          403
+        ],
+        "failure_causes": [
+          "UNKNOWN_5GS_SUBSCRIPTION",
+          "NO_PS_SUBSCRIPTION",
+          "ROAMING_NOT_ALLOWED",
+          "ACCESS_NOT_ALLOWED",
+          "RAT_NOT_ALLOWED",
+          "REAUTHENTICATION_REQUIRED",
+          "SNPN_NOT_ALLOWED"
+        ]
+      }
+    },
+    "confidence": "high",
+    "evidence_refs": [
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2.2.2:amf-registration-for-3gpp-access",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.1:overview",
+        "role": "operation_level_control"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2.2.2:amf-registration-for-3gpp-access",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2.2.2:amf-registration-for-3gpp-access",
+        "role": "resource_instance_binding_check"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Nudm_UECM PUT /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "limitation"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PATCH",
+      "path": "/{ueId}/registrations/amf-3gpp-access",
+      "operation_id": "Update3GppRegistration"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueId",
+        "GUAMI"
+      ],
+      "relation_type": "registered_serving_amf",
+      "relation_statement": "An authorized requester shall be the AMF that is registered as the serving AMF for the UE's 3GPP access registration selected by ueId, with the request's GUAMI corresponding to the stored GUAMI for that registration when GUAMI is used for the modification.",
+      "strength": "explicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-uecm",
+          "nudm-uecm:amf-registration:write"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "condition_scoped",
+        "mechanism": "For the AMF deregistration/purgeFlag PATCH procedure, the UDM shall check that the received GUAMI matches the stored GUAMI before setting the PurgeFlag.",
+        "applies_when": [
+          "PATCH is used by the AMF to deregister/purge from the UDM for 3GPP access",
+          "The request contains the UE identity in /{ueId}, which shall be a SUPI",
+          "The PATCH request includes an instruction to set the purgeFlag within the Amf3GppAccessRegistration resource"
+        ],
+        "failure_codes": [
+          403
+        ],
+        "failure_causes": [
+          "INVALID_GUAMI"
+        ]
+      }
+    },
+    "confidence": "high",
+    "evidence_refs": [
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2.4.2:amf-deregistration-for-3gpp-access",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.1:overview",
+        "role": "operation_metadata"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "operation_level_control"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.2:resource-amf3gppaccessregistration-document:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2.4.2:amf-deregistration-for-3gpp-access",
+        "role": "resource_instance_binding_check"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:5.3.2.4.2:amf-deregistration-for-3gpp-access",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access::TS29503:6.2.3.1:overview",
+        "role": "operation_level_control"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_SDM GET /{supi}/am-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/am-data",
+      "operation_id": "GetAmData"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "supi",
+        "plmn-id"
+      ],
+      "relation_type": "serving_amf",
+      "relation_statement": "An authorized requester should be the AMF serving or handling registration for the UE identified by supi in the serving PLMN/SNPN identified by plmn-id, or in the HPLMN when plmn-id is absent.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-sdm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "procedural_eligibility_only",
+        "mechanism": "Procedural text identifies the intended consumer/use: an NF service consumer, e.g. AMF, retrieves the UE's Access and Mobility Subscription Data after registration using the UE identity in the URI. No explicit resource-instance authorization or ownership check is specified for verifying that the requester is entitled to the addressed SUPI instance.",
+        "applies_when": [
+          "NF service consumer, e.g. AMF, requests UE Access and Mobility Subscription Data",
+          "AMF queries the resource after registering",
+          "Request contains the UE identity in /{supi} and may include supported-features and/or plmn-id"
+        ],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:6.1.3.5:resource-accessandmobilitysubscriptiondata-document:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:6.1.3.5:resource-accessandmobilitysubscriptiondata-document:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:5.2.2.2.3:access-and-mobility-subscription-data-retrieval",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:6.1.3.1:overview",
+        "role": "operation_metadata"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:6.1.3.5:resource-accessandmobilitysubscriptiondata-document:resource-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:5.2.2.2.3:access-and-mobility-subscription-data-retrieval",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:6.1.3.5:resource-accessandmobilitysubscriptiondata-document:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:5.2.2.2.3:access-and-mobility-subscription-data-retrieval",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/am-data::TS29503:6.1.3.1:overview",
+        "role": "procedural_control"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_SDM GET /{supi}/sm-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/sm-data",
+      "operation_id": "GetSmData"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "supi",
+        "single-nssai",
+        "dnn",
+        "plmn-id"
+      ],
+      "relation_type": "serving_smf_for_ue_session",
+      "relation_statement": "An authorized requester should be an SMF acting for the UE identified by supi during session setup or PDN connection establishment for the requested slice, DNN, and serving PLMN/SNPN context.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-sdm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "condition_scoped",
+        "mechanism": "UDM is specified to reject requests where the requested session management subscription data is unavailable for the UE, including when the requested network slice and/or DNN does not belong to the UE subscription.",
+        "applies_when": [
+          "A GET request addresses /{supi}/sm-data for a UE's Session Management Subscription Data.",
+          "The request includes query parameters such as single-nssai and/or dnn.",
+          "The requested session management subscription is not available for the UE, including a requested network slice and/or DNN that does not belong to the UE subscription.",
+          "A non-subscribed DNN is requested."
+        ],
+        "failure_codes": [
+          404
+        ],
+        "failure_causes": [
+          "USER_NOT_FOUND",
+          "DATA_NOT_FOUND"
+        ]
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.8:resource-sessionmanagementsubscriptiondata-document:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.8:resource-sessionmanagementsubscriptiondata-document:resource-with-children",
+        "role": "operation_metadata"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.8:resource-sessionmanagementsubscriptiondata-document:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:5.2.2.2.5:session-management-subscription-data-retrieval",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.1:overview",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.8:resource-sessionmanagementsubscriptiondata-document:resource-with-children",
+        "role": "resource_instance_binding_check"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:5.2.2.2.5:session-management-subscription-data-retrieval",
+        "role": "resource_instance_binding_check"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.8:resource-sessionmanagementsubscriptiondata-document:resource-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:5.2.2.2.5:session-management-subscription-data-retrieval",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.8:resource-sessionmanagementsubscriptiondata-document:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:6.1.3.1:overview",
+        "role": "operation_level_control"
+      },
+      {
+        "context_id": "Nudm_SDM GET /{supi}/sm-data::TS29503:5.2.2.2.5:session-management-subscription-data-retrieval",
+        "role": "limitation"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release",
+    "target": {
+      "service": "Namf_Comm",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/release",
+      "operation_id": "ReleaseUEContext"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "source_amf_handover_cancel",
+      "relation_statement": "An authorized requester should be the source AMF for the same UE handover cancel procedure and may request release only of the UE Context held in the target AMF for the UE identified by ueContextId.",
+      "strength": "explicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "procedural_eligibility_only",
+        "mechanism": "The procedure describes ReleaseUEContext as used by an NF Service Consumer, e.g. a source AMF, toward a target AMF during Inter NG-RAN node N2 handover Cancel to release the addressed UE context. No explicit requester-to-ueContext resource-instance authorization or ownership check is specified in the supplied text.",
+        "applies_when": [
+          "Inter NG-RAN node N2 based handover Cancel procedure",
+          "The source AMF receives Handover Cancel from the 5G-AN during the handover procedure",
+          "The target AMF holds the UE context to be released"
+        ],
+        "failure_codes": [
+          403
+        ],
+        "failure_causes": [
+          "UNSPECIFIED",
+          "SUPI_OR_PEI_UNKNOWN"
+        ]
+      }
+    },
+    "confidence": "high",
+    "evidence_refs": [
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:6.1.3.2:resource-individual-uecontext:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:6.1.3.2:resource-individual-uecontext:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:5.2.2.2.4:releaseuecontext:procedure-with-children",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:6.1.3.1:overview",
+        "role": "operation_metadata"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:6.1.3.2:resource-individual-uecontext:resource-with-children",
+        "role": "resource_instance_binding_check"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:6.1.3.2:resource-individual-uecontext:resource-with-children",
+        "role": "operation_level_control"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:5.2.2.2.4:releaseuecontext:procedure-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:6.1.3.2:resource-individual-uecontext:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Namf_Comm POST /ue-contexts/{ueContextId}/release::TS29518:5.2.2.2.4:releaseuecontext:procedure-with-children",
+        "role": "limitation"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextRef}/release",
+      "operation_id": "ReleaseSmContext"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "smContextRef"
+      ],
+      "relation_type": "serving_nf_consumer",
+      "relation_statement": "The requester NF must be the NF Service Consumer, typically the serving AMF, that is responsible for managing and releasing the SM context of the given PDU session identified by smContextRef.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nsmf-pdusession"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "procedural_eligibility_only",
+        "mechanism": "The supplied TS text procedurally constrains use of the release custom operation to releasing the SM Context of a given PDU session in specified procedures, and says the NF Service Consumer sends POST to the resource representing the individual SM context to be deleted. No explicit caller-to-smContextRef ownership or binding authorization check is specified.",
+        "applies_when": [
+          "When the Release SM Context service operation is used for the procedures listed in TS 29.502 clause 5.2.2.4.1",
+          "When an NF Service Consumer, e.g. AMF, releases the SM Context of a given PDU session using the release custom operation",
+          "When procedure-specific release-only indications such as vsmfReleaseOnly or ismfReleaseOnly apply in the listed mobility, handover, or registration scenarios"
+        ],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:5.2.2.4:release-sm-context-service-operation:procedure-with-children",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:5.2.2.4:release-sm-context-service-operation:procedure-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+        "role": "operation_level_control"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:5.2.2.4:release-sm-context-service-operation:procedure-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release::TS29502:5.2.2.4:release-sm-context-service-operation:procedure-with-children",
+        "role": "error_response"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Npcf_SMPolicyControl GET /sm-policies/{smPolicyId}",
+    "target": {
+      "service": "Npcf_SMPolicyControl",
+      "method": "GET",
+      "path": "/sm-policies/{smPolicyId}",
+      "operation_id": "GetSMPolicy"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "smPolicyId"
+      ],
+      "relation_type": "policy_association_consumer",
+      "relation_statement": "An authorized requester should be the NF service consumer for the PDU session policy association identified by smPolicyId, i.e. the consumer that created or is responsible for the Individual SM Policy associated with the relevant SUPI or PEI and PDU Session ID.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "npcf-smpolicycontrol"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "operation_level_only",
+        "mechanism": "No explicit resource-instance authorization or ownership check is identified; protection visible in the supplied material is limited to operation-level access control and generic error/status behavior.",
+        "applies_when": [
+          "GET /sm-policies/{smPolicyId} is invoked to read an Individual SM Policy resource"
+        ],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "Npcf_SMPolicyControl GET /sm-policies/{smPolicyId}::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl GET /sm-policies/{smPolicyId}::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl GET /sm-policies/{smPolicyId}::TS29512:5.3.1:resource-structure",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl GET /sm-policies/{smPolicyId}::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl GET /sm-policies/{smPolicyId}::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl GET /sm-policies/{smPolicyId}::TS29512:5.3.1:resource-structure",
+        "role": "procedural_control"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update",
+    "target": {
+      "service": "Npcf_SMPolicyControl",
+      "method": "POST",
+      "path": "/sm-policies/{smPolicyId}/update",
+      "operation_id": "UpdateSMPolicy"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "smPolicyId",
+        "SUPI",
+        "PDU session ID",
+        "servNfId"
+      ],
+      "relation_type": "serving_smf_for_pdu_session",
+      "relation_statement": "An authorized SMF requester should be the serving NF service consumer for the PDU session and UE subscription context associated with the Individual SM Policy resource identified by smPolicyId.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "npcf-smpolicycontrol"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "procedural_eligibility_only",
+        "mechanism": "No explicit authorization or ownership check tying the NF service consumer to the addressed smPolicyId is specified. The text procedurally constrains use of the operation to updating the Individual SM Policy identified by smPolicyId when policy control request triggers are met, and includes request-consistency rejection for incoherent session information.",
+        "applies_when": [
+          "NF service consumer detects one or more policy control request triggers are met",
+          "NF service consumer sends POST to update the Individual SM Policy resource identified by smPolicyId",
+          "PCF processes session information in the update request and compares it with previous session information for the same session"
+        ],
+        "failure_codes": [
+          400,
+          403
+        ],
+        "failure_causes": [
+          "ERROR_TRIGGER_EVENT",
+          "ERROR_CONFLICTING_REQUEST",
+          "ERROR_TRAFFIC_MAPPING_INFO_REJECTED"
+        ]
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "resource_definition"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "method_behavior"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:4.2.4:npcf-smpolicycontrol-update-service-operation:procedure-with-children",
+        "role": "procedure_context"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:5.3.1:resource-structure",
+        "role": "operation_metadata"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:5.3.3:resource-individual-sm-policy:resource-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:4.2.4:npcf-smpolicycontrol-update-service-operation:procedure-with-children",
+        "role": "procedural_control"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:4.2.4:npcf-smpolicycontrol-update-service-operation:procedure-with-children",
+        "role": "error_response"
+      },
+      {
+        "context_id": "Npcf_SMPolicyControl POST /sm-policies/{smPolicyId}/update::TS29512:4.2.4:npcf-smpolicycontrol-update-service-operation:procedure-with-children",
+        "role": "limitation"
+      }
+    ]
+  }
+]

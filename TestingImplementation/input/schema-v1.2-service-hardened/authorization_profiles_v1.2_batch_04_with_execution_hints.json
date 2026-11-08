@@ -1,0 +1,1696 @@
+[
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "DELETE",
+      "path": "/{ueId}/registrations/ip-sm-gw",
+      "operation_id": "IpSmGwDeregistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:ip-sm-gw-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "hss_ip_sm_gw_registration_deregistration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "hss_associated_with_ue_registration",
+          "relation_statement": "The authenticated HSS requesting deletion is associated with the addressed UE's IP-SM-GW registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The DELETE procedure identifies the HSS as requester and the UE's IP-SM-GW registration as the addressed resource, but states no check binding the requester to that registration or UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:6.2.3.10:resource-ipsmgwregistration:resource-with-children",
+            "role": "addressed resource and identifier"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:6.2.3.10:resource-ipsmgwregistration:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and procedure"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "registration relationship"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Applicable deregistration procedure"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:6.2.3.10:resource-ipsmgwregistration:resource-with-children",
+            "role": "DELETE resource definition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "HSS",
+          "status": "executable",
+          "representative_variant": "hss_ip_sm_gw_deregistration",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The ueId path value is the SUPI of a UE with an existing IP-SM-GW registration in the ordinary owner/attacker fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the HSS requester and deregistration procedure",
+              "quoted_text": "1.The HSS sends a DELETE request to the resource representing the UE's IP-SM-GW registration.",
+              "rationale": "An authenticated HSS exercises this case by deleting the addressed UE's IP-SM-GW registration."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "identifies the path-value type",
+              "quoted_text": "The request contains the UE's identity (/{ueId}) which shall be a SUPI.",
+              "rationale": "Supply the fixture UE's SUPI as ueId."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/ip-sm-gw::TS29503:6.2.3.10:resource-ipsmgwregistration:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a request body",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "DELETE on the IP-SM-GW registration resource exercises the procedure without body fields; the DELETE query-parameter table lists none."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{ueId}/registrations/ip-sm-gw",
+      "operation_id": "IpSmGwRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:ip-sm-gw-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "hss_ue_ip_sm_gw_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "hss_registers_for_ue",
+          "relation_statement": "The authenticated HSS may create or update the IP-SM-GW registration for the UE whose SUPI is {ueId} when acting as the HSS registering that UE's IP-SM-GW.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the HSS as the requester and the UE by SUPI, but does not state a check binding the authenticated HSS to the addressed UE or its IP-SM-GW registration. The stated authorization failure concerns UE subscription data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and procedure"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "UE subject"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw::TS29503:6.2.3.10:resource-ipsmgwregistration:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Requester and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Scope of stated authorization failure"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "HSS",
+          "status": "executable",
+          "representative_variant": "hss_registers_ip_sm_gw_map_address",
+          "body_required_fields": [
+            "ipSmGwMapAddress"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the HSS requester and registration procedure.",
+              "quoted_text": "The HSS sends a PUT request to the resource .../{ueId}/registrations/ip-sm-gw, to create an IP-SM-GW registration as present in the message body.",
+              "rationale": "An HSS PUT to the UE's IP-SM-GW registration resource, with registration information represented by the OpenAPI ipSmGwMapAddress field, exercises this case."
+            },
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/ip-sm-gw::TS29503:6.2.3.10:resource-ipsmgwregistration:resource-with-children",
+              "evidence_role": "Confirms the request body and UE identifier.",
+              "quoted_text": "The IP-SM-GW registration is created or updated with the received information.",
+              "rationale": "The PUT carries an IpSmGwRegistration body; the addressed {ueId} identifies the UE whose registration is created or updated."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/location",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/location",
+      "operation_id": "GetLocationInfo"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_location_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "GMLC",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "requester_to_ue_binding_not_identified",
+          "relation_statement": "The supplied context does not identify which authenticated GMLC or NEF may retrieve this UE's location information.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the UE through the resource URI and describes retrieval by GMLC or NEF, but states no check binding the authenticated requester to the addressed UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/location::TS29503:6.2.3.8:resource-location:resource-with-children",
+            "role": "Addressed resource and identifier"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/location::TS29503:6.2.3.1:overview",
+            "role": "Named retrieving NF types"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/location::TS29503:6.2.3.8:resource-location:resource-with-children",
+            "role": "Resource identification without requester binding"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/location::TS29503:6.2.3.1:overview",
+            "role": "Requester description without a resource-instance check"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "GMLC",
+          "status": "executable",
+          "representative_variant": "gmlc_get_ue_location",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed ueId identifies a UE whose location information is available for retrieval."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/location::TS29503:6.2.3.1:overview",
+              "evidence_role": "selects the requester and operation",
+              "quoted_text": "Retrieve the UE's location information by GMLC or NEF",
+              "rationale": "Select GMLC as the concrete requester for the listed location-retrieval operation."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/location::TS29503:6.2.3.8:resource-location:resource-with-children",
+              "evidence_role": "establishes the path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudm-uecm/v1/{ueId}/registrations/location",
+              "rationale": "A GET to this URI identifies the target UE through ueId."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/location::TS29503:6.2.3.8:resource-location:resource-with-children",
+              "evidence_role": "establishes that no body or query field is needed",
+              "quoted_text": "supported-features\nSupportedFeatures\nO\n0..1",
+              "rationale": "The only listed query parameter is optional; the GET request-body table specifies n/a. The GET method and resource URI therefore exercise the selected operation without body or query fields."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/nwdaf-registrations",
+      "operation_id": "GetNwdafRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_nwdaf_registration_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NWDAF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_consumer_of_ue_registration_information",
+          "relation_statement": "The authenticated requester NF may retrieve the NWDAF registrations for the UE identified by {ueId} only if it is authorized to receive that UE's registration information; it need not be an NWDAF recorded in those registrations.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The GET provisions describe retrieval by UE identifier and optional analytics identifiers, but do not require the UDM to verify that the authenticated consumer is authorized for the UE's NWDAF registrations."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:6.2.3.12:resource-nwdafregistrations:resource-with-children",
+            "role": "addressed resource and identifier"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "applicable requester and retrieval procedure"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET procedure"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:6.2.3.12:resource-nwdafregistrations:resource-with-children",
+            "role": "resource-specific GET requirements"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NWDAF",
+          "status": "executable",
+          "representative_variant": "nwdaf_get_all_ue_registrations",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the requester and retrieval procedure",
+              "quoted_text": "the NF service consumer (e.g. NWDAF) sends a request to the UDM to retrieve the UE's NwdafRegistration Information.",
+              "rationale": "NWDAF is a TS-supported consumer for this UE registration retrieval."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:6.2.3.12:resource-nwdafregistrations:resource-with-children",
+              "evidence_role": "Establishes the path-and-method trigger without a body or query parameters",
+              "quoted_text": "SUPI (i.e. imsi or nai or gli or gci) is used with the GET method",
+              "rationale": "Send GET to the specified resource using the fixture UE's SUPI as {ueId}."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:6.2.3.12:resource-nwdafregistrations:resource-with-children",
+              "evidence_role": "Confirms the request body is empty",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "No body fields are needed or permitted for this GET."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/nwdaf-registrations::TS29503:6.2.3.12:resource-nwdafregistrations:resource-with-children",
+              "evidence_role": "Confirms analytics filtering is optional",
+              "quoted_text": "analytics-ids\narray(EventId)\nO\n0..N",
+              "rationale": "The representative request omits optional analytics filtering."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "DELETE",
+      "path": "/{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+      "operation_id": "NwdafDeregistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:nwdaf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_nwdaf_deregistration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NWDAF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "nwdafRegistrationId"
+          ],
+          "relation_type": "registered_nwdaf_owns_registration",
+          "relation_statement": "The authenticated requesting NWDAF may delete its own registration for the UE, rather than another NWDAF's registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes deregistration by a registered NWDAF, but does not require the UDM to verify that the authenticated requester is the NWDAF associated with the addressed UE registration."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and deregistration relation"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "DELETE procedure"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+            "role": "resource identity"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+            "role": "DELETE resource requirements"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "method-specific contrast"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NWDAF",
+          "status": "executable",
+          "representative_variant": "individual_nwdaf_registration_delete",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The ordinary owner/attacker fixture provides a UE SUPI and an existing NWDAF registration ID associated with that UE and owned by an NWDAF distinct from the authenticated requesting NWDAF. Use those fixture values for ueId and nwdafRegistrationId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "requester and procedure trigger",
+              "quoted_text": "1.The NWDAF sends a DELETE request to the resource representing the UE's NWDAF registration.",
+              "rationale": "An authenticated NWDAF deleting another NWDAF's addressed registration exercises the supplied requester-to-registration binding case."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+              "evidence_role": "path-and-method trigger without body or query fields",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "DELETE on the individual registration URI selects the operation; the TS specifies no DELETE query parameters and requires an empty request body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PATCH",
+      "path": "/{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+      "operation_id": "UpdateNwdafRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:nwdaf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_nwdaf_updates_own_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NWDAF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "nwdafRegistrationId"
+          ],
+          "relation_type": "currently_registered_nwdaf",
+          "relation_statement": "The authenticated requesting NWDAF may update the addressed registration only if it is the NWDAF currently registered for that UE.",
+          "strength": "explicit"
+        },
+        "existing_protection": {
+          "coverage": "explicit_binding_check",
+          "mechanism": "The UDM rejects a PATCH when the requesting NWDAF is not the one currently registered for the UE.",
+          "failure_codes": [
+            422
+          ],
+          "failure_causes": [
+            "UNPROCESSABLE_REQUEST"
+          ],
+          "protected_relation": "Requesting NWDAF to the UE's currently registered NWDAF registration",
+          "coverage_notes": "The requester-to-registration check is explicit. The specification does not describe how the requester is matched to the particular nwdafRegistrationId when a UE has multiple NWDAF registrations. UNPROCESSABLE_REQUEST is an optional cause for the 422 response."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester-to-resource binding"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+            "role": "resource-instance identification"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester-to-registration check and rejection"
+          },
+          {
+            "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+            "role": "associated response cause"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NWDAF",
+          "status": "executable",
+          "representative_variant": "update_analytics_ids",
+          "body_required_fields": [
+            "analyticsIds"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed UE has an existing NWDAF registration. Use its ueId and nwdafRegistrationId with the registered NWDAF as owner and a different NWDAF as attacker."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the requester and modification",
+              "quoted_text": "The request contains the UE's identity (/{ueId}) which shall be a SUPI, the NWDAF's registration identity (/{nwdafRegistrationId}) and an instruction to modify a parameter (e.g. analyticsId(s)).",
+              "rationale": "A PATCH carrying analyticsIds is a concrete parameter-update instruction for the addressed NWDAF registration."
+            },
+            {
+              "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "establishes the requester-to-registration check",
+              "quoted_text": "If the resource exists, but the requesting NWDAF is not the one currently registered for the UE, HTTP status code \"422 Unprocessable Entity\" should be returned",
+              "rationale": "Sending the same update as the registered NWDAF and as a different NWDAF exercises the case's binding."
+            },
+            {
+              "context_id": "Nudm_UECM PATCH /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+              "evidence_role": "confirms the PATCH request body",
+              "quoted_text": "NwdafRegistrationModification\nM\n1\nThe NWDAF registration is modified with the received information.",
+              "rationale": "The request uses the specified modification body; OpenAPI-required structural fields are constructed separately."
+            }
+          ],
+          "gaps": [
+            "The specification does not describe how the requesting NWDAF is matched to a particular nwdafRegistrationId when the UE has multiple NWDAF registrations."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "high",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+      "operation_id": "NwdafRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:nwdaf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "nwdaf_own_ue_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NWDAF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "nwdafRegistrationId"
+          ],
+          "relation_type": "register_own_nwdaf_registration",
+          "relation_statement": "The authenticated NWDAF requester may PUT its own registration for the UE identified by ueId, rather than a registration belonging to an unrelated NWDAF.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The PUT procedure identifies the UE and NWDAF registration through request values and describes rejection based on UE subscription data, but does not require the UDM to verify that the requesting NWDAF is authorized for the addressed UE registration. A requester-to-registration check is stated for PATCH, not PUT."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and addressed-resource procedure"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "resource subject and registration identity"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+            "role": "identifier interpretation"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "PUT procedure"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "PUT rejection basis"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "method-specific contrast"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NWDAF",
+          "status": "executable",
+          "representative_variant": "create_own_nwdaf_registration",
+          "body_required_fields": [
+            "nwdafInstanceId"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the UE's SUPI as ueId and an nwdafRegistrationId identifying the authenticated NWDAF; set nwdafInstanceId to that NWDAF's instance ID."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the requester and create-registration procedure",
+              "quoted_text": "The NWDAF sends a PUT request to the resource .../{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}, to create an NWDAF Registration as present in the message body.",
+              "rationale": "A PUT by NWDAF to the addressed resource with NWDAF registration information exercises this case."
+            },
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}::TS29503:6.2.3.11:resource-nwdafregistration-document:resource-with-children",
+              "evidence_role": "Establishes request body and registration-ID requirements",
+              "quoted_text": "nwdafRegistrationId could be the NfInstanceId, the combination of NfSetId and NfInstance ID or other identifier forms of the NWDAF. NWDAF implementation shall secure the global uniqueness of this resource ID.",
+              "rationale": "The path identifier must identify the requesting NWDAF's registration; nwdafInstanceId carries its instance identity in the body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "POST",
+      "path": "/{ueId}/registrations/send-routing-info-sm",
+      "operation_id": "SendRoutingInfoSm"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "sms_routing_consumer_for_ue",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMS_GMSC",
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "consumer_requesting_routing_for_recipient_ue",
+          "relation_statement": "An authenticated SMS_GMSC or HSS acting as an NF consumer may request routing information for the recipient UE identified by {ueId}; the supplied text does not establish that the requester must be a node registered for that UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification text does not require the UDM to verify that the NF service consumer is authorized to retrieve SMS routing information for the UE identified by {ueId}. The stated 403 conditions concern the UE's SMS subscription or service barring, not the consumer-to-UE relation."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and addressed UE"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "method and resource subject"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Request addressing"
+          },
+          {
+            "context_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Scope of stated refusal"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMS_GMSC",
+          "status": "executable",
+          "representative_variant": "sms_gmsc_empty_body_routing_request",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the recipient UE's fixture identity as {ueId}. For a 200 routing response, the UE must have SMS service provisioned and an available SMS-delivery node registered with the UDM."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the requester and path-and-method trigger",
+              "quoted_text": "The NF Service Consumer sends a POST request (custom method: send-routing-info-sm) to the UDM. The request URI contains the UE's identity ({ueId}).",
+              "rationale": "The POST operation addressed to the recipient UE exercises the routing-information request."
+            },
+            {
+              "context_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "supports an empty JSON request body",
+              "quoted_text": "otherwise, the request body may contain an empty JSON object.",
+              "rationale": "An empty JSON object selects a TS-supported request without requiring an optional body field."
+            },
+            {
+              "context_id": "Nudm_UECM POST /{ueId}/registrations/send-routing-info-sm::TS29503:6.2.3.9:resource-registrations:resource-with-children",
+              "evidence_role": "identifies a supported consumer",
+              "quoted_text": "The send-routing-info-sm custom operation is used by the NF service consumer (e.g. SMS-GMSC, HSS…) to retrieve addressing information",
+              "rationale": "SMS_GMSC is the selected requester type, rather than assuming another consumer's payload variant applies."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "DELETE",
+      "path": "/{ueId}/registrations/smsf-3gpp-access",
+      "operation_id": "3GppSmsfDeregistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:smsf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_smsf_deregistration",
+        "applies_when": [
+          "The UDM does not apply the optional smsf-set-id same-NF-set guard."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMSF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "registered_smsf_for_ue",
+          "relation_statement": "The authenticated requester is the SMSF registered for the addressed UE's 3GPP-access SMSF registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "Without the optional smsf-set-id guard, the supplied specification does not state a check binding the requester to the addressed SMSF registration."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and deregistration semantics"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "method-specific resource and requester"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "DELETE procedure"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+            "role": "scope of the optional guard"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMSF",
+          "status": "executable",
+          "representative_variant": "unguarded_3gpp_smsf_delete",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "smsf-set-id"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed ueId is a SUPI with an existing 3GPP-access SMSF registration.",
+            "The UDM does not apply the optional smsf-set-id guard to this request."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "identifies the requester and path-and-method trigger",
+              "quoted_text": "The SMSF sends a DELETE request to the resource representing the UE's SMSF registration for 3GPP access.",
+              "rationale": "An SMSF DELETE to the addressed registration exercises deregistration without a payload selector."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "establishes the empty body and optional query guard",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "The DELETE requires no body fields; omitting the optional smsf-set-id selects the request without a set-ID parameter."
+            }
+          ],
+          "gaps": [
+            "Omitting smsf-set-id does not itself establish whether the UDM applies any deployment-specific guard; that condition must be confirmed in the fixture."
+          ],
+          "confidence": "high"
+        }
+      },
+      {
+        "case_id": "same_smsf_set_deregistration",
+        "applies_when": [
+          "The UDM uses the optional smsf-set-id guard for this DELETE request."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMSF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "smsf-set-id"
+          ],
+          "relation_type": "same_smsf_set_as_registered_smsf",
+          "relation_statement": "The authenticated requester is an SMSF belonging to the same NF set as the SMSF registered for the addressed UE's 3GPP-access registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM uses the optional smsf-set-id guard to prevent deletion by an NF outside the registered SMSF's NF set.",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "The deleting NF belongs to the same NF set as the SMSF registered for the addressed UE.",
+          "coverage_notes": "This protects a same-set relation, not identity with the registered SMSF. The supplied text does not specify how the UDM verifies the deleting NF's set membership or a failure response for the guard."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+            "role": "condition-specific resource-binding check"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester type"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+            "role": "resource-relation guard"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMSF",
+          "status": "executable",
+          "representative_variant": "smsf_set_guarded_3gpp_delete",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "smsf-set-id"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed ueId is a SUPI with an existing 3GPP-access SMSF registration whose SMSF belongs to a known NF set.",
+            "The UDM applies the optional smsf-set-id guard to this DELETE request.",
+            "The query value is taken from the SMSF NF-set configuration in the lab fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "identifies the requester and deregistration operation",
+              "quoted_text": "The SMSF sends a DELETE request to the resource representing the UE's SMSF registration for 3GPP access.",
+              "rationale": "The same SMSF DELETE operation exercises the set-guarded case when the UDM applies the guard."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "selects the guard-related query parameter",
+              "quoted_text": "The smsf-set-id may be used by the UDM to guard against deletion of registrations by NFs that do not belong to the same NF set as the registered SMSF.",
+              "rationale": "Supplying smsf-set-id provides the parameter for the optional same-set guard; its concrete value depends on the fixture."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "establishes that no request payload is needed",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "No body field is needed to exercise this DELETE."
+            }
+          ],
+          "gaps": [
+            "The supplied text does not specify how the UDM verifies the deleting NF's set membership or the guard's failure response."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{ueId}/registrations/smsf-3gpp-access",
+      "operation_id": "3GppSmsfRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:smsf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "serving_smsf_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMSF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "selected_smsf_for_ue",
+          "relation_statement": "The authenticated SMSF is the SMSF selected to provide SMS service to the UE identified by {ueId} and is registering itself for that UE's 3GPP access.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The PUT procedure describes an SMSF creating or updating a UE registration, but does not require the UDM to verify that the authenticated requester is authorized to register as the serving SMSF for the addressed UE. The stated rejection conditions concern the UE's subscription and service restrictions, not requester-to-resource binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester-to-UE relationship"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "applicable requester and operation"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "PUT procedure"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "stated authorization rejection"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMSF",
+          "status": "executable",
+          "representative_variant": "smsf_3gpp_registration",
+          "body_required_fields": [
+            "smsfInstanceId"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the addressed UE's SUPI as ueId and the requesting SMSF's instance ID as smsfInstanceId; obtain concrete values from the lab fixture.",
+            "The addressed UE has SMS service subscription data that permits the registration, so an independent subscription or service restriction does not determine the result."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the requester, UE identifier type, and registration procedure.",
+              "quoted_text": "The request contains the UE's identity (/{ueId}) which shall be a SUPI and the SMSF Registration Information for SMS service.",
+              "rationale": "An SMSF PUT for the UE's 3GPP-access registration exercises the selected-SMSF binding case; smsfInstanceId identifies the SMSF being registered."
+            },
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "Confirms the PUT request body and absence of PUT query parameters.",
+              "quoted_text": "SmsfRegistration\nM\n1\nThe SMSF registration for 3GPP access is created or updated with the received information.",
+              "rationale": "Send a SmsfRegistration body; OpenAPI supplies its structural requirements, including plmnId, without making them additional procedure selectors."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/smsf-3gpp-access",
+      "operation_id": "Get3GppSmsfRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_ue_smsf_registration_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_to_retrieve_ue_registration",
+          "relation_statement": "The authenticated requester may retrieve the SMSF registration only for an addressed UE whose registration information it is authorized to obtain.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes retrieval by a GPSI and a 403 response for missing SMS subscription data or barred SMS service, but states no check binding the authenticated consumer to the addressed UE or its SMSF registration."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Applicable GET procedure and example requester"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Addressed UE identifier"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+            "role": "Resource definition"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET procedure"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Scope of specified denial"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "nef_smsf_3gpp_registration_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the addressed UE's GPSI for {ueId}; the UE has a provisioned 3GPP-access SMSF registration and SMS service."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the NEF consumer and retrieval procedure.",
+              "quoted_text": "The NF service consumer (e.g. NEF) sends a GET request to the resource representing the UE's SMSF registration information for 3GPP access",
+              "rationale": "A NEF GET to this resource is a TS-supported trigger for the supplied case."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-3gpp-access::TS29503:6.2.3.6:resource-smsf3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "Establishes the URI identifier and optional request components.",
+              "quoted_text": "GPSI (i.e. msisdn or extid) is used with the GET method.",
+              "rationale": "The GET path must address the UE by GPSI. The resource specifies no GET request body and marks supported-features optional, so the path and method exercise the operation without body or query fields."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "DELETE",
+      "path": "/{ueId}/registrations/smsf-non-3gpp-access",
+      "operation_id": "Non3GppSmsfDeregistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:smsf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_smsf_deregistration",
+        "applies_when": [
+          "No SMSF-set-based deletion guard is applied."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMSF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "registered_smsf_for_ue",
+          "relation_statement": "The requesting SMSF is the SMSF registered for the UE's non-3GPP-access SMSF registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "Without the SMSF-set deletion guard, the DELETE procedure does not state a check that the requester is the SMSF registered for the addressed UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester and registration relationship"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "operation-specific requester and target"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "DELETE procedure"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMSF",
+          "status": "executable",
+          "representative_variant": "delete_without_smsf_set_id",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "smsf-set-id"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed UE has an existing non-3GPP SMSF registration; use its SUPI as ueId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the requester and deregistration procedure.",
+              "quoted_text": "The SMSF sends a DELETE request to the resource representing the UE's SMSF registration for non 3GPP access.",
+              "rationale": "An SMSF DELETE to this resource exercises non-3GPP SMSF deregistration."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "Establishes the path-and-method trigger and empty request body.",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "The DELETE method and addressed resource exercise this variant without body fields; omitting the optional smsf-set-id selects the variant without the set-based deletion guard."
+            }
+          ],
+          "gaps": [
+            "The supplied TS does not specify a registered-SMSF-instance identity check for this DELETE."
+          ],
+          "confidence": "high"
+        }
+      },
+      {
+        "case_id": "same_smsf_set_deregistration",
+        "applies_when": [
+          "The smsf-set-id query parameter is supplied and the UDM uses it to guard deletion."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMSF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "smsf-set-id"
+          ],
+          "relation_type": "same_smsf_set_as_registered_smsf",
+          "relation_statement": "The requesting SMSF belongs to the same SMSF NF set as the SMSF registered for the addressed UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM may use the smsf-set-id query parameter to guard against deletion by an NF outside the registered SMSF's NF set.",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "The deleting NF belongs to the same NF set as the SMSF registered for the addressed UE.",
+          "coverage_notes": "This is a same-set guard, not a requirement that the requester be the registered SMSF instance. The specification does not state how the request-supplied set ID is bound to the authenticated requester or specify a failure response for the guard."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+            "role": "conditional set-based binding"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "operation-specific requester"
+          },
+          {
+            "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+            "role": "Conditional resource-relation guard"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMSF",
+          "status": "executable",
+          "representative_variant": "delete_with_smsf_set_id",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "smsf-set-id"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed UE has an existing non-3GPP SMSF registration; use its SUPI as ueId.",
+            "Use the registered SMSF's NF set ID as smsf-set-id and an SMSF requester belonging to that set.",
+            "The UDM implementation uses smsf-set-id to guard deletion."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the requester and deregistration procedure.",
+              "quoted_text": "The SMSF sends a DELETE request to the resource representing the UE's SMSF registration for non 3GPP access.",
+              "rationale": "An SMSF DELETE to this resource exercises non-3GPP SMSF deregistration."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "Selects the optional set-guard variant.",
+              "quoted_text": "The smsf-set-id may be used by the UDM to guard against deletion of registrations by NFs that do not belong to the same NF set as than the registered SMSF.",
+              "rationale": "Supplying smsf-set-id selects the query-parameter condition for the same-set guard; its concrete value comes from the registration fixture."
+            },
+            {
+              "context_id": "Nudm_UECM DELETE /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "Establishes that no request payload is needed.",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "The set-guard variant is selected by the query parameter, not a body field."
+            }
+          ],
+          "gaps": [
+            "The TS makes use of the set guard discretionary and does not specify how the supplied set ID is bound to the authenticated requester."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{ueId}/registrations/smsf-non-3gpp-access",
+      "operation_id": "Non3GppSmsfRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm",
+        "nudm-uecm:smsf-registration:write"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "smsf_non_3gpp_registration",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMSF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "selected_smsf_for_ue",
+          "relation_statement": "The authenticated SMSF may create or update this registration when it is the SMSF selected to provide SMS service to the UE identified by {ueId} over non-3GPP access.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes SMSF registration for the UE identified in the request and rejection based on subscription data, access barring, or roaming restrictions. It does not state a check binding the authenticated requester to that UE or to an existing SMSF registration."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "requester-to-UE relation"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "applicable requester and operation"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "Registration procedure and stated rejection grounds"
+          },
+          {
+            "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+            "role": "Resource addressing and PUT behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMSF",
+          "status": "executable",
+          "representative_variant": "create_non_3gpp_smsf_registration",
+          "body_required_fields": [
+            "smsfInstanceId"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use a provisioned UE SUPI for which SMS service over non-3GPP access is allowed.",
+            "Use the lab fixture's SMSF instance identifier in smsfInstanceId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the requester and registration procedure",
+              "quoted_text": "The SMSF sends a PUT request to the resource representing the UE's SMSF registration for Non 3GPP Access to update or create SMSF registration information.",
+              "rationale": "An SMSF PUT to the specified non-3GPP registration resource exercises this case; smsfInstanceId identifies the SMSF being registered. Stage A can construct other structurally required body fields from OpenAPI."
+            },
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "confirms the mandatory request body and UE identifier form",
+              "quoted_text": "SmsfRegistration\nM\n1\nThe SMSF registration for non 3GPP access is created or updated with the received information.",
+              "rationale": "The PUT requires a SmsfRegistration body; it is not a bodyless path-and-method trigger."
+            },
+            {
+              "context_id": "Nudm_UECM PUT /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "constrains the path identifier",
+              "quoted_text": "SUPI (i.e. imsi or nai or gli or gci) is used with the PUT and DELETE methods",
+              "rationale": "Select the target UE's SUPI, rather than a GPSI, for {ueId}."
+            }
+          ],
+          "gaps": [
+            "Concrete SUPI and SMSF instance identifier values must come from the lab fixture."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations/smsf-non-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations/smsf-non-3gpp-access",
+      "operation_id": "GetNon3GppSmsfRegistration"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_smsf_registration_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "ue_subject_binding_not_identified",
+          "relation_statement": "An authenticated NF consumer, exemplified by NEF, retrieves the non-3GPP SMSF registration of the UE identified by ueId. The supplied text does not establish which relationship between that requester and UE makes access authorized.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specified GET behavior identifies the UE registration to retrieve and describes rejection based on the UE's SMS service subscription or barring status, but states no check binding the authenticated requester to that UE or its SMSF registration."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "applicable GET requester and subject"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+            "role": "GET resource identifier"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET procedure"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "stated rejection condition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "nef_non_3gpp_smsf_registration_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the provisioned GPSI of a UE with an existing non-3GPP SMSF registration; for a successful retrieval, the UE has SMS service provisioned and is not barred."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-non-3gpp-access::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the NEF requester and retrieval procedure",
+              "quoted_text": "The NF service consumer (e.g. NEF) sends a GET request to the resource representing the UE's SMSF registration information for non-3GPP access",
+              "rationale": "A NEF GET to this resource directly exercises the supplied registration-retrieval case."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations/smsf-non-3gpp-access::TS29503:6.2.3.7:resource-smsfnon3gppaccessregistration-document:resource-with-children",
+              "evidence_role": "Establishes the path identifier and absence of a required body or query parameter",
+              "quoted_text": "GPSI (i.e. msisdn or extid) is used with the GET method.",
+              "rationale": "Supply the UE's GPSI as ueId. The GET resource definition lists no request-body data structure and marks supported-features optional, so the path and method suffice as the request trigger."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UECM GET /{ueId}/registrations",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "GET",
+      "path": "/{ueId}/registrations",
+      "operation_id": "GetRegistrations"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_registration_dataset_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS",
+            "NWDAF",
+            "NSSAAF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_consumer_for_ue",
+          "relation_statement": "The authenticated NF consumer may retrieve the addressed UE's registration data sets only if it is entitled to access registration information for that UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specified GET retrieves registration data sets for the UE identified by the request, but no check binds the authenticated NF service consumer to that UE or its registration data sets. The stated 403 causes for SMSF data sets concern SMS service availability, not that requester-to-resource relation."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations::TS29503:6.2.3.9:resource-registrations:resource-with-children",
+            "role": "resource and method"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "applicable requester and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "additional requester example"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+            "role": "GET behavior"
+          },
+          {
+            "context_id": "Nudm_UECM GET /{ueId}/registrations::TS29503:6.2.3.9:resource-registrations:resource-with-children",
+            "role": "GET error semantics"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "HSS",
+          "status": "executable",
+          "representative_variant": "hss_amf_registration_datasets",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "registration-dataset-names"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {
+            "registration-dataset-names": "AMF_3GPP,AMF_NON_3GPP"
+          },
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations::TS29503:5.3.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the requester and dataset combination",
+              "quoted_text": "Figure 5.3.2.5.10-1 shows a scenario where the NF service consumer (e.g. HSS, NWDAF, NSSAAF) sends a request to the UDM to receive multiple UE registration data sets. In this example scenario the UE's AMF registration data sets are retrieved with a single request; see clause 6.2.6.3.6 for other data sets that can be retrieved with a single request. The request contains the resource of UE's registrations({ueId}/registrations) and query parameters identifying the requested registration data sets (in this example: ?registration-dataset-names=AMF_3GPP, AMF_NON_3GPP).",
+              "rationale": "The TS explicitly supports HSS requesting these two AMF datasets in one GET. The query value uses comma-separated serialization for the OpenAPI array parameter."
+            },
+            {
+              "context_id": "Nudm_UECM GET /{ueId}/registrations::TS29503:6.2.3.9:resource-registrations:resource-with-children",
+              "evidence_role": "confirms the request has no body",
+              "quoted_text": "Table 6.2.3.9.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET path and dataset query parameter exercise the selected retrieval without a request body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_04"
+  }
+]

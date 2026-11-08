@@ -1,0 +1,5266 @@
+openapi: 3.0.0
+info:
+  version: 1.2.7
+  title: NRF NFDiscovery Service
+  description: "NRF NFDiscovery Service.  \n\xA9 2024, 3GPP Organizational Partners\
+    \ (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  \nAll rights reserved.\n"
+servers:
+- url: http://nrf:8000/nnrf-disc/v1
+security:
+- {}
+- oAuth2ClientCredentials:
+  - nnrf-disc
+externalDocs:
+  description: 3GPP TS 29.510 V17.13.0; 5G System; Network Function Repository Services;
+    Stage 3
+  url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.510/
+paths:
+  /nf-instances:
+    get:
+      summary: Search a collection of NF Instances
+      operationId: SearchNFInstances
+      tags:
+      - NF Instances (Store)
+      parameters:
+      - name: Accept-Encoding
+        in: header
+        description: Accept-Encoding, described in IETF RFC 7231
+        schema:
+          type: string
+      - name: target-nf-type
+        in: query
+        description: Type of the target NF
+        required: true
+        schema:
+          $ref: '#/components/schemas/NFType'
+      - name: requester-nf-type
+        in: query
+        description: Type of the requester NF
+        required: true
+        schema:
+          $ref: '#/components/schemas/NFType'
+      - name: preferred-collocated-nf-types
+        in: query
+        description: collocated NF types that candidate NFs should preferentially
+          support
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollocatedNfType'
+          minItems: 1
+        style: form
+        explode: false
+      - name: requester-nf-instance-id
+        in: query
+        description: NfInstanceId of the requester NF
+        schema:
+          $ref: '#/components/schemas/NfInstanceId'
+      - name: service-names
+        in: query
+        description: Names of the services offered by the NF
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceName'
+          minItems: 1
+          uniqueItems: true
+        style: form
+        explode: false
+      - name: requester-nf-instance-fqdn
+        in: query
+        description: FQDN of the requester NF
+        schema:
+          $ref: '#/components/schemas/Fqdn'
+      - name: target-plmn-list
+        in: query
+        description: 'Id of the PLMN of either the target NF, or in SNPN scenario
+          the Credentials Holder in the PLMN
+
+          '
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlmnId'
+              minItems: 1
+      - name: requester-plmn-list
+        in: query
+        description: Id of the PLMN where the NF issuing the Discovery request is
+          located
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlmnId'
+              minItems: 1
+      - name: target-nf-instance-id
+        in: query
+        description: Identity of the NF instance being discovered
+        schema:
+          $ref: '#/components/schemas/NfInstanceId'
+      - name: target-nf-fqdn
+        in: query
+        description: FQDN of the NF instance being discovered
+        schema:
+          $ref: '#/components/schemas/Fqdn'
+      - name: hnrf-uri
+        in: query
+        description: Uri of the home NRF
+        schema:
+          $ref: '#/components/schemas/Uri'
+      - name: snssais
+        in: query
+        description: Slice info of the target NF
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Snssai'
+              minItems: 1
+      - name: requester-snssais
+        in: query
+        description: Slice info of the requester NF
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ExtSnssai'
+              minItems: 1
+      - name: plmn-specific-snssai-list
+        in: query
+        description: PLMN specific Slice info of the target NF
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlmnSnssai'
+              minItems: 1
+      - name: requester-plmn-specific-snssai-list
+        in: query
+        description: PLMN-specific slice info of the NF issuing the Discovery request
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlmnSnssai'
+              minItems: 1
+      - name: dnn
+        in: query
+        description: Dnn supported by the BSF, SMF or UPF
+        schema:
+          $ref: '#/components/schemas/Dnn'
+      - name: ipv4-index
+        in: query
+        description: The IPv4 Index supported by the candidate UPF.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpIndex'
+      - name: ipv6-index
+        in: query
+        description: The IPv6 Index supported by the candidate UPF.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpIndex'
+      - name: nsi-list
+        in: query
+        description: NSI IDs that are served by the services being discovered
+        schema:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        style: form
+        explode: false
+      - name: smf-serving-area
+        in: query
+        schema:
+          type: string
+      - name: mbsmf-serving-area
+        in: query
+        schema:
+          type: string
+      - name: tai
+        in: query
+        description: Tracking Area Identity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tai'
+      - name: amf-region-id
+        in: query
+        description: AMF Region Identity
+        schema:
+          $ref: '#/components/schemas/AmfRegionId'
+      - name: amf-set-id
+        in: query
+        description: AMF Set Identity
+        schema:
+          $ref: '#/components/schemas/AmfSetId'
+      - name: guami
+        in: query
+        description: Guami used to search for an appropriate AMF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Guami'
+      - name: supi
+        in: query
+        description: SUPI of the user
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: ue-ipv4-address
+        in: query
+        description: IPv4 address of the UE
+        schema:
+          $ref: '#/components/schemas/Ipv4Addr'
+      - name: ip-domain
+        in: query
+        description: IP domain of the UE, which supported by BSF
+        schema:
+          type: string
+      - name: ue-ipv6-prefix
+        in: query
+        description: IPv6 prefix of the UE
+        schema:
+          $ref: '#/components/schemas/Ipv6Prefix'
+      - name: pgw-ind
+        in: query
+        description: Combined PGW-C and SMF or a standalone SMF
+        schema:
+          type: boolean
+      - name: preferred-pgw-ind
+        in: query
+        description: Indicates combined PGW-C+SMF or standalone SMF are preferred
+        schema:
+          type: boolean
+      - name: pgw
+        in: query
+        description: PGW FQDN of a combined PGW-C and SMF
+        schema:
+          $ref: '#/components/schemas/Fqdn'
+      - name: pgw-ip
+        in: query
+        description: PGW IP Address of a combined PGW-C and SMF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpAddr'
+      - name: gpsi
+        in: query
+        description: GPSI of the user
+        schema:
+          $ref: '#/components/schemas/Gpsi'
+      - name: external-group-identity
+        in: query
+        description: external group identifier of the user
+        schema:
+          $ref: '#/components/schemas/ExtGroupId'
+      - name: internal-group-identity
+        in: query
+        description: internal group identifier of the user
+        schema:
+          $ref: '#/components/schemas/GroupId'
+      - name: pfd-data
+        in: query
+        description: PFD data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PfdData'
+      - name: data-set
+        in: query
+        description: data set supported by the NF
+        schema:
+          $ref: '#/components/schemas/DataSetId'
+      - name: routing-indicator
+        in: query
+        description: routing indicator in SUCI
+        schema:
+          type: string
+          pattern: ^[0-9]{1,4}$
+      - name: group-id-list
+        in: query
+        description: Group IDs of the NFs being discovered
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfGroupId'
+          minItems: 1
+        style: form
+        explode: false
+      - name: dnai-list
+        in: query
+        description: Data network access identifiers of the NFs being discovered
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnai'
+          minItems: 1
+        style: form
+        explode: false
+      - name: pdu-session-types
+        in: query
+        description: list of PDU Session Type required to be supported by the target
+          NF
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/PduSessionType'
+          minItems: 1
+        style: form
+        explode: false
+      - name: event-id-list
+        in: query
+        description: 'Analytics event(s) requested to be supported by the Nnwdaf_AnalyticsInfo
+          service
+
+          '
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventId'
+          minItems: 1
+        style: form
+        explode: false
+      - name: nwdaf-event-list
+        in: query
+        description: 'Analytics event(s) requested to be supported by the Nnwdaf_EventsSubscription
+          service.
+
+          '
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/NwdafEvent'
+          minItems: 1
+        style: form
+        explode: false
+      - name: supported-features
+        in: query
+        description: Features required to be supported by the target NF
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      - name: upf-iwk-eps-ind
+        in: query
+        description: UPF supporting interworking with EPS or not
+        schema:
+          type: boolean
+      - name: chf-supported-plmn
+        in: query
+        description: PLMN ID supported by a CHF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlmnId'
+      - name: preferred-locality
+        in: query
+        description: preferred target NF location
+        schema:
+          type: string
+      - name: access-type
+        in: query
+        description: AccessType supported by the target NF
+        schema:
+          $ref: '#/components/schemas/AccessType'
+      - name: limit
+        in: query
+        description: Maximum number of NFProfiles to return in the response
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+      - name: required-features
+        in: query
+        description: Features required to be supported by the target NF
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedFeatures'
+          minItems: 1
+        style: form
+        explode: false
+      - name: complex-query
+        in: query
+        description: the complex query condition expression
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplexQuery'
+      - name: max-payload-size
+        in: query
+        description: Maximum payload size of the response expressed in kilo octets
+        required: false
+        schema:
+          type: integer
+          maximum: 2000
+          default: 124
+      - name: max-payload-size-ext
+        in: query
+        description: 'Extended query for maximum payload size of the response expressed
+          in kilo octets
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 124
+      - name: atsss-capability
+        in: query
+        description: ATSSS Capability
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtsssCapability'
+      - name: upf-ue-ip-addr-ind
+        in: query
+        description: UPF supporting allocating UE IP addresses/prefixes
+        schema:
+          type: boolean
+      - name: client-type
+        in: query
+        description: Requested client type served by the NF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalClientType'
+      - name: lmf-id
+        in: query
+        description: LMF identification to be discovered
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LMFIdentification'
+      - name: an-node-type
+        in: query
+        description: Requested AN node type served by the NF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnNodeType'
+      - name: rat-type
+        in: query
+        description: Requested RAT type served by the NF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatType'
+      - name: preferred-tai
+        in: query
+        description: preferred Tracking Area Identity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tai'
+      - name: preferred-nf-instances
+        in: query
+        description: preferred NF Instances
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfInstanceId'
+          minItems: 1
+        style: form
+        explode: false
+      - name: If-None-Match
+        in: header
+        description: Validator for conditional requests, as described in IETF RFC
+          7232, 3.2
+        schema:
+          type: string
+      - name: target-snpn
+        in: query
+        description: Target SNPN Identity, or the Credentials Holder in the SNPN
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlmnIdNid'
+      - name: requester-snpn-list
+        in: query
+        description: SNPN ID(s) of the NF instance issuing the Discovery request
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlmnIdNid'
+              minItems: 1
+      - name: af-ee-data
+        in: query
+        description: NEF exposured by the AF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AfEventExposureData'
+      - name: w-agf-info
+        in: query
+        description: UPF collocated with W-AGF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WAgfInfo'
+      - name: tngf-info
+        in: query
+        description: UPF collocated with TNGF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TngfInfo'
+      - name: twif-info
+        in: query
+        description: UPF collocated with TWIF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TwifInfo'
+      - name: target-nf-set-id
+        in: query
+        description: Target NF Set ID
+        schema:
+          $ref: '#/components/schemas/NfSetId'
+      - name: target-nf-service-set-id
+        in: query
+        description: Target NF Service Set ID
+        schema:
+          $ref: '#/components/schemas/NfServiceSetId'
+      - name: nef-id
+        in: query
+        description: NEF ID
+        schema:
+          $ref: '#/components/schemas/NefId'
+      - name: notification-type
+        in: query
+        description: Notification Type
+        schema:
+          $ref: '#/components/schemas/NotificationType'
+      - name: n1-msg-class
+        in: query
+        description: N1 Message Class
+        schema:
+          $ref: '#/components/schemas/N1MessageClass'
+      - name: n2-info-class
+        in: query
+        description: N2 Information Class
+        schema:
+          $ref: '#/components/schemas/N2InformationClass'
+      - name: serving-scope
+        in: query
+        description: areas that can be served by the target NF
+        schema:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        style: form
+        explode: false
+      - name: imsi
+        in: query
+        description: IMSI of the requester UE to search for an appropriate NF (e.g.
+          HSS)
+        schema:
+          type: string
+          pattern: ^[0-9]{5,15}$
+      - name: ims-private-identity
+        in: query
+        description: IMPI of the requester UE to search for a target HSS
+        schema:
+          type: string
+      - name: ims-public-identity
+        in: query
+        description: IMS Public Identity of the requester UE to search for a target
+          HSS
+        schema:
+          type: string
+      - name: msisdn
+        in: query
+        description: MSISDN of the requester UE to search for a target HSS
+        schema:
+          type: string
+      - name: preferred-api-versions
+        in: query
+        description: Preferred API version of the services to be discovered
+        content:
+          application/json:
+            schema:
+              description: A map (list of key-value pairs) where ServiceName serves
+                as key
+              type: object
+              additionalProperties:
+                type: string
+              minProperties: 1
+      - name: v2x-support-ind
+        in: query
+        description: PCF supports V2X
+        schema:
+          type: boolean
+      - name: redundant-gtpu
+        in: query
+        description: UPF supports redundant gtp-u to be discovered
+        schema:
+          type: boolean
+      - name: redundant-transport
+        in: query
+        description: UPF supports redundant transport path to be discovered
+        schema:
+          type: boolean
+      - name: ipups
+        in: query
+        description: UPF which is configured for IPUPS functionality to be discovered
+        schema:
+          type: boolean
+      - name: scp-domain-list
+        in: query
+        description: SCP domains the target SCP or SEPP belongs to
+        schema:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        style: form
+        explode: false
+      - name: address-domain
+        in: query
+        description: Address domain reachable through the SCP
+        schema:
+          $ref: '#/components/schemas/Fqdn'
+      - name: ipv4-addr
+        in: query
+        description: IPv4 address reachable through the SCP
+        schema:
+          $ref: '#/components/schemas/Ipv4Addr'
+      - name: ipv6-prefix
+        in: query
+        description: IPv6 prefix reachable through the SCP
+        schema:
+          $ref: '#/components/schemas/Ipv6Prefix'
+      - name: served-nf-set-id
+        in: query
+        description: NF Set ID served by the SCP
+        schema:
+          $ref: '#/components/schemas/NfSetId'
+      - name: remote-plmn-id
+        in: query
+        description: Id of the PLMN reachable through the SCP or SEPP
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlmnId'
+      - name: remote-snpn-id
+        in: query
+        description: Id of the SNPN reachable through the SCP or SEPP
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlmnIdNid'
+      - name: data-forwarding
+        in: query
+        description: UPF Instance(s) configured for data forwarding are requested
+        schema:
+          type: boolean
+      - name: preferred-full-plmn
+        in: query
+        description: NF Instance(s) serving the full PLMN are preferred
+        schema:
+          type: boolean
+      - name: requester-features
+        in: query
+        description: 'Features supported by the NF Service Consumer that is invoking
+          the Nnrf_NFDiscovery service
+
+          '
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      - name: realm-id
+        in: query
+        description: realm-id to search for an appropriate UDSF
+        schema:
+          type: string
+      - name: storage-id
+        in: query
+        description: storage-id to search for an appropriate UDSF
+        schema:
+          type: string
+      - name: vsmf-support-ind
+        in: query
+        description: V-SMF capability supported by the target NF instance(s)
+        schema:
+          type: boolean
+      - name: ismf-support-ind
+        in: query
+        description: I-SMF capability supported by the target NF instance(s)
+        schema:
+          type: boolean
+      - name: nrf-disc-uri
+        in: query
+        description: Uri of the NRF holding the NF profile of a target NF Instance
+        schema:
+          $ref: '#/components/schemas/Uri'
+      - name: preferred-vendor-specific-features
+        in: query
+        description: Preferred vendor specific features of the services to be discovered
+        content:
+          application/json:
+            schema:
+              description: A map (list of key-value pairs) where ServiceName serves
+                as key
+              type: object
+              additionalProperties:
+                description: 'A map (list of key-value pairs) where IANA-assigned
+                  SMI Network Management Private Enterprise Codes serves as key
+
+                  '
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/VendorSpecificFeature'
+                  minItems: 1
+                minProperties: 1
+              minProperties: 1
+      - name: preferred-vendor-specific-nf-features
+        in: query
+        description: Preferred vendor specific features of the network function to
+          be discovered
+        content:
+          application/json:
+            schema:
+              description: 'A map (list of key-value pairs) where IANA-assigned SMI
+                Network Management Private Enterprise Codes serves as key
+
+                '
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VendorSpecificFeature'
+                minItems: 1
+              minProperties: 1
+      - name: required-pfcp-features
+        in: query
+        description: PFCP features required to be supported by the target UPF
+        schema:
+          type: string
+      - name: home-pub-key-id
+        in: query
+        description: 'Indicates the Home Network Public Key ID which shall be able
+          to be served by the NF instance
+
+          '
+        schema:
+          type: integer
+      - name: prose-support-ind
+        in: query
+        description: PCF supports ProSe Capability
+        schema:
+          type: boolean
+      - name: analytics-aggregation-ind
+        in: query
+        description: analytics aggregation is supported by NWDAF or not
+        schema:
+          type: boolean
+      - name: serving-nf-set-id
+        in: query
+        description: NF Set Id served by target NF
+        schema:
+          $ref: '#/components/schemas/NfSetId'
+      - name: serving-nf-type
+        in: query
+        description: NF type served by the target NF
+        schema:
+          $ref: '#/components/schemas/NFType'
+      - name: ml-analytics-info-list
+        in: query
+        description: Lisf of ML Analytics Filter information of Nnwdaf_MLModelProvision
+          service
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MlAnalyticsInfo'
+              minItems: 1
+      - name: analytics-metadata-prov-ind
+        in: query
+        description: analytics matadata provisioning is supported by NWDAF or not
+        schema:
+          type: boolean
+      - name: nsacf-capability
+        in: query
+        description: the service capability supported by the target NSACF
+        schema:
+          $ref: '#/components/schemas/NsacfCapability'
+      - name: mbs-session-id-list
+        in: query
+        description: List of MBS Session ID(s)
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MbsSessionId'
+              minItems: 1
+      - name: area-session-id
+        in: query
+        description: Area Session ID
+        schema:
+          $ref: '#/components/schemas/Uint16'
+      - name: gmlc-number
+        in: query
+        description: The GMLC Number supported by the GMLC
+        schema:
+          type: string
+          pattern: ^[0-9]{5,15}$
+      - name: upf-n6-ip
+        in: query
+        description: N6 IP address of PSA UPF supported by the EASDF
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpAddr'
+      - name: tai-list
+        in: query
+        description: Tracking Area Identifiers of the NFs being discovered
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tai'
+              minItems: 1
+      - name: preferences-precedence
+        in: query
+        description: 'Indicates the precedence of the preference query parameters
+          (from higher to lower)
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+          minItems: 2
+        style: form
+        explode: false
+      - name: support-onboarding-capability
+        in: query
+        description: Indicating the support for onboarding.
+        schema:
+          type: boolean
+          default: false
+      - name: uas-nf-functionality-ind
+        in: query
+        description: UAS NF functionality is supported by NEF or not
+        schema:
+          type: boolean
+      - name: v2x-capability
+        in: query
+        description: indicates the V2X capability that the target PCF needs to support.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2xCapability'
+      - name: prose-capability
+        in: query
+        description: indicates the ProSe capability that the target PCF needs to support.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProSeCapability'
+      - name: shared-data-id
+        in: query
+        description: Identifier of shared data stored in the NF being discovered
+        schema:
+          $ref: '#/components/schemas/SharedDataId'
+      - name: target-hni
+        in: query
+        description: Home Network Identifier query.
+        schema:
+          $ref: '#/components/schemas/Fqdn'
+      - name: target-nw-resolution
+        in: query
+        description: Resolution of the identity of the target PLMN based on the GPSI
+          of the UE
+        schema:
+          type: boolean
+      - name: exclude-nfinst-list
+        in: query
+        description: NF Instance IDs to be excluded from the NF Discovery procedure
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfInstanceId'
+          minItems: 1
+        style: form
+        explode: false
+      - name: exclude-nfservinst-list
+        in: query
+        description: NF service instance IDs to be excluded from the NF Discovery
+          procedure
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/NfServiceInstance'
+              minItems: 1
+      - name: exclude-nfserviceset-list
+        in: query
+        description: NF Service Set IDs to be excluded from the NF Discovery procedure
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfServiceSetId'
+          minItems: 1
+        style: form
+        explode: false
+      - name: exclude-nfset-list
+        in: query
+        description: NF Set IDs to be excluded from the NF Discovery procedure
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfSetId'
+          minItems: 1
+        style: form
+        explode: false
+      - name: preferred-analytics-delays
+        in: query
+        description: Preferred analytics delays supported by the NWDAF to be discovered
+        content:
+          application/json:
+            schema:
+              description: 'A map (list of key-value pairs) where EventId or NwdafEvent
+                serves as key
+
+                '
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/DurationSec'
+              minProperties: 1
+      - name: high-latency-com
+        in: query
+        description: Indicating the support for High Latency communication.
+        schema:
+          type: boolean
+          enum:
+          - true
+      - name: nsac-sai
+        in: query
+        description: NSAC Service Area Identifier
+        schema:
+          $ref: '#/components/schemas/NsacSai'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResult'
+          links:
+            search:
+              operationId: RetrieveStoredSearch
+              parameters:
+                searchId: $response.body#/searchId
+              description: 'The ''searchId'' parameter returned in the response can
+                be used as the ''searchId'' parameter in the GET request to ''/searches/{searchId}''
+
+                '
+            completeSearch:
+              operationId: RetrieveCompleteSearch
+              parameters:
+                searchId: $response.body#/searchId
+              description: 'The ''searchId'' parameter returned in the response can
+                be used as the ''searchId'' parameter in the GET request to ''/searches/{searchId}/complete''
+
+                '
+          headers:
+            Cache-Control:
+              description: Cache-Control containing max-age, described in IETF RFC
+                7234, 5.2
+              schema:
+                type: string
+            ETag:
+              description: Entity Tag containing a strong validator, described in
+                IETF RFC 7232, 2.3
+              schema:
+                type: string
+            Content-Encoding:
+              description: Content-Encoding, described in IETF RFC 7231
+              schema:
+                type: string
+        '307':
+          description: Temporary Redirect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectResponse'
+          headers:
+            Location:
+              description: The URI pointing to the resource located on the redirect
+                target NRF
+              required: true
+              schema:
+                type: string
+        '308':
+          description: Permanent Redirect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectResponse'
+          headers:
+            Location:
+              description: The URI pointing to the resource located on the redirect
+                target NRF
+              required: true
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+  /searches/{searchId}:
+    get:
+      operationId: RetrieveStoredSearch
+      tags:
+      - Stored Search (Document)
+      parameters:
+      - $ref: '#/components/parameters/searchId'
+      - name: Accept-Encoding
+        in: header
+        description: Accept-Encoding, described in IETF RFC 7231
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '307':
+          description: Temporary Redirect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectResponse'
+          headers:
+            Location:
+              description: The URI pointing to the resource located on the redirect
+                target NRF
+              required: true
+              schema:
+                type: string
+        '308':
+          description: Permanent Redirect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectResponse'
+          headers:
+            Location:
+              description: The URI pointing to the resource located on the redirect
+                target NRF
+              required: true
+              schema:
+                type: string
+  /searches/{searchId}/complete:
+    get:
+      operationId: RetrieveCompleteSearch
+      tags:
+      - Complete Stored Search (Document)
+      parameters:
+      - $ref: '#/components/parameters/searchId'
+      - name: Accept-Encoding
+        in: header
+        description: Accept-Encoding, described in IETF RFC 7231
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '307':
+          description: Temporary Redirect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectResponse'
+          headers:
+            Location:
+              description: The URI pointing to the resource located on the redirect
+                target NRF
+              required: true
+              schema:
+                type: string
+        '308':
+          description: Permanent Redirect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectResponse'
+          headers:
+            Location:
+              description: The URI pointing to the resource located on the redirect
+                target NRF
+              required: true
+              schema:
+                type: string
+  /scp-domain-routing-info:
+    get:
+      operationId: SCPDomainRoutingInfoGet
+      tags:
+      - SCP Domain Routing Information (Document)
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nnrf-disc
+      - oAuth2ClientCredentials:
+        - nnrf-disc
+        - nnrf-disc:scp-domain:read
+      parameters:
+      - name: local
+        in: query
+        description: Indication of local SCP Domain Routing Information
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: Accept-Encoding
+        in: header
+        description: Accept-Encoding, described in IETF RFC 7231
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScpDomainRoutingInformation'
+          headers:
+            Content-Encoding:
+              description: Content-Encoding, described in IETF RFC 7231
+              schema:
+                type: string
+        '307':
+          description: Temporary Redirect
+          headers:
+            Location:
+              description: The URI pointing to the resource located on the redirect
+                target NRF
+              required: true
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+  /scp-domain-routing-info-subs:
+    post:
+      summary: Create a new subscription
+      operationId: ScpDomainRoutingInfoSubscribe
+      tags:
+      - SCP Domain Routing Information Subscriptions (Collection)
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nnrf-disc
+      - oAuth2ClientCredentials:
+        - nnrf-disc
+        - nnrf-disc:scp-domain-subs:write
+      parameters:
+      - name: Content-Encoding
+        in: header
+        description: Content-Encoding, described in IETF RFC 7231
+        schema:
+          type: string
+      - name: Accept-Encoding
+        in: header
+        description: Accept-Encoding, described in IETF RFC 7231
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScpDomainRoutingInfoSubscription'
+        required: true
+      responses:
+        '201':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScpDomainRoutingInfoSubscription'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nnrf-disc/v1/scp-domain-routing-info-subs/{subscriptionID}
+
+                '
+              required: true
+              schema:
+                type: string
+            Accept-Encoding:
+              description: Accept-Encoding, described in IETF RFC 7694
+              schema:
+                type: string
+            Content-Encoding:
+              description: Content-Encoding, described in IETF RFC 7231
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+      callbacks:
+        onScpDomainRoutingInformationChange:
+          '{$request.body#/callbackUri}':
+            post:
+              parameters:
+              - name: Content-Encoding
+                in: header
+                description: Content-Encoding, described in IETF RFC 7231
+                schema:
+                  type: string
+              requestBody:
+                description: Notification Payload
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/ScpDomainRoutingInfoNotification'
+              responses:
+                '204':
+                  description: Expected response to a successful callback processing
+                  headers:
+                    Accept-Encoding:
+                      description: Accept-Encoding, described in IETF RFC 7694
+                      schema:
+                        type: string
+                '400':
+                  $ref: '#/components/responses/400'
+                '401':
+                  $ref: '#/components/responses/401'
+                '403':
+                  $ref: '#/components/responses/403'
+                '404':
+                  $ref: '#/components/responses/404'
+                '411':
+                  $ref: '#/components/responses/411'
+                '413':
+                  $ref: '#/components/responses/413'
+                '415':
+                  $ref: '#/components/responses/415'
+                '429':
+                  $ref: '#/components/responses/429'
+                '500':
+                  $ref: '#/components/responses/500'
+                '501':
+                  $ref: '#/components/responses/501'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  $ref: '#/components/responses/default'
+  /scp-domain-routing-info-subs/{subscriptionID}:
+    delete:
+      summary: Deletes a subscription
+      operationId: ScpDomainRoutingInfoUnsubscribe
+      tags:
+      - Individual SCP Domain Routing Information Subscription (Document)
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nnrf-disc
+      - oAuth2ClientCredentials:
+        - nnrf-disc
+        - nnrf-disc:scp-domain-subs:write
+      parameters:
+      - name: subscriptionID
+        in: path
+        required: true
+        description: Unique ID of the subscription to remove
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Expected response to a successful subscription removal
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+components:
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: http://nrf:8000/oauth2/token
+          scopes:
+            nnrf-disc: Access to the Nnrf_NFDiscovery API
+            nnrf-disc:scp-domain:read: Access to read the scp-domain-routing-info
+              resource
+            nnrf-disc:scp-domain-subs:write: Access to create/delete a scp-domain
+              subscription resource
+  parameters:
+    searchId:
+      name: searchId
+      in: path
+      description: Id of a stored search
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Expected response to a valid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StoredSearchResult'
+      headers:
+        Cache-Control:
+          description: Cache-Control containing max-age, described in IETF RFC 7234,
+            5.2
+          schema:
+            type: string
+        ETag:
+          description: Entity Tag containing a strong validator, described in IETF
+            RFC 7232, 2.3
+          schema:
+            type: string
+        Content-Encoding:
+          description: Content-Encoding, described in IETF RFC 7231
+          schema:
+            type: string
+    '400':
+      description: Bad request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '401':
+      description: Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '403':
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '404':
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '406':
+      description: 406 Not Acceptable
+    '411':
+      description: Length Required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '413':
+      description: Payload Too Large
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '415':
+      description: Unsupported Media Type
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '429':
+      description: Too Many Requests
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '500':
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '501':
+      description: Not Implemented
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '503':
+      description: Service Unavailable
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    default:
+      description: Generic Error
+  schemas:
+    SearchResult:
+      description: Contains the list of NF Profiles returned in a Discovery response
+      type: object
+      required:
+      - nfInstances
+      properties:
+        validityPeriod:
+          type: integer
+        nfInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFProfile'
+        searchId:
+          type: string
+        numNfInstComplete:
+          $ref: '#/components/schemas/Uint32'
+        preferredSearch:
+          $ref: '#/components/schemas/PreferredSearch'
+        nrfSupportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        nfInstanceList:
+          description: List of matching NF instances. The key of the map is the NF
+            instance ID.
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/NfInstanceInfo'
+          minProperties: 1
+        alteredPriorityInd:
+          type: boolean
+        noProfileMatchInfo:
+          $ref: '#/components/schemas/NoProfileMatchInfo'
+    StoredSearchResult:
+      description: 'Contains a complete search result (i.e. a number of discovered
+        NF Instances), stored by NRF as a consequence of a prior search result
+
+        '
+      type: object
+      required:
+      - nfInstances
+      properties:
+        nfInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFProfile'
+    NFProfile:
+      description: Information of an NF Instance discovered by the NRF
+      type: object
+      required:
+      - nfInstanceId
+      - nfType
+      - nfStatus
+      properties:
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfInstanceName:
+          type: string
+        nfType:
+          $ref: '#/components/schemas/NFType'
+        nfStatus:
+          $ref: '#/components/schemas/NFStatus'
+        collocatedNfInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollocatedNfInstance'
+          minItems: 1
+        plmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 1
+        sNssais:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtSnssai'
+          minItems: 1
+        perPlmnSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnSnssai'
+          minItems: 1
+        nsiList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        fqdn:
+          $ref: '#/components/schemas/Fqdn'
+        interPlmnFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        ipv4Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        capacity:
+          type: integer
+          minimum: 0
+          maximum: 65535
+        load:
+          type: integer
+          minimum: 0
+          maximum: 100
+        loadTimeStamp:
+          $ref: '#/components/schemas/DateTime'
+        locality:
+          type: string
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 65535
+        udrInfo:
+          $ref: '#/components/schemas/UdrInfo'
+        udrInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of UdrInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UdrInfo'
+          minProperties: 1
+        udmInfo:
+          $ref: '#/components/schemas/UdmInfo'
+        udmInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of UdmInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UdmInfo'
+          minProperties: 1
+        ausfInfo:
+          $ref: '#/components/schemas/AusfInfo'
+        ausfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of AusfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AusfInfo'
+          minProperties: 1
+        amfInfo:
+          $ref: '#/components/schemas/AmfInfo'
+        amfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of AmfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AmfInfo'
+          minProperties: 1
+        smfInfo:
+          $ref: '#/components/schemas/SmfInfo'
+        smfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of SmfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SmfInfo'
+          minProperties: 1
+        upfInfo:
+          $ref: '#/components/schemas/UpfInfo'
+        upfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of UpfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UpfInfo'
+          minProperties: 1
+        pcfInfo:
+          $ref: '#/components/schemas/PcfInfo'
+        pcfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of PcfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PcfInfo'
+          minProperties: 1
+        bsfInfo:
+          $ref: '#/components/schemas/BsfInfo'
+        bsfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of BsfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BsfInfo'
+          minProperties: 1
+        chfInfo:
+          $ref: '#/components/schemas/ChfInfo'
+        chfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of ChfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ChfInfo'
+          minProperties: 1
+        udsfInfo:
+          $ref: '#/components/schemas/UdsfInfo'
+        udsfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of UdsfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UdsfInfo'
+          minProperties: 1
+        nwdafInfo:
+          $ref: '#/components/schemas/NwdafInfo'
+        nwdafInfoList:
+          type: object
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of NwdafInfo
+
+            '
+          additionalProperties:
+            $ref: '#/components/schemas/NwdafInfo'
+          minProperties: 1
+        nefInfo:
+          $ref: '#/components/schemas/NefInfo'
+        pcscfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of PcscfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PcscfInfo'
+          minProperties: 1
+        hssInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of HssInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/HssInfo'
+          minProperties: 1
+        customInfo:
+          type: object
+        recoveryTime:
+          $ref: '#/components/schemas/DateTime'
+        nfServicePersistence:
+          type: boolean
+          default: false
+        nfServices:
+          deprecated: true
+          type: array
+          items:
+            $ref: '#/components/schemas/NFService'
+          minItems: 1
+        nfServiceList:
+          description: 'A map (list of key-value pairs) where serviceInstanceId serves
+            as key of NFService
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/NFService'
+          minProperties: 1
+        defaultNotificationSubscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/DefaultNotificationSubscription'
+        lmfInfo:
+          $ref: '#/components/schemas/LmfInfo'
+        gmlcInfo:
+          $ref: '#/components/schemas/GmlcInfo'
+        snpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        nfSetIdList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfSetId'
+          minItems: 1
+        servingScope:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        lcHSupportInd:
+          type: boolean
+          default: false
+        olcHSupportInd:
+          type: boolean
+          default: false
+        nfSetRecoveryTimeList:
+          description: A map (list of key-value pairs) where NfSetId serves as key
+            of DateTime
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DateTime'
+          minProperties: 1
+        serviceSetRecoveryTimeList:
+          description: 'A map (list of key-value pairs) where NfServiceSetId serves
+            as key of DateTime
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DateTime'
+          minProperties: 1
+        scpDomains:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        scpInfo:
+          $ref: '#/components/schemas/ScpInfo'
+        seppInfo:
+          $ref: '#/components/schemas/SeppInfo'
+        vendorId:
+          $ref: '#/components/schemas/VendorId'
+        supportedVendorSpecificFeatures:
+          description: 'The key of the map is the IANA-assigned SMI Network Management
+            Private Enterprise Codes
+
+            '
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/VendorSpecificFeature'
+            minItems: 1
+          minProperties: 1
+        aanfInfoList:
+          type: object
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of AanfInfo
+
+            '
+          additionalProperties:
+            $ref: '#/components/schemas/AanfInfo'
+          minProperties: 1
+        mfafInfo:
+          $ref: '#/components/schemas/MfafInfo'
+        easdfInfoList:
+          type: object
+          description: 'A map(list of key-value pairs) where a (unique) valid JSON
+            string serves as key of EasdfInfo
+
+            '
+          additionalProperties:
+            $ref: '#/components/schemas/EasdfInfo'
+          minProperties: 1
+        dccfInfo:
+          $ref: '#/components/schemas/DccfInfo'
+        nsacfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of NsacfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/NsacfInfo'
+          minProperties: 1
+        mbSmfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of MbSmfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MbSmfInfo'
+          minProperties: 1
+        tsctsfInfoList:
+          type: object
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of TsctsfInfo
+
+            '
+          additionalProperties:
+            $ref: '#/components/schemas/TsctsfInfo'
+          minProperties: 1
+        mbUpfInfoList:
+          description: 'A map (list of key-value pairs) where a (unique) valid JSON
+            string serves as key of MbUpfInfo
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MbUpfInfo'
+          minProperties: 1
+        trustAfInfo:
+          $ref: '#/components/schemas/TrustAfInfo'
+        nssaafInfo:
+          $ref: '#/components/schemas/NssaafInfo'
+        hniList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fqdn'
+          minItems: 1
+        iwmscInfo:
+          $ref: '#/components/schemas/IwmscInfo'
+        mnpfInfo:
+          $ref: '#/components/schemas/MnpfInfo'
+    NFService:
+      description: 'Information of a given NF Service Instance; it is part of the
+        NFProfile of an NF Instance discovered by the NRF
+
+        '
+      type: object
+      required:
+      - serviceInstanceId
+      - serviceName
+      - versions
+      - scheme
+      - nfServiceStatus
+      properties:
+        serviceInstanceId:
+          type: string
+        serviceName:
+          $ref: '#/components/schemas/ServiceName'
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFServiceVersion'
+          minItems: 1
+        scheme:
+          $ref: '#/components/schemas/UriScheme'
+        nfServiceStatus:
+          $ref: '#/components/schemas/NFServiceStatus'
+        fqdn:
+          $ref: '#/components/schemas/Fqdn'
+        interPlmnFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        ipEndPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/IpEndPoint'
+          minItems: 1
+        apiPrefix:
+          type: string
+        defaultNotificationSubscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/DefaultNotificationSubscription'
+          minItems: 1
+        capacity:
+          type: integer
+          minimum: 0
+          maximum: 65535
+        load:
+          type: integer
+          minimum: 0
+          maximum: 100
+        loadTimeStamp:
+          $ref: '#/components/schemas/DateTime'
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 65535
+        recoveryTime:
+          $ref: '#/components/schemas/DateTime'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        nfServiceSetIdList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfServiceSetId'
+          minItems: 1
+        sNssais:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtSnssai'
+          minItems: 1
+        perPlmnSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnSnssai'
+          minItems: 1
+        vendorId:
+          $ref: '#/components/schemas/VendorId'
+        supportedVendorSpecificFeatures:
+          description: 'The key of the map is the IANA-assigned SMI Network Management
+            Private Enterprise Codes
+
+            '
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/VendorSpecificFeature'
+            minItems: 1
+          minProperties: 1
+        oauth2Required:
+          type: boolean
+        allowedOperationsPerNfType:
+          description: A map (list of key-value pairs) where NF Type serves as key
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+            minItems: 1
+          minProperties: 1
+        allowedOperationsPerNfInstance:
+          description: A map (list of key-value pairs) where NF Instance Id serves
+            as key
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+            minItems: 1
+          minProperties: 1
+    PreferredSearch:
+      description: 'Contains information on whether the returned NFProfiles match
+        the preferred query parameters
+
+        '
+      type: object
+      properties:
+        preferredTaiMatchInd:
+          type: boolean
+          default: false
+        preferredFullPlmnMatchInd:
+          type: boolean
+          default: false
+        preferredApiVersionsMatchInd:
+          type: boolean
+        otherApiVersionsInd:
+          type: boolean
+        preferredLocalityMatchInd:
+          type: boolean
+          default: false
+        otherLocalityInd:
+          type: boolean
+          default: false
+        preferredVendorSpecificFeaturesInd:
+          type: boolean
+          default: false
+        preferredCollocatedNfTypeInd:
+          type: boolean
+          default: false
+        preferredPgwMatchInd:
+          type: boolean
+        preferredAnalyticsDelaysInd:
+          type: boolean
+    NfInstanceInfo:
+      description: Contains information on an NF profile matching a discovery request
+      type: object
+      properties:
+        nrfDiscApiUri:
+          $ref: '#/components/schemas/Uri'
+        preferredSearch:
+          $ref: '#/components/schemas/PreferredSearch'
+        nrfAlteredPriorities:
+          description: 'The key of the map is the JSON Pointer of the priority IE
+            in the NFProfile data type that is altered by the NRF
+
+            '
+          type: object
+          additionalProperties:
+            type: integer
+            minimum: 0
+            maximum: 65535
+          minProperties: 1
+    ScpDomainRoutingInformation:
+      description: SCP Domain Routing Information
+      type: object
+      required:
+      - scpDomainList
+      properties:
+        scpDomainList:
+          description: 'This IE shall contain a map of SCP domain interconnection
+            information, where
+
+            the key of the map is a SCP domain. The value of each entry shall be the
+
+            interconnectivity information of the the SCP domain indicated by the key.
+
+            An empty map indicates that there is no SCP domain currently registered
+            in
+
+            the NRF.
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScpDomainConnectivity'
+    ScpDomainConnectivity:
+      description: SCP Domain Connectivity Information
+      type: object
+      required:
+      - connectedScpDomainList
+      properties:
+        connectedScpDomainList:
+          type: array
+          items:
+            type: string
+    ScpDomainRoutingInfoSubscription:
+      description: SCP Domain Routing Information Subscription
+      type: object
+      required:
+      - callbackUri
+      properties:
+        callbackUri:
+          $ref: '#/components/schemas/Uri'
+        validityTime:
+          $ref: '#/components/schemas/DateTime'
+        reqInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        localInd:
+          type: boolean
+          default: false
+    ScpDomainRoutingInfoNotification:
+      description: SCP Domain Routing Information Notification
+      type: object
+      required:
+      - routingInfo
+      properties:
+        routingInfo:
+          $ref: '#/components/schemas/ScpDomainRoutingInformation'
+        localInd:
+          type: boolean
+          default: false
+    NfServiceInstance:
+      description: NF service instance
+      type: object
+      oneOf:
+      - required:
+        - nfInstanceId
+      - required:
+        - nfServiceSetId
+      properties:
+        serviceInstanceId:
+          type: string
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfServiceSetId:
+          $ref: '#/components/schemas/NfServiceSetId'
+    NoProfileMatchInfo:
+      description: Provides the reason for not finding NF matching the search criteria
+      type: object
+      required:
+      - reason
+      properties:
+        reason:
+          $ref: '#/components/schemas/NoProfileMatchReason'
+        queryParamCombinationList:
+          type: array
+          items:
+            $ref: '#/components/schemas/QueryParamCombination'
+          minItems: 1
+    QueryParamCombination:
+      description: Contains a list of Query Parameters
+      type: object
+      required:
+      - queryParams
+      properties:
+        queryParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/QueryParameter'
+          minItems: 1
+    QueryParameter:
+      description: Contains the name and value of a query parameter
+      type: object
+      required:
+      - name
+      - value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    NoProfileMatchReason:
+      description: No Profile Match Reason
+      anyOf:
+      - type: string
+        enum:
+        - REQUESTER_PLMN_NOT_ALLOWED
+        - TARGET_NF_SUSPENDED
+        - TARGET_NF_UNDISCOVERABLE
+        - QUERY_PARAMS_COMBINATION_NO_MATCH
+        - UNSPECIFIED
+      - type: string
+    NFType:
+      description: NF types known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - NRF
+        - UDM
+        - AMF
+        - SMF
+        - AUSF
+        - NEF
+        - PCF
+        - SMSF
+        - NSSF
+        - UDR
+        - LMF
+        - GMLC
+        - 5G_EIR
+        - SEPP
+        - UPF
+        - N3IWF
+        - AF
+        - UDSF
+        - BSF
+        - CHF
+        - NWDAF
+        - PCSCF
+        - CBCF
+        - HSS
+        - UCMF
+        - SOR_AF
+        - SPAF
+        - MME
+        - SCSAS
+        - SCEF
+        - SCP
+        - NSSAAF
+        - ICSCF
+        - SCSCF
+        - DRA
+        - IMS_AS
+        - AANF
+        - 5G_DDNMF
+        - NSACF
+        - MFAF
+        - EASDF
+        - DCCF
+        - MB_SMF
+        - TSCTSF
+        - ADRF
+        - GBA_BSF
+        - CEF
+        - MB_UPF
+        - NSWOF
+        - PKMF
+        - MNPF
+        - SMS_GMSC
+        - SMS_IWMSC
+        - MBSF
+        - MBSTF
+        - PANF
+        - IP_SM_GW
+        - SMS_ROUTER
+      - type: string
+    CollocatedNfType:
+      description: NF types for a collocated NF
+      anyOf:
+      - type: string
+        enum:
+        - UPF
+        - SMF
+        - MB_UPF
+        - MB_SMF
+      - type: string
+    NfInstanceId:
+      type: string
+      format: uuid
+      description: "String uniquely identifying a NF instance. The format of the NF\
+        \ Instance ID shall be a  Universally Unique Identifier (UUID) version 4,\
+        \ as described in IETF RFC 4122. \n"
+    ServiceName:
+      description: Service names known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - nnrf-nfm
+        - nnrf-disc
+        - nnrf-oauth2
+        - nudm-sdm
+        - nudm-uecm
+        - nudm-ueau
+        - nudm-ee
+        - nudm-pp
+        - nudm-niddau
+        - nudm-mt
+        - nudm-ssau
+        - nudm-rsds
+        - nudm-ueid
+        - namf-comm
+        - namf-evts
+        - namf-mt
+        - namf-loc
+        - namf-mbs-comm
+        - namf-mbs-bc
+        - nsmf-pdusession
+        - nsmf-event-exposure
+        - nsmf-nidd
+        - nausf-auth
+        - nausf-sorprotection
+        - nausf-upuprotection
+        - nnef-pfdmanagement
+        - nnef-smcontext
+        - nnef-eventexposure
+        - nnef-eas-deployment
+        - 3gpp-cp-parameter-provisioning
+        - 3gpp-device-triggering
+        - 3gpp-bdt
+        - 3gpp-traffic-influence
+        - 3gpp-chargeable-party
+        - 3gpp-as-session-with-qos
+        - 3gpp-msisdn-less-mo-sms
+        - 3gpp-service-parameter
+        - 3gpp-monitoring-event
+        - 3gpp-nidd-configuration-trigger
+        - 3gpp-nidd
+        - 3gpp-analyticsexposure
+        - 3gpp-racs-parameter-provisioning
+        - 3gpp-ecr-control
+        - 3gpp-applying-bdt-policy
+        - 3gpp-mo-lcs-notify
+        - 3gpp-time-sync
+        - 3gpp-am-influence
+        - 3gpp-am-policyauthorization
+        - 3gpp-akma
+        - 3gpp-eas-deployment
+        - 3gpp-iptvconfiguration
+        - 3gpp-mbs-tmgi
+        - 3gpp-mbs-session
+        - 3gpp-authentication
+        - 3gpp-asti
+        - npcf-am-policy-control
+        - npcf-smpolicycontrol
+        - npcf-policyauthorization
+        - npcf-bdtpolicycontrol
+        - npcf-eventexposure
+        - npcf-ue-policy-control
+        - npcf-am-policyauthorization
+        - npcf-mbspolicycontrol
+        - npcf-mbspolicyauth
+        - nsmsf-sms
+        - nnssf-nsselection
+        - nnssf-nssaiavailability
+        - nudr-dr
+        - nudr-group-id-map
+        - nlmf-loc
+        - n5g-eir-eic
+        - nbsf-management
+        - nchf-spendinglimitcontrol
+        - nchf-convergedcharging
+        - nchf-offlineonlycharging
+        - nnwdaf-eventssubscription
+        - nnwdaf-analyticsinfo
+        - nnwdaf-datamanagement
+        - nnwdaf-mlmodelprovision
+        - ngmlc-loc
+        - nucmf-provisioning
+        - nucmf-uecapabilitymanagement
+        - nhss-sdm
+        - nhss-uecm
+        - nhss-ueau
+        - nhss-ee
+        - nhss-ims-sdm
+        - nhss-ims-uecm
+        - nhss-ims-ueau
+        - nhss-gba-sdm
+        - nhss-gba-ueau
+        - nsepp-telescopic
+        - nsoraf-sor
+        - nspaf-secured-packet
+        - nudsf-dr
+        - nudsf-timer
+        - nnssaaf-nssaa
+        - nnssaaf-aiw
+        - naanf-akma
+        - n5gddnmf-discovery
+        - nmfaf-3dadatamanagement
+        - nmfaf-3cadatamanagement
+        - neasdf-dnscontext
+        - neasdf-baselinednspattern
+        - ndccf-datamanagement
+        - ndccf-contextmanagement
+        - nnsacf-nsac
+        - nnsacf-slice-ee
+        - nmbsmf-tmgi
+        - nmbsmf-mbssession
+        - nadrf-datamanagement
+        - nbsp-gba
+        - ntsctsf-time-sync
+        - ntsctsf-qos-tscai
+        - ntsctsf-asti
+        - npkmf-keyreq
+        - npkmf-userid
+        - npkmf-discovery
+        - nmnpf-npstatus
+        - niwmsc-smservice
+        - nmbsf-mbs-us
+        - nmbsf-mbs-ud-ingest
+        - nmbstf-distsession
+        - npanf-prosekey
+        - npanf-userid
+      - type: string
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: ^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$
+      minLength: 4
+      maxLength: 253
+    Mcc:
+      type: string
+      pattern: ^\d{3}$
+      description: "Mobile Country Code part of the PLMN, comprising 3 digits, as\
+        \ defined in clause 9.3.3.5 of 3GPP TS 38.413. \n"
+    Mnc:
+      type: string
+      pattern: ^\d{2,3}$
+      description: Mobile Network Code part of the PLMN, comprising 2 or 3 digits,
+        as defined in clause 9.3.3.5 of 3GPP TS 38.413.
+    PlmnId:
+      type: object
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+      description: 'When PlmnId needs to be converted to string (e.g. when used in
+        maps as key), the string  shall be composed of three digits "mcc" followed
+        by "-" and two or three digits "mnc".
+
+        '
+      required:
+      - mcc
+      - mnc
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+    Snssai:
+      type: object
+      properties:
+        sst:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: "Unsigned integer, within the range 0 to 255, representing\
+            \ the Slice/Service Type.  It indicates the expected Network Slice behaviour\
+            \ in terms of features and services. Values 0 to 127 correspond to the\
+            \ standardized SST range. Values 128 to 255 correspond  to the Operator-specific\
+            \ range. See clause 28.4.2 of 3GPP TS 23.003. Standardized values are\
+            \ defined in clause 5.15.2.2 of 3GPP TS 23.501. \n"
+        sd:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: '3-octet string, representing the Slice Differentiator, in
+            hexadecimal representation. Each character in the string shall take a
+            value of "0" to "9", "a" to "f" or "A" to "F" and shall represent 4 bits.
+            The most significant character representing the 4 most significant bits
+            of the SD shall appear first in the string, and the character representing
+            the 4 least significant bit of the SD shall appear last in the string.
+            This is an optional parameter that complements the Slice/Service type(s)
+            to allow to  differentiate amongst multiple Network Slices of the same
+            Slice/Service type. This IE shall be absent if no SD value is associated
+            with the SST.
+
+            '
+      description: 'When Snssai needs to be converted to string (e.g. when used in
+        maps as key), the string shall be composed of one to three digits "sst" optionally
+        followed by "-" and 6 hexadecimal digits "sd".
+
+        '
+      required:
+      - sst
+    SdRange:
+      description: A range of SDs (Slice Differentiators)
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: 'First value identifying the start of an SD range. This string
+            shall be formatted as specified for the sd attribute of the Snssai data
+            type in clause 5.4.4.2.
+
+            '
+        end:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: 'Last value identifying the end of an SD range. This string
+            shall be formatted as specified for the sd attribute of the Snssai data
+            type in clause 5.4.4.2.
+
+            '
+    SnssaiExtension:
+      description: 'Extensions to the Snssai data type, sdRanges and wildcardSd shall
+        not be present simultaneously
+
+        '
+      type: object
+      not:
+        required:
+        - sdRanges
+        - wildcardSd
+      properties:
+        sdRanges:
+          description: 'When present, it shall contain the range(s) of Slice Differentiator
+            values supported for the Slice/Service Type value indicated in the sst
+            attribute of the Snssai data type
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/SdRange'
+          minItems: 1
+        wildcardSd:
+          description: 'When present, it shall be set to true, to indicate that all
+            SD values are supported for the Slice/Service Type value indicated in
+            the sst attribute of the Snssai data type.
+
+            '
+          type: boolean
+          enum:
+          - true
+    ExtSnssai:
+      allOf:
+      - $ref: '#/components/schemas/Snssai'
+      - $ref: '#/components/schemas/SnssaiExtension'
+      description: 'The sdRanges and wildcardSd attributes shall be exclusive from
+        each other. If one of these attributes is present,  the sd attribute shall
+        also be present and it shall contain one Slice Differentiator value within
+        the range of SD  (if the sdRanges attribute is present) or with any value
+        (if the wildcardSd attribute is present).
+
+        '
+    Nid:
+      type: string
+      pattern: ^[A-Fa-f0-9]{11}$
+      description: "This represents the Network Identifier, which together with a\
+        \ PLMN ID is used to identify an SNPN (see 3GPP TS 23.003 and 3GPP TS 23.501\
+        \ clause 5.30.2.1). \n"
+    PlmnSnssai:
+      description: List of network slices (S-NSSAIs) for a given PLMN ID
+      type: object
+      required:
+      - plmnId
+      - sNssaiList
+      properties:
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        sNssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtSnssai'
+          minItems: 1
+        nid:
+          $ref: '#/components/schemas/Nid'
+    Dnn:
+      type: string
+      description: 'String representing a Data Network as defined in clause 9A of
+        3GPP TS 23.003;  it shall contain either a DNN Network Identifier, or a full
+        DNN with both the Network  Identifier and Operator Identifier, as specified
+        in 3GPP TS 23.003 clause 9.1.1 and 9.1.2. It shall be coded as string in which
+        the labels are separated by dots  (e.g. "Label1.Label2.Label3").
+
+        '
+    IpIndex:
+      description: Represents the IP Index to be sent from UDM to the SMF (its value
+        can be either an integer or a string)
+      anyOf:
+      - type: integer
+      - type: string
+    Tac:
+      type: string
+      pattern: (^[A-Fa-f0-9]{4}$)|(^[A-Fa-f0-9]{6}$)
+      description: "2 or 3-octet string identifying a tracking area code as specified\
+        \ in clause 9.3.3.10  of 3GPP TS 38.413, in hexadecimal representation. Each\
+        \ character in the string shall  take a value of \"0\" to \"9\", \"a\" to\
+        \ \"f\" or \"A\" to \"F\" and shall represent 4 bits. The most significant\
+        \ character representing the 4 most significant bits of the TAC shall  appear\
+        \ first in the string, and the character representing the 4 least significant\
+        \ bit  of the TAC shall appear last in the string. \n"
+    Tai:
+      description: Contains the tracking area identity as described in 3GPP 23.003
+      type: object
+      properties:
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        tac:
+          $ref: '#/components/schemas/Tac'
+        nid:
+          $ref: '#/components/schemas/Nid'
+      required:
+      - plmnId
+      - tac
+    AmfRegionId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{2}$
+      description: 'String identifying the AMF Set ID (10 bits) as specified in clause
+        2.10.1 of 3GPP TS 23.003.  It is encoded as a string of 3 hexadecimal characters
+        where the first character is limited to  values 0 to 3 (i.e. 10 bits)
+
+        '
+    AmfSetId:
+      type: string
+      pattern: ^[0-3][A-Fa-f0-9]{2}$
+      description: 'String identifying the AMF Set ID (10 bits) as specified in clause
+        2.10.1 of 3GPP TS 23.003.  It is encoded as a string of 3 hexadecimal characters
+        where the first character is limited to  values 0 to 3 (i.e. 10 bits).
+
+        '
+    PlmnIdNid:
+      description: 'Contains the serving core network operator PLMN ID and, for an
+        SNPN, the NID that together with the PLMN ID identifies the SNPN.
+
+        '
+      type: object
+      required:
+      - mcc
+      - mnc
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+        nid:
+          $ref: '#/components/schemas/Nid'
+    AmfId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{6}$
+      description: "String identifying the AMF ID composed of AMF Region ID (8 bits),\
+        \ AMF Set ID (10 bits) and AMF  Pointer (6 bits) as specified in clause 2.10.1\
+        \ of 3GPP TS 23.003. It is encoded as a string of  6 hexadecimal characters\
+        \ (i.e., 24 bits). \n"
+    Guami:
+      type: object
+      properties:
+        plmnId:
+          $ref: '#/components/schemas/PlmnIdNid'
+        amfId:
+          $ref: '#/components/schemas/AmfId'
+      required:
+      - plmnId
+      - amfId
+      description: Globally Unique AMF Identifier constructed out of PLMN, Network
+        and AMF identity.
+    Supi:
+      type: string
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|gci-.+|gli-.+|.+)$
+      description: "String identifying a Supi that shall contain either an IMSI, a\
+        \ network specific identifier,\na Global Cable Identifier (GCI) or a Global\
+        \ Line Identifier (GLI) as specified in clause \n2.2A of 3GPP TS 23.003. It\
+        \ shall be formatted as follows\n - for an IMSI \"imsi-<imsi>\", where <imsi>\
+        \ shall be formatted according to clause 2.2\n   of 3GPP TS 23.003 that describes\
+        \ an IMSI.\n - for a network specific identifier \"nai-<nai>, where <nai>\
+        \ shall be formatted\n   according to clause 28.7.2 of 3GPP TS 23.003 that\
+        \ describes an NAI.\n - for a GCI \"gci-<gci>\", where <gci> shall be formatted\
+        \ according to clause 28.15.2\n   of 3GPP TS 23.003.\n - for a GLI \"gli-<gli>\"\
+        , where <gli> shall be formatted according to clause 28.16.2 of\n   3GPP TS\
+        \ 23.003.To enable that the value is used as part of an URI, the string shall\n\
+        \   only contain characters allowed according to the \"lower-with-hyphen\"\
+        \ naming convention\n   defined in 3GPP TS 29.501.\n"
+    Ipv4Addr:
+      type: string
+      pattern: ^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
+      example: 198.51.100.1
+      description: 'String identifying a IPv4 address formatted in the ''dotted decimal''
+        notation as defined in RFC 1166.
+
+        '
+    Ipv6Prefix:
+      type: string
+      allOf:
+      - pattern: ^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$
+      - pattern: ^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)$
+      example: 2001:db8:abcd:12::0/64
+      description: 'String identifying an IPv6 address prefix formatted according
+        to clause 4 of RFC 5952. IPv6Prefix data type may contain an individual /128
+        IPv6 address.
+
+        '
+    Ipv6Addr:
+      type: string
+      allOf:
+      - pattern: ^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))$
+      - pattern: ^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))$
+      example: 2001:db8:85a3::8a2e:370:7334
+      description: 'String identifying an IPv6 address formatted according to clause
+        4 of RFC5952. The mixed IPv4 IPv6 notation according to clause 5 of RFC5952
+        shall not be used.
+
+        '
+    IpAddr:
+      description: Contains an IP adresse.
+      type: object
+      oneOf:
+      - required:
+        - ipv4Addr
+      - required:
+        - ipv6Addr
+      - required:
+        - ipv6Prefix
+      properties:
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Addr:
+          $ref: '#/components/schemas/Ipv6Addr'
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+    Gpsi:
+      type: string
+      pattern: ^(msisdn-[0-9]{5,15}|extid-[^@]+@[^@]+|.+)$
+      description: "String identifying a Gpsi shall contain either an External Id\
+        \ or an MSISDN.  It shall be formatted as follows -External Identifier= \"\
+        extid-'extid', where 'extid'  shall be formatted according to clause 19.7.2\
+        \ of 3GPP TS 23.003 that describes an  External Identifier. \n"
+    ExtGroupId:
+      type: string
+      pattern: ^extgroupid-[^@]+@[^@]+$
+    GroupId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{8}-[0-9]{3}-[0-9]{2,3}-([A-Fa-f0-9][A-Fa-f0-9]){1,10}$
+      description: "String identifying a group of devices network internal globally\
+        \ unique ID which identifies a set of IMSIs, as specified in clause 19.9 of\
+        \ 3GPP TS 23.003. \n"
+    PfdData:
+      description: List of Application IDs and/or AF IDs managed by a given NEF Instance
+      type: object
+      properties:
+        appIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        afIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+    DataSetId:
+      description: Types of data sets and subsets stored in UDR
+      anyOf:
+      - type: string
+        enum:
+        - SUBSCRIPTION
+        - POLICY
+        - EXPOSURE
+        - APPLICATION
+        - A_PFD
+        - A_AFTI
+        - A_IPTV
+        - A_BDT
+        - A_SPD
+        - A_EASD
+        - A_AMI
+        - P_UE
+        - P_SCD
+        - P_BDT
+        - P_PLMNUE
+        - P_NSSCD
+        - P_MBSCD
+      - type: string
+    NfGroupId:
+      type: string
+      description: Identifier of a group of NFs.
+    Dnai:
+      type: string
+      description: DNAI (Data network access identifier), see clause 5.6.7 of 3GPP
+        TS 23.501.
+    PduSessionType:
+      anyOf:
+      - type: string
+        enum:
+        - IPV4
+        - IPV6
+        - IPV4V6
+        - UNSTRUCTURED
+        - ETHERNET
+      - type: string
+      description: "PduSessionType indicates the type of a PDU session. It shall comply\
+        \ with the provisions defined in table 5.4.3.3-1. \n"
+    EventId:
+      anyOf:
+      - type: string
+        enum:
+        - LOAD_LEVEL_INFORMATION
+        - NETWORK_PERFORMANCE
+        - NF_LOAD
+        - SERVICE_EXPERIENCE
+        - UE_MOBILITY
+        - UE_COMMUNICATION
+        - QOS_SUSTAINABILITY
+        - ABNORMAL_BEHAVIOUR
+        - USER_DATA_CONGESTION
+        - NSI_LOAD_LEVEL
+        - SM_CONGESTION
+        - DISPERSION
+        - RED_TRANS_EXP
+        - WLAN_PERFORMANCE
+        - DN_PERFORMANCE
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are:
+
+        - LOAD_LEVEL_INFORMATION: Represent the analytics of load level information
+        of corresponding network slice.
+
+        - NETWORK_PERFORMANCE: Represent the analytics of network performance information.
+
+        - NF_LOAD: Indicates that the event subscribed is NF Load.
+
+        - SERVICE_EXPERIENCE: Represent the analytics of service experience information
+        of the specific applications.
+
+        - UE_MOBILITY: Represent the analytics of UE mobility.
+
+        - UE_COMMUNICATION: Represent the analytics of UE communication.
+
+        - QOS_SUSTAINABILITY: Represent the analytics of QoS sustainability information
+        in the certain area.
+
+        - ABNORMAL_BEHAVIOUR: Indicates that the event subscribed is abnormal behaviour
+        information.
+
+        - USER_DATA_CONGESTION: Represent the analytics of the user data congestion
+        in the certain area.
+
+        - NSI_LOAD_LEVEL: Represent the analytics of Network Slice and the optionally
+        associated Network Slice Instance.
+
+        - SM_CONGESTION: Represent the analytics of Session Management congestion
+        control experience information for specific DNN and/or S-NSSAI.
+
+        - DISPERSION: Represents the analytics of dispersion.
+
+        - RED_TRANS_EXP: Represents the analytics of Redundant Transmission Experience.
+
+        - WLAN_PERFORMANCE: Represents the analytics of WLAN performance.
+
+        - DN_PERFORMANCE: Represents the analytics of DN performance.
+
+        '
+    NwdafEvent:
+      anyOf:
+      - type: string
+        enum:
+        - SLICE_LOAD_LEVEL
+        - NETWORK_PERFORMANCE
+        - NF_LOAD
+        - SERVICE_EXPERIENCE
+        - UE_MOBILITY
+        - UE_COMMUNICATION
+        - QOS_SUSTAINABILITY
+        - ABNORMAL_BEHAVIOUR
+        - USER_DATA_CONGESTION
+        - NSI_LOAD_LEVEL
+        - DN_PERFORMANCE
+        - DISPERSION
+        - RED_TRANS_EXP
+        - WLAN_PERFORMANCE
+        - SM_CONGESTION
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: "Possible values are:\n- SLICE_LOAD_LEVEL: Indicates that the event\
+        \ subscribed is load level information of Network Slice  \n- NETWORK_PERFORMANCE:\
+        \ Indicates that the event subscribed is network performance information.\
+        \  \n- NF_LOAD: Indicates that the event subscribed is load level and status\
+        \ of one or several Network Functions.  \n- SERVICE_EXPERIENCE: Indicates\
+        \ that the event subscribed is service experience.  \n- UE_MOBILITY: Indicates\
+        \ that the event subscribed is UE mobility information.  \n- UE_COMMUNICATION:\
+        \ Indicates that the event subscribed is UE communication information.  \n\
+        - QOS_SUSTAINABILITY: Indicates that the event subscribed is QoS sustainability.\
+        \  \n- ABNORMAL_BEHAVIOUR: Indicates that the event subscribed is abnormal\
+        \ behaviour.  \n- USER_DATA_CONGESTION: Indicates that the event subscribed\
+        \ is user data congestion information.  \n- NSI_LOAD_LEVEL: Indicates that\
+        \ the event subscribed is load level information of Network Slice and the\
+        \ optionally associated Network Slice Instance  \n- DN_PERFORMANCE: Indicates\
+        \ that the event subscribed is DN performance information.  \n- DISPERSION:\
+        \ Indicates that the event subscribed is dispersion information.  \n- RED_TRANS_EXP:\
+        \ Indicates that the event subscribed is redundant transmission experience.\
+        \  \n- WLAN_PERFORMANCE: Indicates that the event subscribed is WLAN performance.\
+        \  \n- SM_CONGESTION: Indicates the Session Management Congestion Control\
+        \ Experience information for specific DNN and/or S-NSSAI.\n"
+    SupportedFeatures:
+      type: string
+      pattern: ^[A-Fa-f0-9]*$
+      description: "A string used to indicate the features supported by an API that\
+        \ is used as defined in clause  6.6 in 3GPP TS 29.500. The string shall contain\
+        \ a bitmask indicating supported features in  hexadecimal representation Each\
+        \ character in the string shall take a value of \"0\" to \"9\",  \"a\" to\
+        \ \"f\" or \"A\" to \"F\" and shall represent the support of 4 features as\
+        \ described in  table\_5.2.2-3. The most significant character representing\
+        \ the highest-numbered features shall  appear first in the string, and the\
+        \ character representing features 1 to 4 shall appear last  in the string.\
+        \ The list of features and their numbering (starting with 1) are defined \
+        \ separately for each API. If the string contains a lower number of characters\
+        \ than there are  defined features for an API, all features that would be\
+        \ represented by characters that are not  present in the string are not supported.\n"
+    AccessType:
+      type: string
+      enum:
+      - 3GPP_ACCESS
+      - NON_3GPP_ACCESS
+      description: Indicates whether the access is  via 3GPP or via non-3GPP.
+    Atom:
+      description: contains a search parameter and its positive or negative content.
+      type: object
+      required:
+      - attr
+      - value
+      properties:
+        attr:
+          type: string
+          description: contains the name of a defined query parameter.
+        value: {}
+        negative:
+          type: boolean
+          description: indicates whether the negative condition applies for the query
+            condition.
+    CnfUnit:
+      type: object
+      required:
+      - cnfUnit
+      properties:
+        cnfUnit:
+          type: array
+          items:
+            $ref: '#/components/schemas/Atom'
+          minItems: 1
+      description: 'During the processing of cnfUnits attribute, all the members in
+        the array shall be  interpreted as logically concatenated with logical "AND".
+
+        '
+    Cnf:
+      type: object
+      required:
+      - cnfUnits
+      properties:
+        cnfUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/CnfUnit'
+          minItems: 1
+      description: A conjunctive normal form
+    DnfUnit:
+      type: object
+      required:
+      - dnfUnit
+      properties:
+        dnfUnit:
+          type: array
+          items:
+            $ref: '#/components/schemas/Atom'
+          minItems: 1
+      description: 'During the processing of dnfUnits attribute, all the members in
+        the array shall be  interpreted as logically concatenated with logical "OR".
+
+        '
+    Dnf:
+      type: object
+      required:
+      - dnfUnits
+      properties:
+        dnfUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnfUnit'
+          minItems: 1
+      description: A disjunctive normal form.
+    ComplexQuery:
+      oneOf:
+      - $ref: '#/components/schemas/Cnf'
+      - $ref: '#/components/schemas/Dnf'
+      description: 'The ComplexQuery data type is either a conjunctive normal form
+        or a disjunctive normal form.  The attribute names "cnfUnits" and "dnfUnits"
+        (see clause 5.2.4.11 and clause 5.2.4.12)  serve as discriminator.
+
+        '
+    AtsssCapability:
+      description: 'Containes Capability to support procedures related to Access Traffic
+        Steering, Switching, Splitting.
+
+        '
+      type: object
+      properties:
+        atsssLL:
+          type: boolean
+          default: false
+          description: 'Indicates the ATSSS-LL capability to support procedures related
+            to Access Traffic Steering, Switching, Splitting (see clauses 4.2.10,
+            5.32 of 3GPP TS 23.501). true: Supported false (default): Not Supported
+
+            '
+        mptcp:
+          type: boolean
+          default: false
+          description: "Indicates the MPTCP capability to support procedures related\
+            \ to Access Traffic Steering, Switching, Splitting (see clauses 4.2.10,\
+            \ 5.32 of 3GPP\_TS\_23.501 true: Supported false (default): Not Supported\n"
+        rttWithoutPmf:
+          type: boolean
+          default: false
+          description: "This IE is only used by the UPF to indicate whether the UPF\
+            \ supports RTT measurement without PMF (see clauses\_5.32.2, 6.3.3.3 of\
+            \ 3GPP\_TS\_23.501 true: Supported false (default): Not Supported\n"
+    ExternalClientType:
+      description: Indicates types of External Clients.
+      anyOf:
+      - type: string
+        enum:
+        - EMERGENCY_SERVICES
+        - VALUE_ADDED_SERVICES
+        - PLMN_OPERATOR_SERVICES
+        - LAWFUL_INTERCEPT_SERVICES
+        - PLMN_OPERATOR_BROADCAST_SERVICES
+        - PLMN_OPERATOR_OM
+        - PLMN_OPERATOR_ANONYMOUS_STATISTICS
+        - PLMN_OPERATOR_TARGET_MS_SERVICE_SUPPORT
+      - type: string
+    LMFIdentification:
+      description: LMF identification.
+      type: string
+    AnNodeType:
+      description: Access Network Node Type (gNB, ng-eNB...)
+      anyOf:
+      - type: string
+        enum:
+        - GNB
+        - NG_ENB
+      - type: string
+    RatType:
+      anyOf:
+      - type: string
+        enum:
+        - NR
+        - EUTRA
+        - WLAN
+        - VIRTUAL
+        - NBIOT
+        - WIRELINE
+        - WIRELINE_CABLE
+        - WIRELINE_BBF
+        - LTE-M
+        - NR_U
+        - EUTRA_U
+        - TRUSTED_N3GA
+        - TRUSTED_WLAN
+        - UTRA
+        - GERA
+        - NR_LEO
+        - NR_MEO
+        - NR_GEO
+        - NR_OTHER_SAT
+        - NR_REDCAP
+        - WB_E_UTRAN_LEO
+        - WB_E_UTRAN_MEO
+        - WB_E_UTRAN_GEO
+        - WB_E_UTRAN_OTHERSAT
+        - NB_IOT_LEO
+        - NB_IOT_MEO
+        - NB_IOT_GEO
+        - NB_IOT_OTHERSAT
+        - LTE_M_LEO
+        - LTE_M_MEO
+        - LTE_M_GEO
+        - LTE_M_OTHERSAT
+      - type: string
+      description: Indicates the radio access used.
+    AfEvent:
+      description: Represents Application Events.
+      anyOf:
+      - type: string
+        enum:
+        - SVC_EXPERIENCE
+        - UE_MOBILITY
+        - UE_COMM
+        - EXCEPTIONS
+        - USER_DATA_CONGESTION
+        - PERF_DATA
+        - DISPERSION
+        - COLLECTIVE_BEHAVIOUR
+        - MS_QOE_METRICS
+        - MS_CONSUMPTION
+        - MS_NET_ASSIST_INVOCATION
+        - MS_DYN_POLICY_INVOCATION
+        - MS_ACCESS_ACTIVITY
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+    AfEventExposureData:
+      description: AF Event Exposure data managed by a given NEF Instance
+      type: object
+      required:
+      - afEvents
+      properties:
+        afEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AfEvent'
+          minItems: 1
+        afIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        appIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+    WAgfInfo:
+      description: Information of the W-AGF end-points
+      type: object
+      properties:
+        ipv4EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        endpointFqdn:
+          $ref: '#/components/schemas/Fqdn'
+    TngfInfo:
+      description: Infomation of the TNGF endpoints
+      type: object
+      properties:
+        ipv4EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        endpointFqdn:
+          $ref: '#/components/schemas/Fqdn'
+    TwifInfo:
+      description: Addressing information (IP addresses, FQDN) of the TWIF
+      type: object
+      properties:
+        ipv4EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        endpointFqdn:
+          $ref: '#/components/schemas/Fqdn'
+    NfSetId:
+      type: string
+      description: "NF Set Identifier (see clause 28.12 of 3GPP TS 23.003), formatted\
+        \ as the following string \"set<Set ID>.<nftype>set.5gc.mnc<MNC>.mcc<MCC>\"\
+        , or  \"set<SetID>.<NFType>set.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\" with  <MCC>\
+        \ encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)  <MNC>\
+        \ encoding the Mobile Network Code part of the PLMN, comprising 3 digits.\
+        \ \n  If there are only 2 significant digits in the MNC, one \"0\" digit shall\
+        \ be inserted \n  at the left side to fill the 3 digits coding of MNC.  Pattern:\
+        \ '^[0-9]{3}$'\n<NFType> encoded as a value defined in Table 6.1.6.3.3-1 of\
+        \ 3GPP TS 29.510 but \n  with lower case characters <Set ID> encoded as a\
+        \ string of characters consisting of \n  alphabetic characters (A-Z and a-z),\
+        \ digits (0-9) and/or the hyphen (-) and that \n  shall end with either an\
+        \ alphabetic character or a digit. \n"
+    NfServiceSetId:
+      type: string
+      description: "NF Service Set Identifier (see clause 28.12 of 3GPP TS 23.003)\
+        \ formatted as the following  string \"set<Set ID>.sn<Service Name>.nfi<NF\
+        \ Instance ID>.5gc.mnc<MNC>.mcc<MCC>\", or  \"set<SetID>.sn<ServiceName>.nfi<NFInstanceID>.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\"\
+        \ with  <MCC> encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)\
+        \   <MNC> encoding the Mobile Network Code part of the PLMN, comprising 3\
+        \ digits. \n  If there are only 2 significant digits in the MNC, one \"0\"\
+        \ digit shall be inserted \n  at the left side to fill the 3 digits coding\
+        \ of MNC.  Pattern: '^[0-9]{3}$'\n<NID> encoded as defined in clause\_5.4.2\
+        \ (\"Nid\" data type definition)  <NFInstanceId> encoded as defined in clause\
+        \ 5.3.2  <ServiceName> encoded as defined in 3GPP TS 29.510  <Set ID> encoded\
+        \ as a string of characters consisting of alphabetic \n  characters (A-Z and\
+        \ a-z), digits (0-9) and/or the hyphen (-) and that shall end \n  with either\
+        \ an alphabetic character or a digit.\n"
+    NefId:
+      description: Identity of the NEF
+      type: string
+    NotificationType:
+      description: 'Types of notifications used in Default Notification URIs in the
+        NF Profile of an NF Instance
+
+        '
+      anyOf:
+      - type: string
+        enum:
+        - N1_MESSAGES
+        - N2_INFORMATION
+        - LOCATION_NOTIFICATION
+        - DATA_REMOVAL_NOTIFICATION
+        - DATA_CHANGE_NOTIFICATION
+        - LOCATION_UPDATE_NOTIFICATION
+        - NSSAA_REAUTH_NOTIFICATION
+        - NSSAA_REVOC_NOTIFICATION
+        - MATCH_INFO_NOTIFICATION
+        - DATA_RESTORATION_NOTIFICATION
+        - TSCTS_NOTIFICATION
+        - LCS_KEY_DELIVERY_NOTIFICATION
+        - UUAA_MM_AUTH_NOTIFICATION
+      - type: string
+    N1MessageClass:
+      description: Enumeration for N1 Message Class
+      anyOf:
+      - type: string
+        enum:
+        - 5GMM
+        - SM
+        - LPP
+        - SMS
+        - UPDP
+        - LCS
+      - type: string
+    N2InformationClass:
+      description: Enumeration for N2 Information Class
+      anyOf:
+      - type: string
+        enum:
+        - SM
+        - NRPPa
+        - PWS
+        - PWS-BCAL
+        - PWS-RF
+        - RAN
+        - V2X
+        - PROSE
+      - type: string
+    VendorSpecificFeature:
+      description: Information about a vendor-specific feature
+      type: object
+      required:
+      - featureName
+      - featureVersion
+      properties:
+        featureName:
+          type: string
+        featureVersion:
+          type: string
+    MlAnalyticsInfo:
+      description: ML Analytics Filter information supported by the Nnwdaf_MLModelProvision
+        service
+      type: object
+      properties:
+        mlAnalyticsIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/NwdafEvent'
+          minItems: 1
+        snssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        trackingAreaList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+    NsacfCapability:
+      description: 'NSACF service capabilities (e.g. to monitor and control the number
+        of registered UEs or established PDU sessions per network slice)
+
+        '
+      type: object
+      properties:
+        supportUeSAC:
+          description: "Indicates the service capability of the NSACF to monitor and\
+            \ control the number of\nregistered UEs per network slice for the network\
+            \ slice that is subject to NSAC  \ntrue: Supported  \nfalse (default):\
+            \ Not Supported\n"
+          type: boolean
+          default: false
+        supportPduSAC:
+          description: "Indicates the service capability of the NSACF to monitor and\
+            \ control the number of\nestablished PDU sessions per network slice for\
+            \ the network slice that is subject to NSAC  \ntrue: Supported  \nfalse\
+            \ (default): Not Supported\n"
+          type: boolean
+          default: false
+    Tmgi:
+      description: Temporary Mobile Group Identity
+      type: object
+      properties:
+        mbsServiceId:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: MBS Service ID
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+      required:
+      - mbsServiceId
+      - plmnId
+    Ssm:
+      description: Source specific IP multicast address
+      type: object
+      properties:
+        sourceIpAddr:
+          $ref: '#/components/schemas/IpAddr'
+        destIpAddr:
+          $ref: '#/components/schemas/IpAddr'
+      required:
+      - sourceIpAddr
+      - destIpAddr
+    MbsSessionId:
+      description: MBS Session Identifier
+      type: object
+      properties:
+        tmgi:
+          $ref: '#/components/schemas/Tmgi'
+        ssm:
+          $ref: '#/components/schemas/Ssm'
+        nid:
+          $ref: '#/components/schemas/Nid'
+      anyOf:
+      - required:
+        - tmgi
+      - required:
+        - ssm
+    Uint16:
+      type: integer
+      minimum: 0
+      maximum: 65535
+      description: Integer where the allowed values correspond to the value range
+        of an unsigned 16-bit integer.
+    V2xCapability:
+      description: Indicate the supported V2X Capability by the PCF.
+      type: object
+      properties:
+        lteV2x:
+          type: boolean
+          default: false
+        nrV2x:
+          type: boolean
+          default: false
+    ProSeCapability:
+      description: Indicate the supported ProSe Capability by the PCF.
+      type: object
+      properties:
+        proseDirectDiscovey:
+          type: boolean
+          default: false
+        proseDirectCommunication:
+          type: boolean
+          default: false
+        proseL2UetoNetworkRelay:
+          type: boolean
+          default: false
+        proseL3UetoNetworkRelay:
+          type: boolean
+          default: false
+        proseL2RemoteUe:
+          type: boolean
+          default: false
+        proseL3RemoteUe:
+          type: boolean
+          default: false
+    SharedDataId:
+      type: string
+      pattern: ^[0-9]{5,6}-.+$
+    DurationSec:
+      type: integer
+      description: indicating a time in seconds.
+    NsacSai:
+      type: string
+      description: 'String identifying the Network Slice Admission Control Service
+        Area Identifier.
+
+        '
+    NFStatus:
+      description: Status of a given NF Instance stored in NRF
+      anyOf:
+      - type: string
+        enum:
+        - REGISTERED
+        - SUSPENDED
+        - UNDISCOVERABLE
+      - type: string
+    CollocatedNfInstance:
+      description: Information of an collocated NF Instance registered in the NRF
+      type: object
+      required:
+      - nfInstanceId
+      - nfType
+      properties:
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfType:
+          $ref: '#/components/schemas/CollocatedNfType'
+    DateTime:
+      format: date-time
+      type: string
+      description: string with format 'date-time' as defined in OpenAPI.
+    SupiRange:
+      description: 'A range of SUPIs (subscriber identities), either based on a numeric
+        range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]+$
+        end:
+          type: string
+          pattern: ^[0-9]+$
+        pattern:
+          type: string
+    IdentityRange:
+      description: 'A range of GPSIs (subscriber identities), either based on a numeric
+        range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]+$
+        end:
+          type: string
+          pattern: ^[0-9]+$
+        pattern:
+          type: string
+    SharedDataIdRange:
+      description: A range of SharedDataIds based on regular-expression matching
+      type: object
+      properties:
+        pattern:
+          type: string
+    UdrInfo:
+      description: Information of an UDR NF Instance
+      type: object
+      properties:
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        externalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        supportedDataSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSetId'
+          minItems: 1
+        sharedDataIdRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedDataIdRange'
+          minItems: 1
+    InternalGroupIdRange:
+      description: 'A range of Group IDs (internal group identities), either based
+        on a numeric range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/GroupId'
+        end:
+          $ref: '#/components/schemas/GroupId'
+        pattern:
+          type: string
+    SuciInfo:
+      description: SUCI information containing Routing Indicator and Home Network
+        Public Key ID
+      type: object
+      properties:
+        routingInds:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9]{1,4}$
+          minItems: 1
+        hNwPubKeyIds:
+          type: array
+          items:
+            type: integer
+          minItems: 1
+    UdmInfo:
+      description: Information of an UDM NF Instance
+      type: object
+      properties:
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        externalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        routingIndicators:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9]{1,4}$
+          minItems: 1
+        internalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternalGroupIdRange'
+          minItems: 1
+        suciInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuciInfo'
+          minItems: 1
+    AusfInfo:
+      description: Information of an AUSF NF Instance
+      type: object
+      properties:
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        routingIndicators:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9]{1,4}$
+          minItems: 1
+        suciInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuciInfo'
+          minItems: 1
+    TacRange:
+      description: Range of TACs (Tracking Area Codes)
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^([A-Fa-f0-9]{4}|[A-Fa-f0-9]{6})$
+        end:
+          type: string
+          pattern: ^([A-Fa-f0-9]{4}|[A-Fa-f0-9]{6})$
+        pattern:
+          type: string
+    TaiRange:
+      description: Range of TAIs (Tracking Area Identities)
+      type: object
+      required:
+      - plmnId
+      - tacRangeList
+      properties:
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        tacRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TacRange'
+          minItems: 1
+        nid:
+          $ref: '#/components/schemas/Nid'
+    N2InterfaceAmfInfo:
+      description: AMF N2 interface information
+      type: object
+      properties:
+        ipv4EndpointAddress:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6EndpointAddress:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        amfName:
+          $ref: '#/components/schemas/Fqdn'
+    AmfInfo:
+      description: Information of an AMF NF Instance
+      type: object
+      required:
+      - amfSetId
+      - amfRegionId
+      - guamiList
+      properties:
+        amfSetId:
+          $ref: '#/components/schemas/AmfSetId'
+        amfRegionId:
+          $ref: '#/components/schemas/AmfRegionId'
+        guamiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guami'
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        backupInfoAmfFailure:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guami'
+          minItems: 1
+        backupInfoAmfRemoval:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guami'
+          minItems: 1
+        n2InterfaceAmfInfo:
+          $ref: '#/components/schemas/N2InterfaceAmfInfo'
+        amfOnboardingCapability:
+          type: boolean
+          default: false
+        highLatencyCom:
+          type: boolean
+    WildcardDnn:
+      type: string
+      pattern: ^[*]$
+      description: String representing the Wildcard DNN. It shall contain the string
+        "*".
+    WildcardDnai:
+      description: Wildcard DNAI
+      type: string
+      pattern: ^[*]$
+    DnnSmfInfoItem:
+      description: Set of parameters supported by SMF for a given DNN
+      type: object
+      required:
+      - dnn
+      properties:
+        dnn:
+          anyOf:
+          - $ref: '#/components/schemas/Dnn'
+          - $ref: '#/components/schemas/WildcardDnn'
+        dnaiList:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/Dnai'
+            - $ref: '#/components/schemas/WildcardDnai'
+          minItems: 1
+    SnssaiSmfInfoItem:
+      description: Set of parameters supported by SMF for a given S-NSSAI
+      type: object
+      required:
+      - sNssai
+      - dnnSmfInfoList
+      properties:
+        sNssai:
+          $ref: '#/components/schemas/ExtSnssai'
+        dnnSmfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnnSmfInfoItem'
+          minItems: 1
+    SmfInfo:
+      description: Information of an SMF NF Instance
+      type: object
+      required:
+      - sNssaiSmfInfoList
+      properties:
+        sNssaiSmfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SnssaiSmfInfoItem'
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        pgwFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        pgwIpAddrList:
+          type: array
+          items:
+            $ref: '#/components/schemas/IpAddr'
+          minItems: 1
+        accessType:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessType'
+          minItems: 1
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 65535
+        vsmfSupportInd:
+          type: boolean
+        pgwFqdnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fqdn'
+          minItems: 1
+        smfOnboardingCapability:
+          type: boolean
+          default: false
+          deprecated: true
+        ismfSupportInd:
+          type: boolean
+        smfUPRPCapability:
+          type: boolean
+          default: false
+    Ipv4AddressRange:
+      description: Range of IPv4 addresses
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/Ipv4Addr'
+        end:
+          $ref: '#/components/schemas/Ipv4Addr'
+    Ipv6PrefixRange:
+      description: Range of IPv6 prefixes
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/Ipv6Prefix'
+        end:
+          $ref: '#/components/schemas/Ipv6Prefix'
+    DnnUpfInfoItem:
+      description: Set of parameters supported by UPF for a given DNN
+      type: object
+      required:
+      - dnn
+      properties:
+        dnn:
+          $ref: '#/components/schemas/Dnn'
+        dnaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnai'
+          minItems: 1
+        pduSessionTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PduSessionType'
+          minItems: 1
+        ipv4AddressRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4AddressRange'
+          minItems: 1
+        ipv6PrefixRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6PrefixRange'
+          minItems: 1
+        ipv4IndexList:
+          type: array
+          items:
+            $ref: '#/components/schemas/IpIndex'
+          minItems: 1
+        ipv6IndexList:
+          type: array
+          items:
+            $ref: '#/components/schemas/IpIndex'
+          minItems: 1
+        dnaiNwInstanceList:
+          description: 'Map of network instance per DNAI for the DNN, where the key
+            of the map is the DNAI. When present, the value of each entry of the map
+            shall contain a N6 network instance that is configured for the DNAI indicated
+            by the key.
+
+            '
+          type: object
+          additionalProperties:
+            type: string
+          minProperties: 1
+    SnssaiUpfInfoItem:
+      description: Set of parameters supported by UPF for a given S-NSSAI
+      type: object
+      required:
+      - sNssai
+      - dnnUpfInfoList
+      properties:
+        sNssai:
+          $ref: '#/components/schemas/ExtSnssai'
+        dnnUpfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnnUpfInfoItem'
+          minItems: 1
+        redundantTransport:
+          type: boolean
+          default: false
+    UPInterfaceType:
+      description: Types of User-Plane interfaces of the UPF
+      anyOf:
+      - type: string
+        enum:
+        - N3
+        - N6
+        - N9
+        - DATA_FORWARDING
+        - N3MB
+        - N6MB
+        - N19MB
+        - NMB9
+      - type: string
+    InterfaceUpfInfoItem:
+      description: Information of a given IP interface of an UPF
+      type: object
+      required:
+      - interfaceType
+      properties:
+        interfaceType:
+          $ref: '#/components/schemas/UPInterfaceType'
+        ipv4EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6EndpointAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        endpointFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        networkInstance:
+          type: string
+    UpfInfo:
+      description: Information of an UPF NF Instance
+      type: object
+      required:
+      - sNssaiUpfInfoList
+      properties:
+        sNssaiUpfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SnssaiUpfInfoItem'
+          minItems: 1
+        smfServingArea:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        interfaceUpfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceUpfInfoItem'
+          minItems: 1
+        iwkEpsInd:
+          type: boolean
+          default: false
+        pduSessionTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PduSessionType'
+          minItems: 1
+        atsssCapability:
+          $ref: '#/components/schemas/AtsssCapability'
+        ueIpAddrInd:
+          type: boolean
+          default: false
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        wAgfInfo:
+          $ref: '#/components/schemas/WAgfInfo'
+        tngfInfo:
+          $ref: '#/components/schemas/TngfInfo'
+        twifInfo:
+          $ref: '#/components/schemas/TwifInfo'
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 65535
+        redundantGtpu:
+          type: boolean
+          default: false
+        ipups:
+          type: boolean
+          default: false
+        dataForwarding:
+          type: boolean
+          default: false
+        supportedPfcpFeatures:
+          type: string
+    PcfInfo:
+      description: Information of a PCF NF Instance
+      type: object
+      properties:
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        dnnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnn'
+          minItems: 1
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        rxDiamHost:
+          $ref: '#/components/schemas/Fqdn'
+        rxDiamRealm:
+          $ref: '#/components/schemas/Fqdn'
+        v2xSupportInd:
+          type: boolean
+          default: false
+        proseSupportInd:
+          type: boolean
+          default: false
+        proseCapability:
+          $ref: '#/components/schemas/ProSeCapability'
+        v2xCapability:
+          $ref: '#/components/schemas/V2xCapability'
+    BsfInfo:
+      description: Information of a BSF NF Instance
+      type: object
+      properties:
+        dnnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnn'
+          minItems: 1
+        ipDomainList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        ipv4AddressRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4AddressRange'
+          minItems: 1
+        ipv6PrefixRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6PrefixRange'
+          minItems: 1
+        rxDiamHost:
+          $ref: '#/components/schemas/Fqdn'
+        rxDiamRealm:
+          $ref: '#/components/schemas/Fqdn'
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+    PlmnRange:
+      description: Range of PLMN IDs
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]{3}[0-9]{2,3}$
+        end:
+          type: string
+          pattern: ^[0-9]{3}[0-9]{2,3}$
+        pattern:
+          type: string
+    ChfInfo:
+      description: Information of a CHF NF Instance
+      type: object
+      not:
+        required:
+        - primaryChfInstance
+        - secondaryChfInstance
+      properties:
+        supiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        plmnRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnRange'
+          minItems: 1
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        primaryChfInstance:
+          $ref: '#/components/schemas/NfInstanceId'
+        secondaryChfInstance:
+          $ref: '#/components/schemas/NfInstanceId'
+    UdsfInfo:
+      description: Information related to UDSF
+      type: object
+      properties:
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        storageIdRanges:
+          description: 'A map (list of key-value pairs) where realmId serves as key
+            and each value in the map is an array of IdentityRanges. Each IdentityRange
+            is a range of storageIds.
+
+            '
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/IdentityRange'
+            minItems: 1
+          minProperties: 1
+    NwdafCapability:
+      description: Indicates the capability supported by the NWDAF
+      type: object
+      properties:
+        analyticsAggregation:
+          type: boolean
+          default: false
+        analyticsMetadataProvisioning:
+          type: boolean
+          default: false
+    NwdafInfo:
+      description: Information of a NWDAF NF Instance
+      type: object
+      properties:
+        eventIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventId'
+          minItems: 1
+        nwdafEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/NwdafEvent'
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        nwdafCapability:
+          $ref: '#/components/schemas/NwdafCapability'
+        analyticsDelay:
+          $ref: '#/components/schemas/DurationSec'
+        servingNfSetIdList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfSetId'
+          minItems: 1
+        servingNfTypeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFType'
+          minItems: 1
+        mlAnalyticsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/MlAnalyticsInfo'
+          minItems: 1
+    DnnInfoItem:
+      description: Set of parameters supported by NF for a given DNN
+      type: object
+      required:
+      - dnn
+      properties:
+        dnn:
+          anyOf:
+          - $ref: '#/components/schemas/Dnn'
+          - $ref: '#/components/schemas/WildcardDnn'
+    SnssaiInfoItem:
+      description: 'Parameters supported by an NF for a given S-NSSAI Set of parameters
+        supported by NF for a given S-NSSAI
+
+        '
+      type: object
+      required:
+      - sNssai
+      - dnnInfoList
+      properties:
+        sNssai:
+          $ref: '#/components/schemas/ExtSnssai'
+        dnnInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnnInfoItem'
+          minItems: 1
+    UnTrustAfInfo:
+      description: Information of a untrusted AF Instance
+      type: object
+      required:
+      - afId
+      properties:
+        afId:
+          type: string
+        sNssaiInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SnssaiInfoItem'
+          minItems: 1
+        mappingInd:
+          type: boolean
+          default: false
+    NefInfo:
+      description: Information of an NEF NF Instance
+      type: object
+      properties:
+        nefId:
+          $ref: '#/components/schemas/NefId'
+        pfdData:
+          $ref: '#/components/schemas/PfdData'
+        afEeData:
+          $ref: '#/components/schemas/AfEventExposureData'
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        externalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        servedFqdnList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        dnaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnai'
+          minItems: 1
+        unTrustAfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnTrustAfInfo'
+          minItems: 1
+        uasNfFunctionalityInd:
+          type: boolean
+          default: false
+    PcscfInfo:
+      description: Information of a P-CSCF NF Instance
+      type: object
+      properties:
+        accessType:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessType'
+          minItems: 1
+        dnnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnn'
+          minItems: 1
+        gmFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        gmIpv4Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        gmIpv6Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        mwFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        mwIpv4Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        mwIpv6Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        servedIpv4AddressRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4AddressRange'
+          minItems: 1
+        servedIpv6PrefixRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6PrefixRange'
+          minItems: 1
+    ImsiRange:
+      description: 'A range of IMSIs (subscriber identities), either based on a numeric
+        range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]+$
+        end:
+          type: string
+          pattern: ^[0-9]+$
+        pattern:
+          type: string
+    NetworkNodeDiameterAddress:
+      type: object
+      required:
+      - name
+      - realm
+      properties:
+        name:
+          $ref: '#/components/schemas/Fqdn'
+        realm:
+          $ref: '#/components/schemas/Fqdn'
+    HssInfo:
+      description: Information of an HSS NF Instance
+      type: object
+      properties:
+        groupId:
+          $ref: '#/components/schemas/NfGroupId'
+        imsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImsiRange'
+          minItems: 1
+        imsPrivateIdentityRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        imsPublicIdentityRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        msisdnRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        externalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        hssDiameterAddress:
+          $ref: '#/components/schemas/NetworkNodeDiameterAddress'
+    NFServiceVersion:
+      description: Contains the version details of an NF service
+      type: object
+      required:
+      - apiVersionInUri
+      - apiFullVersion
+      properties:
+        apiVersionInUri:
+          type: string
+        apiFullVersion:
+          type: string
+        expiry:
+          $ref: '#/components/schemas/DateTime'
+    UriScheme:
+      anyOf:
+      - type: string
+        enum:
+        - http
+        - https
+      - type: string
+      description: HTTP and HTTPS URI scheme.
+    NFServiceStatus:
+      description: Status of a given NF Service Instance of an NF Instance stored
+        in NRF
+      anyOf:
+      - type: string
+        enum:
+        - REGISTERED
+        - SUSPENDED
+        - UNDISCOVERABLE
+      - type: string
+    TransportProtocol:
+      description: Types of transport protocol used in a given IP endpoint of an NF
+        Service Instance
+      anyOf:
+      - type: string
+        enum:
+        - TCP
+      - type: string
+    IpEndPoint:
+      description: 'IP addressing information of a given NFService; it consists on,
+        e.g. IP address, TCP port, transport protocol...
+
+        '
+      type: object
+      properties:
+        ipv4Address:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Address:
+          $ref: '#/components/schemas/Ipv6Addr'
+        transport:
+          $ref: '#/components/schemas/TransportProtocol'
+        port:
+          type: integer
+          minimum: 0
+          maximum: 65535
+    DefSubServiceInfo:
+      description: Service Specific information for Default Notification Subscription.
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    DefaultNotificationSubscription:
+      description: 'Data structure for specifying the notifications the NF service
+        subscribes by default, along with callback URI
+
+        '
+      type: object
+      required:
+      - notificationType
+      - callbackUri
+      properties:
+        notificationType:
+          $ref: '#/components/schemas/NotificationType'
+        callbackUri:
+          $ref: '#/components/schemas/Uri'
+        interPlmnCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        n1MessageClass:
+          $ref: '#/components/schemas/N1MessageClass'
+        n2InformationClass:
+          $ref: '#/components/schemas/N2InformationClass'
+        versions:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        binding:
+          type: string
+        acceptedEncoding:
+          type: string
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        serviceInfoList:
+          description: 'A map of service specific information. The name of the corresponding
+            service (as specified in ServiceName data type) is the key.
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DefSubServiceInfo'
+          minProperties: 1
+    VendorId:
+      description: Vendor ID of the NF Service instance (Private Enterprise Number
+        assigned by IANA)
+      type: string
+      pattern: ^[0-9]{6}$
+    SupportedGADShapes:
+      description: Indicates supported GAD shapes.
+      anyOf:
+      - type: string
+        enum:
+        - POINT
+        - POINT_UNCERTAINTY_CIRCLE
+        - POINT_UNCERTAINTY_ELLIPSE
+        - POLYGON
+        - POINT_ALTITUDE
+        - POINT_ALTITUDE_UNCERTAINTY
+        - ELLIPSOID_ARC
+        - LOCAL_2D_POINT_UNCERTAINTY_ELLIPSE
+        - LOCAL_3D_POINT_UNCERTAINTY_ELLIPSOID
+      - type: string
+    LmfInfo:
+      description: Information of an LMF NF Instance
+      type: object
+      properties:
+        servingClientTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalClientType'
+          minItems: 1
+        lmfId:
+          $ref: '#/components/schemas/LMFIdentification'
+        servingAccessTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessType'
+          minItems: 1
+        servingAnNodeTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnNodeType'
+          minItems: 1
+        servingRatTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatType'
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        supportedGADShapes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedGADShapes'
+          minItems: 1
+    GmlcInfo:
+      description: Information of a GMLC NF Instance
+      type: object
+      properties:
+        servingClientTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalClientType'
+          minItems: 1
+        gmlcNumbers:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9]{5,15}$
+          minItems: 1
+    ScpDomainInfo:
+      description: SCP Domain specific information
+      type: object
+      properties:
+        scpFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        scpIpEndPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/IpEndPoint'
+          minItems: 1
+        scpPrefix:
+          type: string
+        scpPorts:
+          description: 'Port numbers for HTTP and HTTPS. The key of the map shall
+            be "http" or "https".
+
+            '
+          type: object
+          additionalProperties:
+            type: integer
+            minimum: 0
+            maximum: 65535
+          minProperties: 1
+    IpReachability:
+      description: Indicates the type(s) of IP addresses reachable via an SCP
+      anyOf:
+      - type: string
+        enum:
+        - IPV4
+        - IPV6
+        - IPV4V6
+      - type: string
+    ScpCapability:
+      description: Indicates the capabilities supported by an SCP
+      anyOf:
+      - type: string
+        enum:
+        - INDIRECT_COM_WITH_DELEG_DISC
+      - type: string
+    ScpInfo:
+      description: Information of an SCP Instance
+      type: object
+      properties:
+        scpDomainInfoList:
+          description: 'A map (list of key-value pairs) where the key of the map shall
+            be the string identifying an SCP domain
+
+            '
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScpDomainInfo'
+          minProperties: 1
+        scpPrefix:
+          type: string
+        scpPorts:
+          description: 'Port numbers for HTTP and HTTPS. The key of the map shall
+            be "http" or "https".
+
+            '
+          type: object
+          additionalProperties:
+            type: integer
+            minimum: 0
+            maximum: 65535
+          minProperties: 1
+        addressDomains:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        ipv4Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6Prefixes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Prefix'
+          minItems: 1
+        ipv4AddrRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4AddressRange'
+          minItems: 1
+        ipv6PrefixRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6PrefixRange'
+          minItems: 1
+        servedNfSetIdList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfSetId'
+          minItems: 1
+        remotePlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 1
+        remoteSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        ipReachability:
+          $ref: '#/components/schemas/IpReachability'
+        scpCapabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScpCapability'
+    SeppInfo:
+      description: Information of a SEPP Instance
+      type: object
+      properties:
+        seppPrefix:
+          type: string
+        seppPorts:
+          description: 'Port numbers for HTTP and HTTPS. The key of the map shall
+            be "http" or "https".
+
+            '
+          type: object
+          additionalProperties:
+            type: integer
+            minimum: 0
+            maximum: 65535
+          minProperties: 1
+        remotePlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 1
+        remoteSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+    AanfInfo:
+      description: Represents the information relative to an AAnF NF Instance.
+      type: object
+      properties:
+        routingIndicators:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9]{1,4}$
+          minItems: 1
+    MfafInfo:
+      description: Information of a MFAF NF Instance
+      type: object
+      properties:
+        servingNfTypeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFType'
+          minItems: 1
+        servingNfSetIdList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfSetId'
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+    DnnEasdfInfoItem:
+      description: Set of parameters supported by EASDF for a given DNN
+      type: object
+      required:
+      - dnn
+      properties:
+        dnn:
+          anyOf:
+          - $ref: '#/components/schemas/Dnn'
+          - $ref: '#/components/schemas/WildcardDnn'
+        dnaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnai'
+          minItems: 1
+    SnssaiEasdfInfoItem:
+      description: Set of parameters supported by EASDF for a given S-NSSAI
+      type: object
+      required:
+      - sNssai
+      - dnnEasdfInfoList
+      properties:
+        sNssai:
+          $ref: '#/components/schemas/ExtSnssai'
+        dnnEasdfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnnEasdfInfoItem'
+          minItems: 1
+    EasdfInfo:
+      description: Information of an EASDF NF Instance
+      type: object
+      properties:
+        sNssaiEasdfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SnssaiEasdfInfoItem'
+          minItems: 1
+        easdfN6IpAddressList:
+          type: array
+          items:
+            $ref: '#/components/schemas/IpAddr'
+          minItems: 1
+        upfN6IpAddressList:
+          type: array
+          items:
+            $ref: '#/components/schemas/IpAddr'
+          minItems: 1
+    DccfInfo:
+      description: Information of a DCCF NF Instance
+      type: object
+      properties:
+        servingNfTypeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFType'
+          minItems: 1
+        servingNfSetIdList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NfSetId'
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+    NsacfInfo:
+      description: Information of a NSACF NF Instance
+      type: object
+      required:
+      - nsacfCapability
+      properties:
+        nsacfCapability:
+          $ref: '#/components/schemas/NsacfCapability'
+        taiList:
+          deprecated: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          deprecated: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        nsacSaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NsacSai'
+          minItems: 1
+    DnnMbSmfInfoItem:
+      description: Parameters supported by an MB-SMF for a given DNN
+      type: object
+      required:
+      - dnn
+      properties:
+        dnn:
+          anyOf:
+          - $ref: '#/components/schemas/Dnn'
+          - $ref: '#/components/schemas/WildcardDnn'
+    SnssaiMbSmfInfoItem:
+      description: Parameters supported by an MB-SMF for a given S-NSSAI
+      type: object
+      required:
+      - sNssai
+      - dnnInfoList
+      properties:
+        sNssai:
+          $ref: '#/components/schemas/ExtSnssai'
+        dnnInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnnMbSmfInfoItem'
+          minItems: 1
+    TmgiRange:
+      description: Range of TMGIs
+      type: object
+      required:
+      - mbsServiceIdStart
+      - mbsServiceIdEnd
+      - plmnId
+      properties:
+        mbsServiceIdStart:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+        mbsServiceIdEnd:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        nid:
+          $ref: '#/components/schemas/Nid'
+    NrCellId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{9}$
+      description: "36-bit string identifying an NR Cell Id as specified in clause\
+        \ 9.3.1.7 of 3GPP TS 38.413,  in hexadecimal representation. Each character\
+        \ in the string shall take a value of \"0\" to \"9\",  \"a\" to \"f\" or \"\
+        A\" to \"F\" and shall represent 4 bits. The most significant character  representing\
+        \ the 4 most significant bits of the Cell Id shall appear first in the string,\
+        \ and  the character representing the 4 least significant bit of the Cell\
+        \ Id shall appear last in the  string. \n"
+    Ncgi:
+      description: Contains the NCGI (NR Cell Global Identity), as described in 3GPP
+        23.003
+      type: object
+      properties:
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        nrCellId:
+          $ref: '#/components/schemas/NrCellId'
+        nid:
+          $ref: '#/components/schemas/Nid'
+      required:
+      - plmnId
+      - nrCellId
+    NcgiTai:
+      description: List of NR cell ids, with their pertaining TAIs
+      type: object
+      properties:
+        tai:
+          $ref: '#/components/schemas/Tai'
+        cellList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ncgi'
+          minItems: 1
+          description: List of List of NR cell ids
+      required:
+      - tai
+      - cellList
+    MbsServiceArea:
+      description: MBS Service Area
+      type: object
+      properties:
+        ncgiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NcgiTai'
+          minItems: 1
+          description: List of NR cell Ids
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+          description: List of tracking area Ids
+      anyOf:
+      - required:
+        - ncgiList
+      - required:
+        - taiList
+    MbsServiceAreaInfo:
+      description: MBS Service Area Information for location dependent MBS session
+      type: object
+      properties:
+        areaSessionId:
+          $ref: '#/components/schemas/Uint16'
+        mbsServiceArea:
+          $ref: '#/components/schemas/MbsServiceArea'
+      required:
+      - areaSessionId
+      - mbsServiceArea
+    MbsSession:
+      description: MBS Session currently served by an MB-SMF
+      type: object
+      required:
+      - mbsSessionId
+      properties:
+        mbsSessionId:
+          $ref: '#/components/schemas/MbsSessionId'
+        mbsAreaSessions:
+          description: A map (list of key-value pairs) where the key identifies an
+            areaSessionId
+          additionalProperties:
+            $ref: '#/components/schemas/MbsServiceAreaInfo'
+          minProperties: 1
+    MbSmfInfo:
+      description: Information of an MB-SMF NF Instance
+      type: object
+      properties:
+        sNssaiInfoList:
+          description: A map (list of key-value pairs) where a valid JSON string serves
+            as key
+          additionalProperties:
+            $ref: '#/components/schemas/SnssaiMbSmfInfoItem'
+          minProperties: 1
+        tmgiRangeList:
+          description: A map (list of key-value pairs) where a valid JSON string serves
+            as key
+          additionalProperties:
+            $ref: '#/components/schemas/TmgiRange'
+          minProperties: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        mbsSessionList:
+          description: A map (list of key-value pairs) where a valid JSON string serves
+            as key
+          additionalProperties:
+            $ref: '#/components/schemas/MbsSession'
+          minProperties: 1
+    DnnTsctsfInfoItem:
+      description: Parameters supported by an TSCTSF for a given DNN
+      type: object
+      required:
+      - dnn
+      properties:
+        dnn:
+          anyOf:
+          - $ref: '#/components/schemas/Dnn'
+          - $ref: '#/components/schemas/WildcardDnn'
+    SnssaiTsctsfInfoItem:
+      description: Set of parameters supported by TSCTSF for a given S-NSSAI
+      type: object
+      required:
+      - sNssai
+      - dnnInfoList
+      properties:
+        sNssai:
+          $ref: '#/components/schemas/ExtSnssai'
+        dnnInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnnTsctsfInfoItem'
+          minItems: 1
+    TsctsfInfo:
+      description: Information of a TSCTSF NF Instance
+      type: object
+      properties:
+        sNssaiInfoList:
+          description: A map (list of key-value pairs) where a valid JSON string serves
+            as key
+          additionalProperties:
+            $ref: '#/components/schemas/SnssaiTsctsfInfoItem'
+          minProperties: 1
+        externalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        internalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternalGroupIdRange'
+          minItems: 1
+    MbUpfInfo:
+      description: Information of an MB-UPF NF Instance
+      type: object
+      required:
+      - sNssaiMbUpfInfoList
+      properties:
+        sNssaiMbUpfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SnssaiUpfInfoItem'
+          minItems: 1
+        mbSmfServingArea:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        interfaceMbUpfInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceUpfInfoItem'
+          minItems: 1
+        taiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tai'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 65535
+        supportedPfcpFeatures:
+          type: string
+    TrustAfInfo:
+      description: Information of a trusted AF Instance
+      type: object
+      properties:
+        sNssaiInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SnssaiInfoItem'
+          minItems: 1
+        afEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AfEvent'
+          minItems: 1
+        appIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        internalGroupId:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupId'
+          minItems: 1
+        mappingInd:
+          type: boolean
+          default: false
+    NssaafInfo:
+      description: Information of a NSSAAF Instance
+      type: object
+      properties:
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        internalGroupIdentifiersRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternalGroupIdRange'
+          minItems: 1
+    IwmscInfo:
+      description: Information of an SMS-IWMSC NF Instance
+      type: object
+      properties:
+        msisdnRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        taiRangeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaiRange'
+          minItems: 1
+        scNumber:
+          type: string
+          pattern: ^[0-9]{5,15}$
+    MnpfInfo:
+      description: Information of an MNPF Instance
+      type: object
+      properties:
+        msisdnRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+      required:
+      - msisdnRanges
+    Uint32:
+      type: integer
+      minimum: 0
+      maximum: 4294967295
+      description: 'Integer where the allowed values correspond to the value range
+        of an unsigned 32-bit integer.
+
+        '
+    RedirectResponse:
+      description: 'The response shall include a Location header field containing
+        a different URI  (pointing to a different URI of an other service instance),
+        or the same URI if a request  is redirected to the same target resource via
+        a different SCP.
+
+        '
+      type: object
+      properties:
+        cause:
+          type: string
+        targetScp:
+          $ref: '#/components/schemas/Uri'
+        targetSepp:
+          $ref: '#/components/schemas/Uri'
+    InvalidParam:
+      type: object
+      properties:
+        param:
+          type: string
+          description: 'If the invalid parameter is an attribute in a JSON body, this
+            IE shall contain the  attribute''s name and shall be encoded as a JSON
+            Pointer. If the invalid parameter is  an HTTP header, this IE shall be
+            formatted as the concatenation of the string "header "  plus the name
+            of such header. If the invalid parameter is a query parameter, this IE  shall
+            be formatted as the concatenation of the string "query " plus the name
+            of such  query parameter. If the invalid parameter is a variable part
+            in the path of a resource  URI, this IE shall contain the name of the
+            variable, including the symbols "{" and "}"  used in OpenAPI specification
+            as the notation to represent variable path segments.
+
+            '
+        reason:
+          type: string
+          description: 'A human-readable reason, e.g. "must be a positive integer".
+            In cases involving failed  operations in a PATCH request, the reason string
+            should identify the operation that  failed using the operation''s array
+            index to assist in correlation of the invalid  parameter with the failed
+            operation, e.g." Replacement value invalid for attribute  (failed operation
+            index= 4)"
+
+            '
+      required:
+      - param
+      description: It contains an invalid parameter and a related description.
+    AccessTokenErr:
+      description: Error returned in the access token response message
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+          - invalid_scope
+        error_description:
+          type: string
+        error_uri:
+          type: string
+    AccessTokenReq:
+      description: Contains information related to the access token request
+      type: object
+      required:
+      - grant_type
+      - nfInstanceId
+      - scope
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfType:
+          $ref: '#/components/schemas/NFType'
+        targetNfType:
+          $ref: '#/components/schemas/NFType'
+        scope:
+          type: string
+          pattern: ^([a-zA-Z0-9_:-]+)( [a-zA-Z0-9_:-]+)*$
+        targetNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        requesterPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        requesterPlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 2
+        requesterSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        requesterFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        requesterSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        targetPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        targetSnpn:
+          $ref: '#/components/schemas/PlmnIdNid'
+        targetSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        targetNsiList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        targetNfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        targetNfServiceSetId:
+          $ref: '#/components/schemas/NfServiceSetId'
+        hnrfAccessTokenUri:
+          $ref: '#/components/schemas/Uri'
+        sourceNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+    ProblemDetails:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+        instance:
+          $ref: '#/components/schemas/Uri'
+        cause:
+          type: string
+          description: 'A machine-readable application error cause specific to this
+            occurrence of the problem.  This IE should be present and provide application-related
+            error information, if available.
+
+            '
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+          minItems: 1
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        accessTokenError:
+          $ref: '#/components/schemas/AccessTokenErr'
+        accessTokenRequest:
+          $ref: '#/components/schemas/AccessTokenReq'
+        nrfId:
+          $ref: '#/components/schemas/Fqdn'

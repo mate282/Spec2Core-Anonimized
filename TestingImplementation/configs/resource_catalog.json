@@ -1,0 +1,1308 @@
+[
+  {
+    "param": "smcontextref",
+    "service": "Nsmf_PDUSession",
+    "prefix": "/sm-contexts",
+    "n_ops": 4,
+    "cat": "post",
+    "note": "POST /sm-contexts (operationId: PostSmContexts) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": true,
+    "file": "docs/specs/Nsmf_PDUSession_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/sm-contexts",
+      "operationId": "PostSmContexts"
+    }
+  },
+  {
+    "param": "pdusessionref",
+    "service": "Nsmf_PDUSession",
+    "prefix": "/pdu-sessions",
+    "n_ops": 4,
+    "cat": "post",
+    "note": "POST /pdu-sessions (operationId: PostPduSessions) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": true,
+    "file": "docs/specs/Nsmf_PDUSession_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/pdu-sessions",
+      "operationId": "PostPduSessions"
+    }
+  },
+  {
+    "param": "pdusessionref",
+    "service": "Nsmf_NIDD",
+    "prefix": "/pdu-sessions",
+    "n_ops": 1,
+    "cat": "reused",
+    "note": "Riusa la PDU session già creata via Nsmf_PDUSession POST /pdu-sessions — NIDD opera su una sessione esistente.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueidentity",
+    "service": "Nudm_EE",
+    "prefix": "/",
+    "n_ops": 3,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI/GPSI del subscriber già provisionato — nessuna risorsa nuova.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueidentity",
+    "service": "Nudm_NIDDAU",
+    "prefix": "/",
+    "n_ops": 1,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI/GPSI del subscriber già provisionato — nessuna risorsa nuova.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueidentity",
+    "service": "Nudm_ReportSMDeliveryStatus",
+    "prefix": "/",
+    "n_ops": 1,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI/GPSI del subscriber già provisionato — nessuna risorsa nuova.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueidentity",
+    "service": "Nudm_SSAU",
+    "prefix": "/",
+    "n_ops": 2,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI/GPSI del subscriber già provisionato — nessuna risorsa nuova.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nudm_EE",
+    "prefix": "/{ueIdentity}/ee-subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /{ueIdentity}/ee-subscriptions (operationId: CreateEeSubscription) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_EE_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/{ueIdentity}/ee-subscriptions",
+      "operationId": "CreateEeSubscription"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nudm_SDM",
+    "prefix": "/{ueId}/sdm-subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /{ueId}/sdm-subscriptions (operationId: Subscribe) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_SDM_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/{ueId}/sdm-subscriptions",
+      "operationId": "Subscribe"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nudm_SDM",
+    "prefix": "/shared-data-subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /shared-data-subscriptions (operationId: SubscribeToSharedData) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_SDM_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/shared-data-subscriptions",
+      "operationId": "SubscribeToSharedData"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "NRF NFDiscovery Service",
+    "prefix": "/scp-domain-routing-info-subs",
+    "n_ops": 1,
+    "cat": "post",
+    "note": "POST /scp-domain-routing-info-subs (operationId: ScpDomainRoutingInfoSubscribe) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nnrf_NFDiscovery_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/scp-domain-routing-info-subs",
+      "operationId": "ScpDomainRoutingInfoSubscribe"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "NRF NFManagement Service",
+    "prefix": "/subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /subscriptions (operationId: CreateSubscription) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nnrf_NFManagement_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/subscriptions",
+      "operationId": "CreateSubscription"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Namf_Communication",
+    "prefix": "/ue-contexts/{ueContextId}/n1-n2-messages/subscriptions",
+    "n_ops": 1,
+    "cat": "post",
+    "note": "POST /ue-contexts/{ueContextId}/n1-n2-messages/subscriptions (operationId: N1N2MessageSubscribe) — il server genera l'ID, va letto dalla risposta (campo 'n1n2NotifySubscriptionId', non 'subscriptionId' — vedi response_field). Il vero creatore/owner atteso per questa risorsa è un PCF (vedi the project changelog 2026-09-12, S14), non SMF-1 — vedi creator_identity.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Namf_Communication_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/n1-n2-messages/subscriptions",
+      "operationId": "N1N2MessageSubscribe"
+    },
+    "creator_identity": {
+      "nf_type": "PCF",
+      "fixture_role": "pcf_1"
+    },
+    "response_field": "n1n2NotifySubscriptionId"
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Namf_Communication",
+    "prefix": "/subscriptions",
+    "n_ops": 2,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Namf_Communication_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscriptions/{subscriptionId}",
+      "operationId": "AMFStatusChangeSubscribeModfy"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Namf_EventExposure",
+    "prefix": "/subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /subscriptions (operationId: CreateSubscription) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Namf_EventExposure_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/subscriptions",
+      "operationId": "CreateSubscription"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nchf_SpendingLimitControl",
+    "prefix": "/subscriptions",
+    "n_ops": 2,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nchf_SpendingLimitControl_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscriptions/{subscriptionId}",
+      "operationId": null
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nnef_EASDeployment",
+    "prefix": "/subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /subscriptions (operationId: CreateIndividualSubcription) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nnef_EASDeployment_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/subscriptions",
+      "operationId": "CreateIndividualSubcription"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nnef_EventExposure",
+    "prefix": "/subscriptions",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nnef_EventExposure_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscriptions/{subscriptionId}",
+      "operationId": "ReplaceIndividualSubcription"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nnef_PFDmanagement Service API",
+    "prefix": "/subscriptions",
+    "n_ops": 2,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nnef_PFDmanagement_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscriptions/{subscriptionId}",
+      "operationId": "Nnef_PFDmanagement_ModifySubscr"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "NSSF NSSAI Availability",
+    "prefix": "/nssai-availability/subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /nssai-availability/subscriptions (operationId: NSSAIAvailabilityPost) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nnssf_NSSAIAvailability_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/nssai-availability/subscriptions",
+      "operationId": "NSSAIAvailabilityPost"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Npcf_EventExposure",
+    "prefix": "/subscriptions",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_EventExposure_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscriptions/{subscriptionId}",
+      "operationId": "PutPcEventExposureSubsc"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/application-data/influenceData/subs-to-notify",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/application-data/influenceData/subs-to-notify/{subscriptionId}",
+      "operationId": "ReplaceIndividualInfluenceDataSubscription"
+    }
+  },
+  {
+    "param": "supi",
+    "service": "Nudm_MT",
+    "prefix": "/",
+    "n_ops": 2,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI del subscriber già provisionato.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "supi",
+    "service": "Nudm_SDM",
+    "prefix": "/",
+    "n_ops": 27,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": true,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "supi",
+    "service": "Nudm_UEAU",
+    "prefix": "/",
+    "n_ops": 4,
+    "cat": "reused",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "supi",
+    "service": "Nausf_SoRProtection Service",
+    "prefix": "/",
+    "n_ops": 1,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI del subscriber già provisionato.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "supi",
+    "service": "Nausf_UPUProtection Service",
+    "prefix": "/",
+    "n_ops": 1,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI del subscriber già provisionato.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "supi",
+    "service": "Nnef_SMService",
+    "prefix": "/sm-contexts",
+    "n_ops": 1,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI del subscriber già provisionato.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueid",
+    "service": "Nudm_PP",
+    "prefix": "/",
+    "n_ops": 5,
+    "cat": "reused",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueid",
+    "service": "Nudm_SDM",
+    "prefix": "/",
+    "n_ops": 6,
+    "cat": "reused_ue",
+    "note": "Riusa l'UE (SUPI/GPSI) già provisionato — questi GET leggono dati esistenti.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueid",
+    "service": "Nudm_UECM",
+    "prefix": "/",
+    "n_ops": 33,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": true,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data",
+    "n_ops": 112,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": true,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/policy-data/ues",
+    "n_ops": 14,
+    "cat": "reused",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "ueid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/exposure-data",
+    "n_ops": 7,
+    "cat": "reused",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "extgroupid",
+    "service": "Nudm_PP",
+    "prefix": "/5g-vn-groups",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_PP_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/5g-vn-groups/{extGroupId}",
+      "operationId": "Create 5G VN Group"
+    }
+  },
+  {
+    "param": "extgroupid",
+    "service": "Nudm_PP",
+    "prefix": "/mbs-group-membership",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_PP_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/mbs-group-membership/{extGroupId}",
+      "operationId": "Create 5G MBS Group"
+    }
+  },
+  {
+    "param": "afinstanceid",
+    "service": "Nudm_PP",
+    "prefix": "/{ueId}/pp-data-store",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_PP_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/{ueId}/pp-data-store/{afInstanceId}",
+      "operationId": "Create PP Data Entry"
+    }
+  },
+  {
+    "param": "shareddataid",
+    "service": "Nudm_SDM",
+    "prefix": "/shared-data",
+    "n_ops": 1,
+    "cat": "reused_other",
+    "note": "Riusa lo sharedDataId creato via NRF PUT /shared-data/{sharedDataId} — non una risorsa separata.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "shareddataid",
+    "service": "NRF NFManagement Service",
+    "prefix": "/shared-data",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nnrf_NFManagement_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/shared-data/{sharedDataId}",
+      "operationId": "RegisterSharedData"
+    }
+  },
+  {
+    "param": "shareddataid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/shared-data",
+    "n_ops": 1,
+    "cat": "reused_other",
+    "note": "Riusa lo sharedDataId creato via NRF PUT /shared-data/{sharedDataId}.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "servicetype",
+    "service": "Nudm_SSAU",
+    "prefix": "/{ueIdentity}",
+    "n_ops": 2,
+    "cat": "enum",
+    "note": "Valore enum (es. MONTE_CARLO_5G_SRVCC), non un identificatore di istanza.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "servicetype",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/{ueId}/service-specific-authorization-data",
+    "n_ops": 1,
+    "cat": "enum",
+    "note": "Valore enum, non un identificatore di istanza.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "servicetype",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/{ueId}/context-data/service-specific-authorizations",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/context-data/service-specific-authorizations/{serviceType}",
+      "operationId": "CreateServiceSpecificAuthorizationInfo"
+    }
+  },
+  {
+    "param": "supiorsuci",
+    "service": "Nudm_UEAU",
+    "prefix": "/",
+    "n_ops": 3,
+    "cat": "reused_ue",
+    "note": "Riusa il SUPI/SUCI dell'UE già provisionato.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "hssauthtype",
+    "service": "Nudm_UEAU",
+    "prefix": "/{supi}/hss-security-information",
+    "n_ops": 1,
+    "cat": "enum",
+    "note": "Valore enum (EAP_AKA_PRIME/...), non un identificatore di istanza.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "autheventid",
+    "service": "Nudm_UEAU",
+    "prefix": "/{supi}/auth-events",
+    "n_ops": 1,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_UEAU_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/{supi}/auth-events/{authEventId}",
+      "operationId": "DeleteAuth"
+    }
+  },
+  {
+    "param": "pdusessionid",
+    "service": "Nudm_UECM",
+    "prefix": "/{ueId}/registrations/smf-registrations",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": true,
+    "file": "docs/specs/Nudm_UECM_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+      "operationId": "Registration"
+    }
+  },
+  {
+    "param": "pdusessionid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/{ueId}/context-data/smf-registrations",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/context-data/smf-registrations/{pduSessionId}",
+      "operationId": "CreateOrUpdateSmfRegistration"
+    }
+  },
+  {
+    "param": "pdusessionid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/exposure-data/{ueId}/session-management-data",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+      "operationId": "CreateOrReplaceSessionManagementData"
+    }
+  },
+  {
+    "param": "nwdafregistrationid",
+    "service": "Nudm_UECM",
+    "prefix": "/{ueId}/registrations/nwdaf-registrations",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_UECM_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+      "operationId": "NwdafRegistration"
+    }
+  },
+  {
+    "param": "searchid",
+    "service": "NRF NFDiscovery Service",
+    "prefix": "/searches",
+    "n_ops": 2,
+    "cat": "auto",
+    "note": "Generato automaticamente dall'NRF come side-effect di una query di discovery paginata/complessa — non si crea con una chiamata dedicata.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "nfinstanceid",
+    "service": "NRF NFManagement Service",
+    "prefix": "/nf-instances",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nnrf_NFManagement_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/nf-instances/{nfInstanceID}",
+      "operationId": "RegisterNFInstance"
+    }
+  },
+  {
+    "param": "uecontextid",
+    "service": "Namf_Communication",
+    "prefix": "/ue-contexts",
+    "n_ops": 10,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": true,
+    "file": "docs/specs/Namf_Communication_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/ue-contexts/{ueContextId}",
+      "operationId": "CreateUEContext"
+    }
+  },
+  {
+    "param": "uecontextid",
+    "service": "Namf_Location",
+    "prefix": "/",
+    "n_ops": 3,
+    "cat": "reused_other",
+    "note": "Riusa lo ueContextId creato via Namf_Communication PUT /ue-contexts/{ueContextId} (= il SUPI in free5GC).",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "uecontextid",
+    "service": "Namf_MT",
+    "prefix": "/ue-contexts",
+    "n_ops": 2,
+    "cat": "reused",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "n2notifysubscriptionid",
+    "service": "Namf_Communication",
+    "prefix": "/non-ue-n2-messages/subscriptions",
+    "n_ops": 1,
+    "cat": "post",
+    "note": "POST /non-ue-n2-messages/subscriptions (operationId: NonUeN2InfoSubscribe) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Namf_Communication_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/non-ue-n2-messages/subscriptions",
+      "operationId": "NonUeN2InfoSubscribe"
+    }
+  },
+  {
+    "param": "smcontextid",
+    "service": "Nnef_SMContext",
+    "prefix": "/sm-contexts",
+    "n_ops": 3,
+    "cat": "post",
+    "note": "POST /sm-contexts (operationId: Create) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nnef_SMContext_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/sm-contexts",
+      "operationId": "Create"
+    }
+  },
+  {
+    "param": "smpolicyid",
+    "service": "Npcf_SMPolicyControl API",
+    "prefix": "/sm-policies",
+    "n_ops": 3,
+    "cat": "post",
+    "note": "POST /sm-policies (operationId: CreateSMPolicy) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": true,
+    "file": "docs/specs/Npcf_SMPolicyControl_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/sm-policies",
+      "operationId": "CreateSMPolicy"
+    }
+  },
+  {
+    "param": "mbscontextref",
+    "service": "Namf_MBSBroadcast",
+    "prefix": "/mbs-contexts",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /mbs-contexts (operationId: ContextCreate) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Namf_MBSBroadcast_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/mbs-contexts",
+      "operationId": "ContextCreate"
+    }
+  },
+  {
+    "param": "authctxid",
+    "service": "AUSF API",
+    "prefix": "/ue-authentications",
+    "n_ops": 4,
+    "cat": "post",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": true,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nausf_UEAuthentication_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/ue-authentications",
+      "operationId": null
+    }
+  },
+  {
+    "param": "authctxid",
+    "service": "AUSF API",
+    "prefix": "/prose-authentications",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /prose-authentications — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nausf_UEAuthentication_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/prose-authentications",
+      "operationId": null
+    }
+  },
+  {
+    "param": "chargingdataref",
+    "service": "Nchf_ConvergedCharging",
+    "prefix": "/chargingdata",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /chargingdata — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nchf_ConvergedCharging_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/chargingdata",
+      "operationId": null
+    }
+  },
+  {
+    "param": "offlinechargingdataref",
+    "service": "Nchf_OfflineOnlyCharging",
+    "prefix": "/offlinechargingdata",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /offlinechargingdata — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nchf_OfflineOnlyCharging_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/offlinechargingdata",
+      "operationId": null
+    }
+  },
+  {
+    "param": "appid",
+    "service": "Nnef_PFDmanagement Service API",
+    "prefix": "/applications",
+    "n_ops": 1,
+    "cat": "external",
+    "note": "Assegnato quando un AF si registra (es. via Nnef_EASDeployment) — fuori dal perimetro di questo servizio.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "appid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/application-data/pfds",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/application-data/pfds/{appId}",
+      "operationId": "CreateOrReplaceIndividualPFDData"
+    }
+  },
+  {
+    "param": "nfid",
+    "service": "NSSF NSSAI Availability",
+    "prefix": "/nssai-availability",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nnssf_NSSAIAvailability_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/nssai-availability/{nfId}",
+      "operationId": "NSSAIAvailabilityPut"
+    }
+  },
+  {
+    "param": "appamcontextid",
+    "service": "Npcf_AMPolicyAuthorization Service API",
+    "prefix": "/app-am-contexts",
+    "n_ops": 5,
+    "cat": "post",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_AMPolicyAuthorization_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/app-am-contexts",
+      "operationId": "PostAppAmContexts"
+    }
+  },
+  {
+    "param": "polassoid",
+    "service": "Npcf_AMPolicyControl",
+    "prefix": "/policies",
+    "n_ops": 3,
+    "cat": "post",
+    "note": "POST /policies (operationId: CreateIndividualAMPolicyAssociation) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_AMPolicyControl_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/policies",
+      "operationId": "CreateIndividualAMPolicyAssociation"
+    }
+  },
+  {
+    "param": "polassoid",
+    "service": "Npcf_UEPolicyControl",
+    "prefix": "/policies",
+    "n_ops": 3,
+    "cat": "post",
+    "note": "POST /policies (operationId: CreateIndividualUEPolicyAssociation) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_UEPolicyControl_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/policies",
+      "operationId": "CreateIndividualUEPolicyAssociation"
+    }
+  },
+  {
+    "param": "bdtpolicyid",
+    "service": "Npcf_BDTPolicyControl Service API",
+    "prefix": "/bdtpolicies",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /bdtpolicies (operationId: CreateBDTPolicy) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_BDTPolicyControl_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/bdtpolicies",
+      "operationId": "CreateBDTPolicy"
+    }
+  },
+  {
+    "param": "bdtpolicyid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/application-data/bdtPolicyData",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/application-data/bdtPolicyData/{bdtPolicyId}",
+      "operationId": "CreateIndividualAppliedBdtPolicyData"
+    }
+  },
+  {
+    "param": "contextid",
+    "service": "Npcf_MBSPolicyAuthorization API",
+    "prefix": "/contexts",
+    "n_ops": 3,
+    "cat": "post",
+    "note": "POST /contexts (operationId: CreateMBSAppSessionCtxt) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_MBSPolicyAuthorization_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/contexts",
+      "operationId": "CreateMBSAppSessionCtxt"
+    }
+  },
+  {
+    "param": "mbspolicyid",
+    "service": "Npcf_MBSPolicyControl API",
+    "prefix": "/mbs-policies",
+    "n_ops": 4,
+    "cat": "post",
+    "note": "POST /mbs-policies (operationId: CreateMBSPolicy) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_MBSPolicyControl_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/mbs-policies",
+      "operationId": "CreateMBSPolicy"
+    }
+  },
+  {
+    "param": "appsessionid",
+    "service": "Npcf_PolicyAuthorization Service API",
+    "prefix": "/app-sessions",
+    "n_ops": 5,
+    "cat": "post",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Npcf_PolicyAuthorization_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/app-sessions",
+      "operationId": "PostAppSessions"
+    }
+  },
+  {
+    "param": "subid",
+    "service": "Nsmf_EventExposure",
+    "prefix": "/subscriptions",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nsmf_EventExposure_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscriptions/{subId}",
+      "operationId": "ReplaceIndividualSubcription"
+    }
+  },
+  {
+    "param": "subid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/exposure-data/subs-to-notify",
+    "n_ops": 2,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/exposure-data/subs-to-notify/{subId}",
+      "operationId": "ReplaceIndividualExposureDataSubscription"
+    }
+  },
+  {
+    "param": "servingnetworkname",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/{ueId}/authentication-data/authentication-status",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+      "operationId": "CreateIndividualAuthenticationStatus"
+    }
+  },
+  {
+    "param": "servingplmnid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/{ueId}",
+    "n_ops": 8,
+    "cat": "external",
+    "note": "Filtro/contesto di query sui dati di subscription-data dell'UE, non una risorsa a sé.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "subsid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/{ueId}/context-data/ee-subscriptions",
+    "n_ops": 16,
+    "cat": "post",
+    "note": "Il PUT individuale assume semantica create-or-replace con ID scelto dal chiamante, ma free5GC lo implementa come solo-update: un PUT su un subsId non esistente ritorna 404 SUBSCRIPTION_NOT_FOUND (verificato live 2026-10-10, diagnosticando i SETUP_FAILURE del batch_08). Il vero creatore è il POST sulla collection (operationId: CreateEeSubscriptions), che risponde 201 con header Location contenente il subsId reale — verificato live.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/subscription-data/{ueId}/context-data/ee-subscriptions",
+      "operationId": "CreateEeSubscriptions"
+    }
+  },
+  {
+    "param": "subsid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/group-data/{ueGroupId}/ee-subscriptions",
+    "n_ops": 16,
+    "cat": "post",
+    "note": "Stesso bug della riga ee-subscriptions per-UE (vedi quella nota, 2026-10-10): il PUT individuale è solo-update in free5GC, non create. Il vero creatore è il POST sulla collection (operationId: CreateEeGroupSubscriptions), Location-based (non ancora verificato live per questa specifica collection di gruppo, ma stessa shape/stesso file della versione per-UE già confermata).",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/subscription-data/group-data/{ueGroupId}/ee-subscriptions",
+      "operationId": "CreateEeGroupSubscriptions"
+    }
+  },
+  {
+    "param": "subsid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/{ueId}/context-data/sdm-subscriptions",
+    "n_ops": 8,
+    "cat": "post",
+    "note": "Stesso bug della riga ee-subscriptions (vedi quella nota, 2026-10-10): il PUT individuale è solo-update in free5GC, non create. Il vero creatore è il POST sulla collection (operationId: CreateSdmSubscriptions), Location-based — già osservato funzionare nella pipeline normale (S157_NUDR_DR_CREATESDMSUBSCRIPTIONS_a, batch_08, HTTP 201).",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions",
+      "operationId": "CreateSdmSubscriptions"
+    }
+  },
+  {
+    "param": "subsid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/subs-to-notify",
+    "n_ops": 3,
+    "cat": "post",
+    "note": "POST /subscription-data/subs-to-notify (operationId: SubscriptionDataSubscriptions) — il server genera l'ID, va letto dalla risposta.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/subscription-data/subs-to-notify",
+      "operationId": "SubscriptionDataSubscriptions"
+    }
+  },
+  {
+    "param": "subsid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/policy-data/subs-to-notify",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "Stesso bug della riga ee-subscriptions (vedi quella nota, 2026-10-10): assunto erroneamente che il PUT individuale crei con ID scelto dal chiamante. Il vero creatore è il POST sulla collection (operationId: CreateIndividualPolicyDataSubscription), non ancora verificato live per questa collection specifica ma stessa shape Location-based delle altre subs-to-notify già confermate.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/policy-data/subs-to-notify",
+      "operationId": "CreateIndividualPolicyDataSubscription"
+    }
+  },
+  {
+    "param": "subsid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/application-data/subs-to-notify",
+    "n_ops": 4,
+    "cat": "post",
+    "note": "Stesso bug della riga ee-subscriptions (vedi quella nota, 2026-10-10): assunto erroneamente che il PUT individuale crei con ID scelto dal chiamante. Il vero creatore è il POST sulla collection (operationId: CreateIndividualApplicationDataSubscription), non ancora verificato live per questa collection specifica ma stessa shape Location-based delle altre subs-to-notify già confermate.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/application-data/subs-to-notify",
+      "operationId": "CreateIndividualApplicationDataSubscription"
+    }
+  },
+  {
+    "param": "uegroupid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/group-data",
+    "n_ops": 15,
+    "cat": "no_create_needed",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "externalgroupid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/group-data/5g-vn-groups",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscription-data/group-data/5g-vn-groups/{externalGroupId}",
+      "operationId": "Create5GVnGroup"
+    }
+  },
+  {
+    "param": "externalgroupid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/subscription-data/group-data/mbs-group-membership",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/subscription-data/group-data/mbs-group-membership/{externalGroupId}",
+      "operationId": "Create5GmbsGroup"
+    }
+  },
+  {
+    "param": "usagemonid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/policy-data/ues/{ueId}/sm-data",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+      "operationId": "CreateUsageMonitoringResource"
+    }
+  },
+  {
+    "param": "sponsorid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/policy-data/sponsor-connectivity-data",
+    "n_ops": 1,
+    "cat": "external",
+    "note": "Configurazione di rete statica (sponsor connectivity), tipicamente pre-provisionata.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "bdtreferenceid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/policy-data/bdt-data",
+    "n_ops": 4,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/policy-data/bdt-data/{bdtReferenceId}",
+      "operationId": "CreateIndividualBdtData"
+    }
+  },
+  {
+    "param": "influenceid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/application-data/influenceData",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/application-data/influenceData/{influenceId}",
+      "operationId": "CreateOrReplaceIndividualInfluenceData"
+    }
+  },
+  {
+    "param": "plmnid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/policy-data/plmns",
+    "n_ops": 1,
+    "cat": "external",
+    "note": "Configurazione di rete statica a livello di PLMN, tipicamente pre-provisionata.",
+    "auto_from_lifecycle": false,
+    "file": null,
+    "create_op": null
+  },
+  {
+    "param": "configurationid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/application-data/iptvConfigData",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/application-data/iptvConfigData/{configurationId}",
+      "operationId": "CreateOrReplaceIndividualIPTVConfigurationData"
+    }
+  },
+  {
+    "param": "serviceparamid",
+    "service": "Nudr_DataRepository API OpenAPI file",
+    "prefix": "/application-data/serviceParamData",
+    "n_ops": 3,
+    "cat": "put",
+    "note": "PUT diretto su questo path con un ID scelto dal chiamante — chiamata singola, banale.",
+    "auto_from_lifecycle": false,
+    "file": "specs-analysis/5GC_APIs-Rel-17/bundled/Nudr_DR_bundled.yaml",
+    "create_op": {
+      "method": "PUT",
+      "path": "/application-data/serviceParamData/{serviceParamId}",
+      "operationId": "CreateOrReplaceServiceParameterData"
+    }
+  },
+  {
+    "param": "subscriptionid",
+    "service": "Nudm_EE",
+    "prefix": "/ee-subscriptions",
+    "n_ops": 2,
+    "cat": "post",
+    "note": "POST /{ueIdentity}/ee-subscriptions (operationId: CreateEeSubscription) — il server genera l'ID, restituito nell'header Location (mandatorio per TS 29.507, non serve response_field). {ueIdentity} nel create_op è già risolto da _UE_IDENTITY_PARAMS/_ue_seed(). Aggiunta 2026-09-30 per risolvere S50's SETUP_FAILURE su subscriptionId.",
+    "auto_from_lifecycle": false,
+    "file": "docs/specs/Nudm_EE_bundled.yaml",
+    "create_op": {
+      "method": "POST",
+      "path": "/{ueIdentity}/ee-subscriptions",
+      "operationId": "CreateEeSubscription"
+    }
+  }
+]

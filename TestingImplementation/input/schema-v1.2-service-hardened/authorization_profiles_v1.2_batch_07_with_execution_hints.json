@@ -1,0 +1,1941 @@
+[
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PATCH",
+      "path": "/exposure-data/{ueId}/access-and-mobility-data",
+      "operation_id": "UpdateAccessAndMobilityData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:exposure-data",
+        "nudr-dr:exposure-data:access-and-mobility-data:modify"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "unspecified_ue_resource_binding",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "The supplied context does not identify which authenticated requester NF may modify this UE's resource instance or how the requester must relate to the UE.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the UE resource and describes general data-access authorization, but does not require a check binding the authenticated consumer to the UE addressed by ueId."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29519:7.2.3:resource-accessandmobilitydata-121:resource-with-children",
+            "role": "addressed resource and method"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "general consumer types"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29519:7.2.3:resource-accessandmobilitydata-121:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the limits of stated authorization behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_3gpp_access_type_patch",
+          "body_required_fields": [
+            "accessType"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "accessType": "3GPP_ACCESS"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The ueId addresses an existing access-and-mobility-data resource."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "Selects the requester NF type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a named UDR service consumer and is one of the case's permitted requester types."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29519:7.2.3:resource-accessandmobilitydata-121:resource-with-children",
+              "evidence_role": "Selects the request trigger",
+              "quoted_text": "|AccessAndMobilityData|M|1|Access and mobility data for the UE.|",
+              "rationale": "The PATCH method requires an AccessAndMobilityData body. Setting its OpenAPI-defined accessType field to the enumerated value 3GPP_ACCESS gives a concrete access-data modification."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /exposure-data/{ueId}/access-and-mobility-data::TS29519:7.2.3:resource-accessandmobilitydata-121:resource-with-children",
+              "evidence_role": "Identifies the addressed UE resource",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/exposure-data/{ueId}/access-and-mobility-data",
+              "rationale": "The request targets the UE resource identified by ueId, exercising the case's unspecified requester-to-UE binding."
+            }
+          ],
+          "gaps": [
+            "The supplied TS evidence does not specify a UDM-to-ueId authorization relation or expressly assign this resource's PATCH method to UDM."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/exposure-data/{ueId}/access-and-mobility-data",
+      "operation_id": "CreateOrReplaceAccessAndMobilityData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:exposure-data",
+        "nudr-dr:exposure-data:access-and-mobility-data:create"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_access_and_mobility_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_access_to_ue_exposure_data",
+          "relation_statement": "The authenticated NF consumer may write this UE's access-and-mobility exposure-data resource only if it is authorized to access that data for the addressed ueId.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data-access authorization but does not state a check binding the NF consumer to the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29519:7.2.3:resource-accessandmobilitydata-121:resource-with-children",
+            "role": "Identifies the addressed resource and PUT data."
+          },
+          {
+            "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies known NF consumer types."
+          },
+          {
+            "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Establishes that data-access authorization depends on requested data and consumer information."
+          },
+          {
+            "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29519:7.2.3:resource-accessandmobilitydata-121:resource-with-children",
+            "role": "identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "bounds the stated authorization requirement"
+          },
+          {
+            "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "clarifies consumer-specific checking"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "identifies a supported requester type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is an eligible concrete requester, but this statement does not identify a UDM-specific request payload."
+            },
+            {
+              "context_id": "Nudr_DR PUT /exposure-data/{ueId}/access-and-mobility-data::TS29519:7.2.3:resource-accessandmobilitydata-121:resource-with-children",
+              "evidence_role": "establishes the PUT operation and mandatory request-body type",
+              "quoted_text": "|AccessAndMobilityData|M|1|Access and mobility data for the UE is created or updated.|",
+              "rationale": "The PUT requires an AccessAndMobilityData body, but the supplied TS text does not select a concrete field or payload variant for this requester."
+            }
+          ],
+          "gaps": [
+            "The supplied TS evidence does not select a concrete AccessAndMobilityData payload variant. Its OpenAPI fields are optional, and choosing one solely because it is available in the schema would not establish a TS-supported request trigger."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "DELETE",
+      "path": "/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+      "operation_id": "DeleteSessionManagementData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:exposure-data",
+        "nudr-dr:exposure-data:session-management-data:modify"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_access_to_ue_pdu_session_data",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId"
+          ],
+          "relation_type": "authorized_access_to_addressed_data",
+          "relation_statement": "The authenticated NF consumer must be authorized to delete the addressed UE and PDU-session data. The supplied text does not identify a more specific requester-to-instance relationship.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE and PDU session addressed by the resource and discusses data access authorization generally, but does not state a check binding the authenticated consumer to this UE's PDU session data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+            "role": "Identifies the addressed resource and confirms the DELETE method"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies known NF consumer types"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Establishes the available data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Identifies authorization-relevant consumer and resource information"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_delete_ue_pdu_session_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects the requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is an expressly identified consumer of the service and is one of the case's permitted requester types."
+            },
+            {
+              "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+              "evidence_role": "defines the path-and-method trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+              "rationale": "DELETE on this URI addresses the UE and individual PDU-session data in the case."
+            },
+            {
+              "context_id": "Nudr_DR DELETE /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+              "evidence_role": "establishes that the DELETE needs no body or query fields",
+              "quoted_text": "Table 7.2.4.3.3-2: Data structures supported by the DELETE Request Body on this resource\n\n|Data type|P|Cardinality|Description|\n|n/a||||",
+              "rationale": "The resource's DELETE method has no request-body data structure; its DELETE query-parameter table also specifies n/a. The method and addressed URI therefore provide the request trigger."
+            }
+          ],
+          "gaps": [
+            "The supplied text does not specify a requester-to-instance entitlement rule for the addressed UE and PDU session."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+      "operation_id": "QuerySessionManagementData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:exposure-data",
+        "nudr-dr:exposure-data:session-management-data:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_pdu_session_binding_not_identified",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "pduSessionId"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "The supplied context does not identify which authenticated NF requester is entitled to access a particular UE's PDU-session record. UDM, PCF, and NEF are known service consumers, but that status alone does not establish access to this resource instance.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The URI identifies a UE and an individual PDU session, but the supplied context does not require a check binding the authenticated consumer to that resource instance."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+            "role": "addressed resource and GET contract"
+          },
+          {
+            "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+            "role": "resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known NF consumers"
+          },
+          {
+            "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization specificity"
+          },
+          {
+            "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_full_pdu_session_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The ordinary owner/attacker fixture provides a UDM-authenticated requester and an existing PDU-session management data resource for the targeted ueId and pduSessionId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects a supported requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is an explicitly identified consumer and is one of this case's permitted requester types."
+            },
+            {
+              "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29519:7.2.4:resource-pdusessionmanagementdata-123:resource-with-children",
+              "evidence_role": "establishes the path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+              "rationale": "GET of this URI targets one UE's individual PDU-session record. The GET request-body table specifies n/a, and no query parameter is required for a full-resource retrieval."
+            },
+            {
+              "context_id": "Nudr_DR GET /exposure-data/{ueId}/session-management-data/{pduSessionId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+              "evidence_role": "identifies the authorization question exercised",
+              "quoted_text": "different types of data may have different data access authorizations",
+              "rationale": "The request exercises data-access authorization without assuming that UDM consumer status establishes entitlement to this resource instance."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not identify which authenticated UDM requester is entitled to the targeted UE's PDU-session record."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /policy-data/ues/{ueId}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/policy-data/ues/{ueId}",
+      "operation_id": "ReadPolicyData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_policy_data_authorized_consumer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_access_to_subscriber_policy_data",
+          "relation_statement": "The authenticated requester NF may retrieve the addressed subscriber's policy data only if it is authorized to access that subscriber's requested policy data; being a known Nudr_DataRepository consumer alone does not establish that authorization.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification context does not state a check binding the authenticated NF consumer to the UE identified by ueId. General data-access authorization is described, but no requester-to-UE relation is specified for this resource."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29519:5.2.14:resource-policydataforindividualue-34:resource-with-children",
+            "role": "addressed resource and subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "candidate requester NF types"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "resource-specific authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization inputs"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29519:5.2.14:resource-policydataforindividualue-34:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Bounds the stated authorization mechanism"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Clarifies consumer-specific checking"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "pcf_retrieve_all_ue_policy_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "data-subset-names"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "Selects a supported requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a specified Nudr_DataRepository consumer and is in the case's permitted requester types."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29519:5.2.14:resource-policydataforindividualue-34:resource-with-children",
+              "evidence_role": "Defines the path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/policy-data/ues/{ueId}",
+              "rationale": "A GET addressed to a subscriber's ueId exercises retrieval of that subscriber's policy data; the GET request body is specified as n/a."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}::TS29519:5.2.14:resource-policydataforindividualue-34:resource-with-children",
+              "evidence_role": "Selects the no-subset-query variant",
+              "quoted_text": "If this query parameter is not provided by the NF service consumer, this means that all the available policy data subsets shall be returned.",
+              "rationale": "Omitting data-subset-names gives a concrete TS-supported GET variant without needing to select or encode subset values."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/policy-data/ues/{ueId}/am-data",
+      "operation_id": "ReadAccessAndMobilityPolicyData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:am-data:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_am_policy_data_binding_not_identified",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "The supplied context does not establish which authenticated requester NF may read the policy data for a particular ueId. UDM, PCF, and NEF are identified as known service consumers, not as universally authorized readers of this resource.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE through ueId and discusses data access authorization generally, but does not state a check binding the authenticated consumer to that UE's access and mobility policy data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data::TS29519:5.2.3:resource-accessandmobilitypolicydata-17:resource-with-children",
+            "role": "Identifies the addressed resource and its subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies known service consumer NF types"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Establishes the limits of the supplied authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data::TS29519:5.2.3:resource-accessandmobilitypolicydata-17:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "pcf_get_ue_am_policy_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects a supported requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a named service consumer and is included in this case's requester types."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/am-data::TS29519:5.2.3:resource-accessandmobilitypolicydata-17:resource-with-children",
+              "evidence_role": "defines the path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/policy-data/ues/{ueId}/am-data",
+              "rationale": "A GET to this URI, using the existing subscriber's ueId, addresses the access and mobility policy data resource. The GET request-body table specifies n/a, and no query parameters are listed."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not establish a consumer-to-ueId authorization binding."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "DELETE",
+      "path": "/policy-data/ues/{ueId}/operator-specific-data",
+      "operation_id": "DeleteOperatorSpecificData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:operator-specific-data:modify"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_operator_specific_data_delete",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "requester_to_ue_binding_not_identified",
+          "relation_statement": "The supplied context does not identify which authenticated NF consumer may delete this UE's operator-specific-data resource or specify a requester-to-UE relationship for that decision.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is identified by ueId, but the supplied specification does not define a check binding the NF service consumer to that UE's operator-specific data for DELETE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "Identifies the addressed resource and its subject."
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "Identifies the resource-instance path variable."
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies known NF consumer types, without establishing DELETE permission."
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Establishes that data access authorization can differ by data type."
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "pcf_delete_operator_specific_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The UDR supports the OSDResource_Create_Delete feature.",
+            "The addressed UE operator-specific-data resource exists."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+              "evidence_role": "path-and-method trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/policy-data/ues/{ueId}/operator-specific-data",
+              "rationale": "DELETE on this URI targets the identified UE's operator-specific-data resource."
+            },
+            {
+              "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+              "evidence_role": "request shape",
+              "quoted_text": "Table 5.2.12.3.4-2: Data structures supported by the DELETE Request Body on this resource\n\n|Data type|P|Cardinality|Description|\n|n/a||||",
+              "rationale": "The DELETE procedure has no request body; the method and resource URI provide the concrete request trigger."
+            },
+            {
+              "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is one supported consumer type and is selected as the single requester for this bodyless variant."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not specify a requester-to-UE authorization binding for this DELETE operation."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PATCH",
+      "path": "/policy-data/ues/{ueId}/operator-specific-data",
+      "operation_id": "UpdateOperatorSpecificData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:operator-specific-data:modify"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_operator_specific_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_access_to_ue_data",
+          "relation_statement": "The authenticated NF consumer must be authorized to modify the operator-specific data of the UE identified by ueId. The supplied text does not identify a more specific requester-to-UE relationship.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data access authorization and a 403 response when modification is not allowed, but does not specify a check binding the authenticated consumer to the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "addressed resource and method"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "resource subject"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known consumer NF types"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "General authorization context"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "PATCH rejection context"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limit on specified consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is an explicitly identified Nudr_DataRepository consumer and is permitted by the case binding."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+              "evidence_role": "PATCH request requirements",
+              "quoted_text": "|array(PatchItem)|M|1..N|Contains the delta data to the operator specific data|",
+              "rationale": "The PATCH procedure requires at least one PatchItem, so the path and method alone do not provide an executable request."
+            }
+          ],
+          "gaps": [
+            "The supplied OpenAPI request inventory identifies an array but provides no PatchItem field paths or structure from which to select a concrete modification instruction."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/policy-data/ues/{ueId}/operator-specific-data",
+      "operation_id": "ReplaceOperatorSpecificData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:operator-specific-data:create"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_operator_specific_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "The supplied text does not identify which authenticated NF requester may create or modify this particular UE's operator-specific data.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE through the resource URI and describes general data access authorization, but does not state a check binding the NF consumer to the addressed UE's operator-specific data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "Addressed resource and method"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "Resource subject"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Known NF consumers"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Authorization specificity"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "general authorization context"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "limit on consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "identifies a candidate requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a supplied requester type and a known consumer, but this statement does not establish a PCF-specific variant for this resource."
+            },
+            {
+              "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+              "evidence_role": "establishes the PUT payload requirement",
+              "quoted_text": "|map(OperatorSpecificDataContainer)|M|1..N|A map containing the new representation of the operator specific data. The key of the|",
+              "rationale": "The PUT requires a non-empty map. The supplied OpenAPI field inventory contains no paths with which to specify a concrete map entry, so an empty-body trigger would not satisfy the TS."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not identify a concrete operator-specific data element name and corresponding OperatorSpecificDataContainer value for a valid non-empty PUT body.",
+            "The supplied TS context does not identify which known NF consumer may create or modify this particular UE's operator-specific data."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/policy-data/ues/{ueId}/operator-specific-data",
+      "operation_id": "ReadOperatorSpecificData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:operator-specific-data:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_operator_specific_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "ue_data_access_authorization",
+          "relation_statement": "The authenticated NF consumer must be authorized to access operator-specific policy data for the UE identified by {ueId}. The supplied text does not specify a more particular requester-to-UE relationship.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE through the resource path and describes general data access authorization, but does not state a check binding the NF service consumer to the addressed UE's operator-specific data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "addressed resource and subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "service-level requester types"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of general authorization"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limits inference of consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "pcf_get_ue_operator_specific_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the ordinary fixture's UE identifier as {ueId} and address its existing operator-specific data resource."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29519:5.2.12:resource-operatorspecificdata-31:resource-with-children",
+              "evidence_role": "Path-and-method request trigger",
+              "quoted_text": "This method is used to retrieve operator specific data from the UDR.",
+              "rationale": "GET on the specified UE resource exercises retrieval of that UE's operator-specific data; the GET request-body table specifies n/a, and its listed query parameter is optional."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "Requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a stated NF service consumer and is selected as the single representative requester."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+              "evidence_role": "Authorization context",
+              "quoted_text": "different types of data may have different data access authorizations",
+              "rationale": "The retrieval can exercise data-access authorization for the addressed UE resource."
+            }
+          ],
+          "gaps": [
+            "The supplied TS text does not establish a PCF-specific entitlement to this UE's operator-specific data or define a more particular requester-to-UE relationship."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PATCH",
+      "path": "/policy-data/ues/{ueId}/sm-data",
+      "operation_id": "UpdateSessionManagementPolicyData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:sm-data:modify"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "subscriber_sm_policy_data_modify",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "PCF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_subscriber_policy_data_consumer",
+          "relation_statement": "The authenticated PCF may modify the addressed subscriber's session management policy data only if it is authorized to access that subscriber's data.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the subscriber through ueId and describes general data-access authorization, but does not state a check binding the authenticated consumer to that subscriber's SM policy data."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+            "role": "addressed resource and method"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+            "role": "PATCH purpose"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "requester NF context"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+              "evidence_role": "PATCH purpose and required request data structure",
+              "quoted_text": "When the \"SessionManagementPolicyDataPatch\" feature is supported, it requests the modification of the session management policy data for a subscriber.",
+              "rationale": "The TS identifies the modification procedure, but does not make an empty patch a modification."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+              "evidence_role": "candidate modification content",
+              "quoted_text": "creation, removal, or update of an entry of the \"umData\" attribute",
+              "rationale": "An umData entry change is TS-supported, but the supplied field inventory gives only the parent object, not the entry shape needed to construct a concrete change."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/sm-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is the case's sole permitted requester and is identified as a known consumer."
+            }
+          ],
+          "gaps": [
+            "The supplied schema inventory does not describe an umData entry or another nonempty SmPolicyDataPatch value, so a concrete modification payload cannot be selected reliably.",
+            "The UDR must support the SessionManagementPolicyDataPatch feature."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "low"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/policy-data/ues/{ueId}/sm-data",
+      "operation_id": "ReadSessionManagementPolicyData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:sm-data:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "pcf_sm_policy_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "PCF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "snssai",
+            "dnn"
+          ],
+          "relation_type": "pcf_associated_with_sm_policy_data",
+          "relation_statement": "The authenticated PCF may retrieve the addressed UE's session management policy data only for S-NSSAI and DNN associations it is authorized to access; no more than one PCF can access the data under a given association.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification notes that only one PCF can retrieve SM policy data under an S-NSSAI and DNN association, but does not define a check binding the requesting PCF to that association or to the addressed UE resource."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+            "role": "resource subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+            "role": "GET-specific PCF access constraint"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+            "role": "resource-specific limitation"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "general authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "consumer-specific check limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "pcf_get_association_sm_policy_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "snssai",
+            "dnn"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use an existing ueId with SM policy data for a known S-NSSAI and DNN association; obtain the snssai and dnn query values from that association and identify its authorized PCF in the ordinary owner/attacker fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+              "evidence_role": "Selects the association-specific GET trigger",
+              "quoted_text": "NOTE:  This release supports that only one PCF can access to the UDR to retrieve the SM Policy Data under one S-NSSAI and DNN association.",
+              "rationale": "A PCF GET specifying both snssai and dnn targets the association governed by the case."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29519:5.2.5:resource-sessionmanagementpolicydata-20:resource-with-children",
+              "evidence_role": "Explains why both query filters are specified",
+              "quoted_text": "if \"snssai\" is not included, and \"dnn\" is included, UDR shall return the session management policy data per DNN for the DNN identified by \"dnn\" for all network slices where such DNN is available.",
+              "rationale": "Specifying both filters avoids a request spanning multiple S-NSSAI and DNN associations. The GET request body is n/a, so the path, method, and query filters provide the trigger."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "Supports the selected requester NF type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a supported Nudr_DataRepository consumer."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "DELETE",
+      "path": "/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+      "operation_id": "DeleteUsageMonitoringInformation"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:sm-data:modify"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "pcf_ue_usage_monitoring_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "PCF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "usageMonId"
+          ],
+          "relation_type": "authorized_ue_policy_data_consumer",
+          "relation_statement": "The authenticated PCF may delete the addressed usage monitoring resource only if it is authorized to access that UE's SM policy usage monitoring data.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data access authorization but does not state a check binding the requesting PCF to the addressed UE usage monitoring resource."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "Identifies the addressed resource and its subject"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "Identifies the policy-data context"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies a known requester NF type"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Supports resource-specific access authorization"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of the stated authorization requirement"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limits inference of consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "delete_ue_usage_monitoring_resource",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "An addressed usage monitoring resource exists for the fixture UE and usageMonId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "Selects PCF as the requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a specified Nudr_DataRepository consumer."
+            },
+            {
+              "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+              "evidence_role": "Selects the addressed resource and path-and-method trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+              "rationale": "DELETE on this URI addresses the individual UE usage monitoring resource; no payload field is needed to select it."
+            },
+            {
+              "context_id": "Nudr_DR DELETE /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+              "evidence_role": "Confirms the DELETE request has no body",
+              "quoted_text": "|n/a||||",
+              "rationale": "The DELETE request-body table specifies no data structure."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+      "operation_id": "CreateUsageMonitoringResource"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:sm-data:create"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "pcf_ue_usage_monitoring",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "PCF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "usageMonId"
+          ],
+          "relation_type": "manages_ue_sm_policy_data",
+          "relation_statement": "The requesting PCF is authorized to manage SM policy usage monitoring data for the UE and corresponding usage monitoring limit.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied text identifies the UE and usage-monitoring resource and describes general data-access authorization, but does not require a check binding the PCF consumer to the addressed resource."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "Identifies the addressed resource and its SM policy association."
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "Identifies the policy-data subject."
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies a plausible requester NF type."
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "create_ue_usage_monitoring_resource",
+          "body_required_fields": [
+            "limitId"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use a provisioned UE and a usage-monitoring limit from the lab fixture. Set usageMonId and the request body's limitId to the corresponding limit identity."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects the requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a supported Nudr_DataRepository consumer and is the requester type specified by this case."
+            },
+            {
+              "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+              "evidence_role": "selects the request trigger and payload field",
+              "quoted_text": "|UsageMonData|M|1|Create the usage monitoring resource.|",
+              "rationale": "PUT to the specified UE usage-monitoring URI with a UsageMonData body exercises resource creation. The TS ties the resource's usageMonId to the corresponding limitId, making limitId the semantic payload field for this variant."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+      "operation_id": "ReadUsageMonitoringInformation"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:sm-data:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_ue_usage_monitoring_reader",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "PCF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "usageMonId"
+          ],
+          "relation_type": "authorized_ue_policy_data_consumer",
+          "relation_statement": "An authenticated PCF may read the addressed resource only if it is authorized to access that UE's SM policy usage monitoring data for the identified limit.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is identified by ueId and usageMonId, but the supplied specification text does not require a check binding the NF consumer to that UE's usage monitoring resource."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "Identifies the addressed GET resource and its subject."
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies a known consumer NF type."
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Establishes that access authorization depends on the consumer and requested data."
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "pcf_read_usage_monitoring_resource",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+              "evidence_role": "path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+              "rationale": "A GET to this URI addresses the UE's individual usage monitoring resource by ueId and usageMonId."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29519:5.2.6:resource-usagemonitoringinformation-22:resource-with-children",
+              "evidence_role": "GET requires no request body",
+              "quoted_text": "|n/a||||",
+              "rationale": "The GET request-body table specifies no request data structure, so no body fields select this variant."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/sm-data/{usageMonId}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is a supported consumer and is the requester type in the supplied case."
+            }
+          ],
+          "gaps": [
+            "The supplied text does not specify how the UDR determines whether this PCF is authorized for the addressed UE and usage monitoring limit."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PATCH",
+      "path": "/policy-data/ues/{ueId}/ue-policy-set",
+      "operation_id": "UpdateUEPolicySet"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:ue-policy-set:modify"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_policy_set_modify",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "The supplied context does not specify which authenticated NF consumer may modify this subscriber's UE policy set or how that consumer must be related to ueId.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the subscriber's UE policy set and describes general data access authorization, but does not require a check binding the authenticated consumer to that subscriber's resource."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+            "role": "resource and method"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known consumer types"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization limitation"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "patch_andsp_indicator",
+          "body_required_fields": [
+            "andspInd"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects a supported requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is an explicitly identified Nudr_DataRepository consumer and is one of the case's permitted requester types."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+              "evidence_role": "selects the modification request",
+              "quoted_text": "|UePolicySetPatch|M|1|Modify the UE policy set resource for a given subscriber.|",
+              "rationale": "PATCH with a UePolicySetPatch body exercises modification of the UE policy set addressed by ueId. The supplied OpenAPI inventory permits andspInd as a boolean field in that body."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not define a consumer-to-ueId authorization binding or mandate a particular boolean value for andspInd."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/policy-data/ues/{ueId}/ue-policy-set",
+      "operation_id": "CreateOrReplaceUEPolicySet"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:ue-policy-set:create"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_policy_set_subscriber_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "PCF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_ue_policy_data_consumer",
+          "relation_statement": "The authenticated PCF may access the addressed UE policy set only if it is authorized to access UE policy data for the subscriber identified by ueId.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the subscriber through ueId and describes general data-access authorization, but does not state a check binding the authenticated consumer to that subscriber's UE policy set."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+            "role": "identifies the addressed resource and subject"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "identifies known NF consumers"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "qualifies resource-specific access"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "put_subscriber_ue_policy_set",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+              "evidence_role": "method and subscriber-resource trigger",
+              "quoted_text": "|UePolicySet|M|1|Create or modify the UE policy set resource for a given subscriber.|",
+              "rationale": "A PUT to the ueId-addressed resource with a UePolicySet JSON body exercises access to that subscriber's UE policy set. The supplied schema lists no required properties, so no individual body field is needed to select this operation."
+            },
+            {
+              "context_id": "Nudr_DR PUT /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is an identified consumer of the Nudr_DataRepository service and is the requester type specified for this case."
+            }
+          ],
+          "gaps": [
+            "The supplied TS evidence does not specify a PCF-specific UE policy set payload or a subscriber-level authorization check."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "low"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/policy-data/ues/{ueId}/ue-policy-set",
+      "operation_id": "ReadUEPolicySet"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:policy-data",
+        "nudr-dr:policy-data:ues:ue-policy-set:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_policy_set_read_binding_not_identified",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "No requester-to-UE-instance binding is specified for this GET. UDM, PCF, and NEF are known service consumers, but the supplied context does not establish which may read this resource or how a requester must relate to the UE identified by ueId.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE policy set by ueId and discusses data access authorization generally, but does not specify a check binding the authenticated consumer to that subscriber's resource."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+            "role": "addressed resource and identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "general consumer context"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "PCF",
+          "status": "executable",
+          "representative_variant": "pcf_ue_policy_set_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "An existing UE policy set is addressed using its lab-provisioned ueId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects a known NF service consumer",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "PCF is selected as one concrete requester from the case's permitted types."
+            },
+            {
+              "context_id": "Nudr_DR GET /policy-data/ues/{ueId}/ue-policy-set::TS29519:5.2.4:resource-uepolicyset-18:resource-with-children",
+              "evidence_role": "establishes the path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/policy-data/ues/{ueId}/ue-policy-set",
+              "rationale": "GET of this resource URI addresses the UE policy set; the GET request-body table specifies n/a, so no body fields are needed."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not specify a PCF-to-ueId binding check or expressly assign this particular read operation to PCF."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium"
+  }
+]

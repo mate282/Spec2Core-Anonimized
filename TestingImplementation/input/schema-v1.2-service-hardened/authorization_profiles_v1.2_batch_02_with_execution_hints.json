@@ -1,0 +1,1399 @@
+[
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/pdu-sessions/{pduSessionRef}/modify",
+      "operation_id": "UpdatePduSession"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-pdusession"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "associated_vsmf_or_ismf",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "pduSessionRef"
+          ],
+          "relation_type": "associated_session_smf",
+          "relation_statement": "The authenticated requester is the V-SMF or I-SMF associated with the addressed PDU session.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the intended V-SMF or I-SMF consumer and the addressed PDU session, but does not require a check that the authenticated requester is the V-SMF or I-SMF associated with that session."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Identifies the addressed resource and applicable operation"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:5.2.1:service-description",
+            "role": "Supports the requester-to-session association"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Identifies the resource-instance identifier"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:6.1.3.1:overview",
+            "role": "intended consumer"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "resource addressing"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "specified forbidden causes"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMF",
+          "status": "executable",
+          "representative_variant": "vsmf_ue_requested_pdu_session_modification",
+          "body_required_fields": [
+            "requestIndication",
+            "n1SmInfoFromUe"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "requestIndication": "UE_REQ_PDU_SES_MOD"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:6.1.3.1:overview",
+              "evidence_role": "selects the V-SMF-initiated operation",
+              "quoted_text": "Update\n(initiated by V-SMF or I-SMF)",
+              "rationale": "Select a V-SMF as the concrete requester; its NF type is SMF."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/modify::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+              "evidence_role": "selects a UE N1 SM signalling request trigger",
+              "quoted_text": "This custom operation updates an individual PDU session resource in the H-SMF or SMF and/or provide the H-SMF or SMF with information received by the V-SMF or I-SMF in N1 SM signalling from the UE.",
+              "rationale": "POST to the addressed session's modify operation with UE-originated N1 SM information. The OpenAPI inventory provides n1SmInfoFromUe and the exact requestIndication enum value UE_REQ_PDU_SES_MOD for the selected modification variant."
+            }
+          ],
+          "gaps": [
+            "A valid UE-originated N1 SM modification message and its referenced content must be supplied at execution time; no binary content or content identifier is specified by the supplied evidence.",
+            "The supplied TS excerpt does not explicitly state the field-level pairing of n1SmInfoFromUe with UE_REQ_PDU_SES_MOD."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/pdu-sessions/{pduSessionRef}/release",
+      "operation_id": "ReleasePduSession"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-pdusession"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "associated_session_consumer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "V-SMF",
+            "I-SMF"
+          ],
+          "resource_identifiers": [
+            "pduSessionRef"
+          ],
+          "relation_type": "associated_session_consumer",
+          "relation_statement": "The authenticated V-SMF or I-SMF may release the addressed PDU session only if it is the NF associated with that session on the consumer side of the V-SMF–H-SMF or I-SMF–SMF relationship.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification context identifies the addressed PDU session and lists V-SMF and I-SMF as example consumers, but does not require checking that the authenticated requester is associated with that session."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Addressed resource and operation"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Resource identifier"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:5.2.1:service-description",
+            "role": "Consumer and session association"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:5.2.1:service-description",
+            "role": "Release requester NF types"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Resource and release-operation definition"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:5.2.1:service-description",
+            "role": "Service consumer context"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "V-SMF",
+          "status": "executable",
+          "representative_variant": "v_smf_hr_session_release",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed pduSessionRef identifies an existing HR PDU session at the H-SMF, associated with an owner V-SMF distinct from the authenticated requester V-SMF."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:5.2.1:service-description",
+              "evidence_role": "selects a supported requester and release scenario",
+              "quoted_text": "Release a PDU session in the H-SMF in HR roaming scenarios, or in the SMF for PDU sessions involving an I-SMF.\nRequest/Response\nV-SMF, I-SMF",
+              "rationale": "Selects V-SMF as the requester for an HR PDU session at the H-SMF."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+              "evidence_role": "establishes the concrete path-and-method trigger and optional body",
+              "quoted_text": "release\n{resourceUri}/release\nPOST\nRelease service operation",
+              "rationale": "POST to the addressed session's /release URI exercises the release operation."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/release::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+              "evidence_role": "supports omitting the request body",
+              "quoted_text": "ReleaseData\nC\n0..1\nRepresentation of the data to be sent to the H-SMF or SMF when releasing the PDU session.",
+              "rationale": "ReleaseData is conditional with cardinality 0..1, so this representative request needs no body fields."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/pdu-sessions/{pduSessionRef}/retrieve",
+      "operation_id": "RetrievePduSession"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-pdusession"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "associated_session_smf",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "pduSessionRef"
+          ],
+          "relation_type": "associated_session_smf",
+          "relation_statement": "The authenticated requesting SMF is the V-SMF or I-SMF associated with the addressed PDU session.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the PDU session resource and example consumers, but does not require a check that the authenticated requester is the SMF associated with the addressed session."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Addressed resource and operation contract"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:5.2.1:service-description",
+            "role": "Requester procedure roles"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Resource identifier"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "retrieve operation definition"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:5.2.1:service-description",
+            "role": "consumer context"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMF",
+          "status": "executable",
+          "representative_variant": "ismf_retrieve_pdu_session",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Address an existing PDU session in an SMF for a session involving an I-SMF; use that session's pduSessionRef. The requesting SMF acts as the I-SMF in the owner fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:5.2.1:service-description",
+              "evidence_role": "Selects the I-SMF consumer variant",
+              "quoted_text": "Retrieve information from a PDU session context from the H-SMF for a HR PDU session, or from the SMF for a PDU session with an I-SMF.",
+              "rationale": "The I-SMF is the selected SMF requester role for retrieving a session held by the serving SMF."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+              "evidence_role": "Establishes the path-and-method trigger",
+              "quoted_text": "retrieve\n{resourceUri}/retrieve\nPOST\nRetrieve service operation",
+              "rationale": "POST to the addressed session's retrieve URI exercises the selected operation; no optional RetrieveData property is needed to select it."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/retrieve::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+              "evidence_role": "Establishes that a request body is required",
+              "quoted_text": "RetrieveData\nM\n1\nRepresentation of the payload of a Retrieve Request",
+              "rationale": "Send a RetrieveData JSON object, which can be empty because the supplied OpenAPI inventory makes both of its fields optional; do not omit the body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/pdu-sessions/{pduSessionRef}/transfer-mo-data",
+      "operation_id": "TransferMoData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-pdusession"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "associated_session_smf",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "V-SMF",
+            "I-SMF"
+          ],
+          "resource_identifiers": [
+            "pduSessionRef"
+          ],
+          "relation_type": "associated_pdu_session_smf",
+          "relation_statement": "The authenticated requester is the V-SMF or I-SMF associated with the addressed PDU session and transferring its mobile-originated data to the H-SMF or SMF.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes V-SMF or I-SMF use of the operation and identifies the addressed PDU session by pduSessionRef, but does not state a check binding the authenticated consumer to that session."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Addressed resource and operation"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data::TS29502:5.2.2.12:transfer-mo-data-service-operation:procedure-with-children",
+            "role": "Procedure consumer and session association"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Operation subject"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data::TS29502:5.2.2.12:transfer-mo-data-service-operation:procedure-with-children",
+            "role": "Consumer and addressed-resource description"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+            "role": "Resource identifier definition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "V-SMF",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data::TS29502:5.2.2.12:transfer-mo-data-service-operation:procedure-with-children",
+              "evidence_role": "Identifies a V-SMF-supported operation and its mandatory payload",
+              "quoted_text": "The payload body of the POST request shall contain the mobile originated data to be transferred.",
+              "rationale": "POST to the operation URI alone is insufficient; the selected V-SMF request must carry mobile-originated data."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /pdu-sessions/{pduSessionRef}/transfer-mo-data::TS29502:6.1.3.6:resource-individual-pdu-session-h-smf-or-smf:resource-with-children",
+              "evidence_role": "Identifies the request body data type",
+              "quoted_text": "TransferMoDataReqData\nM\n1\nRepresentation of the payload of a Transfer MO Data Request",
+              "rationale": "The TS mandates a TransferMoDataReqData request body, but the supplied OpenAPI request inventory exposes no fields with which to construct its mobile-originated-data content."
+            }
+          ],
+          "gaps": [
+            "The supplied OpenAPI request schema inventory lists no body fields or multipart parts. It does not identify how to encode the mobile-originated data required by the TS, so a concrete request payload cannot be selected."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextRef}/modify",
+      "operation_id": "UpdateSmContext"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-pdusession"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "associated_sm_context_consumer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF",
+            "I-SMF"
+          ],
+          "resource_identifiers": [
+            "smContextRef"
+          ],
+          "relation_type": "associated_service_consumer",
+          "relation_statement": "The authenticated requester is the NF service consumer associated with the addressed SM context for its PDU session.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes an SM context as an association with an NF Service Consumer, but the supplied text does not require the SMF to verify that the authenticated requester is the consumer associated with the addressed SM context."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:5.2.1:service-description",
+            "role": "Consumer-to-context relation"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:5.2.1:service-description",
+            "role": "Example requester NF types"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+            "role": "Addressed resource and operation"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:5.2.1:service-description",
+            "role": "Defines the association relevant to the case"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:5.2.2.3:update-sm-context-service-operation:procedure-with-children",
+            "role": "Describes the update request"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_user_plane_activation",
+          "body_required_fields": [
+            "upCnxState"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "upCnxState": "ACTIVATING"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the smContextRef of an existing, single-access PDU session whose user-plane connection is deactivated and whose DNN is not a LADN.",
+            "To test the binding, authenticate as an AMF other than the NF service consumer associated with that SM context."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:5.2.1:service-description",
+              "evidence_role": "identifies the requester and the association being tested",
+              "quoted_text": "an SM context represents an association between the NF Service Consumer (e.g. AMF) and the SMF for a PDU session",
+              "rationale": "The selected requester is an AMF, while the addressed SM context is associated with a different consumer in the test fixture."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:5.2.2.3:update-sm-context-service-operation:procedure-with-children",
+              "evidence_role": "specifies the concrete AMF-supported request trigger",
+              "quoted_text": "The NF Service Consumer shall request the SMF to activate the user plane connection of the PDU session by sending a POST request, as specified in clause 5.2.2.3.1, with the following information:\n-the upCnxState attribute set to ACTIVATING;",
+              "rationale": "A POST update with upCnxState set to the specified value exercises the user-plane activation procedure without requiring a handover or relocation."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/modify::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+              "evidence_role": "identifies the resource and method",
+              "quoted_text": "modify\n{resourceUri}/modify\nPOST\nUpdate SM Context service operation",
+              "rationale": "The request targets the modify operation of the addressed individual SM context."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextRef}/retrieve",
+      "operation_id": "RetrieveSmContext"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-pdusession"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "associated_amf_sm_context",
+        "applies_when": [
+          "The AMF retrieves the SM context for 5GS-to-EPS mobility."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "smContextRef"
+          ],
+          "relation_type": "associated_consumer",
+          "relation_statement": "The authenticated AMF is the NF service consumer associated with the addressed SM context for the PDU session.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes an SM context as an association with an NF Service Consumer, but does not require the retrieving AMF to be checked against that association."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.1:service-description",
+            "role": "Association and requester context"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.2.6:retrieve-sm-context-service-operation:procedure-with-children",
+            "role": "Applicable retrieval procedure"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.1:service-description",
+            "role": "Resource relationship description"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.2.6:retrieve-sm-context-service-operation:procedure-with-children",
+            "role": "Retrieve request requirement"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "requires_state_setup",
+          "representative_variant": "amf_5gs_to_eps_idle_mobility",
+          "body_required_fields": [
+            "smContextType"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "smContextType": "EPS_PDN_CONNECTION"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "A 5GS-to-EPS idle-mode mobility procedure using N26 is underway for the addressed 3GPP-access PDU session."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.2.6:retrieve-sm-context-service-operation:procedure-with-children",
+              "evidence_role": "Selects the mobility procedure and EPS context retrieval",
+              "quoted_text": "-5GS to EPS Idle mode mobility using N26 interface (see clause 4.11.1.3.2 of 3GPP TS 23.502 [3]), for PDU sessions associated with 3GPP access;",
+              "rationale": "Use the OpenAPI EPS_PDN_CONNECTION enum value to explicitly request the EPS PDN connection in this TS-supported mobility procedure."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.1:service-description",
+              "evidence_role": "Identifies the AMF as a consumer of Retrieve SM Context",
+              "quoted_text": "Request/Response\nAMF, I-SMF,\nV-SMF, SMF",
+              "rationale": "AMF is the selected requester for the addressed SM context."
+            }
+          ],
+          "gaps": [
+            "The supplied material does not specify how to initiate the N26 mobility procedure in the lab."
+          ],
+          "confidence": "high"
+        }
+      },
+      {
+        "case_id": "related_smf_context_transfer",
+        "applies_when": [
+          "An SMF retrieves the context during an inter-SMF insertion, change, removal, or SMF context transfer procedure."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "smContextRef"
+          ],
+          "relation_type": "session_transfer_participant",
+          "relation_statement": "The authenticated SMF is the SMF participating in the transfer or continuation of the PDU session represented by the addressed SM context.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies inter-SMF retrieval scenarios but does not require verification that the requesting SMF is related to the addressed context or authorized for its transfer."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.2.6:retrieve-sm-context-service-operation:procedure-with-children",
+            "role": "Applicable inter-SMF retrieval"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.1:service-description",
+            "role": "Requester and transfer context"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.2.6:retrieve-sm-context-service-operation:procedure-with-children",
+            "role": "Applicable retrieval scenarios"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.2.6:retrieve-sm-context-service-operation:procedure-with-children",
+            "role": "Request handling"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMF",
+          "status": "requires_state_setup",
+          "representative_variant": "smf_context_transfer",
+          "body_required_fields": [
+            "smContextType"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "smContextType": "SM_CONTEXT"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "An SMF Context Transfer procedure is underway for the addressed 3GPP-access PDU session in an LBO or non-roaming scenario without an I-SMF.",
+            "The requesting SMF is configured as the transfer participant for that session."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.2.6:retrieve-sm-context-service-operation:procedure-with-children",
+              "evidence_role": "Selects the transfer procedure and complete-context request",
+              "quoted_text": "-SMF Context Transfer procedure, LBO or no Roaming, no I-SMF (see clause 4.26.5.3 of 3GPP TS 23.502 [3]), for PDU sessions associated with 3GPP access;",
+              "rationale": "Use the OpenAPI SM_CONTEXT enum value to explicitly request the complete SM context for this transfer procedure."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/retrieve::TS29502:5.2.1:service-description",
+              "evidence_role": "Identifies SMF as a consumer of Retrieve SM Context",
+              "quoted_text": "Request/Response\nAMF, I-SMF,\nV-SMF, SMF",
+              "rationale": "SMF is the selected requester, without treating I-SMF or V-SMF variants as interchangeable."
+            }
+          ],
+          "gaps": [
+            "The supplied material does not specify how to establish the coordinated SMF Context Transfer state in the lab."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextRef}/send-mo-data",
+      "operation_id": "SendMoData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-pdusession"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "associated_amf_sm_context",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "smContextRef"
+          ],
+          "relation_type": "associated_consumer",
+          "relation_statement": "The authenticated AMF is the NF service consumer associated with the addressed SM context for the PDU session.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes an SM context as an association with an NF Service Consumer and identifies AMF as an example consumer, but does not state a check that the requester is the AMF associated with the addressed SM context."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:5.2.1:service-description",
+            "role": "resource-to-consumer association"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:5.2.2.11:send-mo-data-service-operation:procedure-with-children",
+            "role": "requester and addressed resource"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:5.2.1:service-description",
+            "role": "association context"
+          },
+          {
+            "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:5.2.2.11:send-mo-data-service-operation:procedure-with-children",
+            "role": "request handling"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:5.2.1:service-description",
+              "evidence_role": "identifies the requester",
+              "quoted_text": "Send MO Data\nSend mobile originated data received over NAS for a PDU session\nRequest/Response\nAMF",
+              "rationale": "The service operation lists AMF as its example consumer."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:5.2.2.11:send-mo-data-service-operation:procedure-with-children",
+              "evidence_role": "establishes that a payload is necessary",
+              "quoted_text": "The payload body of the POST request shall contain the mobile originated data to send.",
+              "rationale": "The path and method alone cannot exercise the procedure; the request must carry mobile originated data."
+            },
+            {
+              "context_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/send-mo-data::TS29502:6.1.3.3:resource-individual-sm-context:resource-with-children",
+              "evidence_role": "confirms the required request data structure",
+              "quoted_text": "SendMoDataReqData\nM\n1\nRepresentation of the payload of a Send MO Data Request",
+              "rationale": "The operation requires request data, but the supplied OpenAPI field inventory provides no field path for constructing its payload."
+            }
+          ],
+          "gaps": [
+            "The supplied OpenAPI request schema inventory contains no fields or multipart part definitions, so the required mobile originated data cannot be mapped to a concrete request payload."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_MT GET /{supi}",
+    "target": {
+      "service": "Nudm_MT",
+      "method": "GET",
+      "path": "/{supi}",
+      "operation_id": "QueryUeInfo"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-mt"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_info_query",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "The specification identifies the HSS as a requester of UeInfo for a SUPI, but does not state which authenticated HSS may access a particular UE's UeInfo.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the SUPI-addressed resource and says it is queried by the HSS, but does not require a check binding the authenticated requester to that UE resource."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_MT GET /{supi}::TS29503:6.7.3.2:resource-ueinfo:resource-with-children",
+            "role": "resource subject and requester"
+          },
+          {
+            "context_id": "Nudm_MT GET /{supi}::TS29503:6.7.3.2:resource-ueinfo:resource-with-children",
+            "role": "GET resource identifier"
+          },
+          {
+            "context_id": "Nudm_MT GET /{supi}::TS29503:6.7.3.2:resource-ueinfo:resource-with-children",
+            "role": "Resource and requester description"
+          },
+          {
+            "context_id": "Nudm_MT GET /{supi}::TS29503:6.7.3.2:resource-ueinfo:resource-with-children",
+            "role": "Resource addressing"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "HSS",
+          "status": "unresolved",
+          "representative_variant": "ue_info_query",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "fields"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_MT GET /{supi}::TS29503:6.7.3.2:resource-ueinfo:resource-with-children",
+              "evidence_role": "Identifies the requester and SUPI-addressed GET resource.",
+              "quoted_text": "It is queried by the HSS",
+              "rationale": "The HSS is the specified requester for this UE information resource."
+            },
+            {
+              "context_id": "Nudm_MT GET /{supi}::TS29503:6.7.3.2:resource-ueinfo:resource-with-children",
+              "evidence_role": "Establishes the mandatory query parameter and the missing value definition.",
+              "quoted_text": "The \" fields \" query parameter contains the pointers of the attribute(s) to be retrieved. See attribute names of type UeInfo.",
+              "rationale": "A valid request needs at least one UeInfo attribute pointer, but the supplied evidence does not give an exact pointer value."
+            }
+          ],
+          "gaps": [
+            "The supplied TS/OpenAPI evidence does not identify an exact UeInfo attribute pointer for the mandatory fields query parameter, so a concrete valid request cannot be selected."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "high",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info",
+    "target": {
+      "service": "Nudm_MT",
+      "method": "POST",
+      "path": "/{supi}/loc-info/provide-loc-info",
+      "operation_id": "ProvideLocationInfo"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-mt"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "hss_ue_location_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "hss_access_to_ue_location",
+          "relation_statement": "The authenticated requester is an HSS authorized to request location information for the UE identified by the path SUPI.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the HSS as the consumer and the SUPI as the UE identifier, but does not state a check binding the requesting HSS to the addressed UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info::TS29503:6.7.3.3:resource-locationinfo:resource-with-children",
+            "role": "Operation and requester"
+          },
+          {
+            "context_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info::TS29503:5.8.2:service-operations:service-operations-with-children",
+            "role": "UE subject and HTTP method"
+          },
+          {
+            "context_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info::TS29503:6.7.3.3:resource-locationinfo:resource-with-children",
+            "role": "consumer and resource description"
+          },
+          {
+            "context_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info::TS29503:5.8.2:service-operations:service-operations-with-children",
+            "role": "request identifier and stated failure condition"
+          },
+          {
+            "context_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info::TS29503:5.8.2:service-operations:service-operations-with-children",
+            "role": "failure-condition distinction"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "HSS",
+          "status": "executable",
+          "representative_variant": "current_location_request",
+          "body_required_fields": [
+            "reqCurrentLoc"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info::TS29503:5.8.2:service-operations:service-operations-with-children",
+              "evidence_role": "identifies the requester and request procedure",
+              "quoted_text": "The request contains the UE's identity (supi), and requested information (current location, local time zone, RAT type, or serving node identity)",
+              "rationale": "Select an HSS request for the addressed UE's current location, represented by the OpenAPI reqCurrentLoc field."
+            },
+            {
+              "context_id": "Nudm_MT POST /{supi}/loc-info/provide-loc-info::TS29503:6.7.3.3:resource-locationinfo:resource-with-children",
+              "evidence_role": "confirms the method, operation, and request body",
+              "quoted_text": "LocationInfoRequest\nM\n1\nContains the requested information: current location, local time zone, RAT type, or serving node identity only",
+              "rationale": "The POST operation requires a LocationInfoRequest body; requesting current location supplies a concrete procedure-specific choice."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions",
+    "target": {
+      "service": "Nudm_EE",
+      "method": "POST",
+      "path": "/{ueIdentity}/ee-subscriptions",
+      "operation_id": "CreateEeSubscription"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ee"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "af_or_mtc_provider_subject_authorization",
+        "applies_when": [
+          "The POST request includes MTC Provider information and/or an AF ID."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity"
+          ],
+          "relation_type": "indirect_af_or_mtc_provider_subject_authorization",
+          "relation_statement": "The requesting consumer NF may create a subscription for the addressed UE, group of UEs, or any-UE scope only when the indicated MTC Provider and/or AF is allowed to perform this operation for that scope. The TS does not establish that the indicated party is the authenticated requesting NF.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM checks whether the AF and/or MTC Provider identified in the request is allowed to perform the operation for the UE, group of UEs, or Any UE indicated by ueIdentity.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [
+            "AF_NOT_ALLOWED",
+            "MTC_PROVIDER_NOT_ALLOWED"
+          ],
+          "protected_relation": "Requested AF and/or MTC Provider authorization for the UE scope addressed by ueIdentity.",
+          "coverage_notes": "The check is required when AF ID and/or MTC Provider information is received. The supplied text does not require binding those request-provided identities to the authenticated NF service consumer."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Conditional subject-specific authorization check"
+          },
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Requester NF example and HTTP-operation applicability"
+          },
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Conditional resource-scope authorization requirement"
+          },
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:6.4.3.2:resource-eesubscriptions-collection:resource-with-children",
+            "role": "Associated failure causes"
+          },
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Associated failure status"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the conditional authorization trigger.",
+              "quoted_text": "If MTC Provider information and/or AF ID are received in the request, the UDM shall check whether the MTC Provider and/or the AF is allowed to perform this operation",
+              "rationale": "Exercising this case requires supplying an MTC Provider identity or AF ID, but neither has an exact path in the supplied request-schema inventory."
+            }
+          ],
+          "gaps": [
+            "The supplied inventory does not identify a field path for MTC Provider information or AF ID, so a concrete request payload for this condition cannot be selected."
+          ],
+          "confidence": "high"
+        }
+      },
+      {
+        "case_id": "consumer_subscription_without_af_mtc_check",
+        "applies_when": [
+          "The POST request includes neither MTC Provider information nor an AF ID."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity"
+          ],
+          "relation_type": "consumer_to_ue_scope_binding_not_identified",
+          "relation_statement": "A consumer NF requests a subscription for the addressed UE, group of UEs, or any-UE scope, but the supplied TS text identifies no requester-to-subject authorization relation for this condition.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "When neither AF ID nor MTC Provider information is received, the specified AF/MTC Provider authorization check is skipped; no other requester-to-ueIdentity authorization check is stated in the supplied context."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Absence of the conditional subject-specific check"
+          },
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:6.4.3.2:resource-eesubscriptions-collection:resource-with-children",
+            "role": "Addressed resource scope"
+          },
+          {
+            "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Authorization-check exclusion"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "nef_ue_event_subscription_without_af_mtc",
+          "body_required_fields": [
+            "callbackReference",
+            "monitoringConfigurations"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the requester and subscription payload.",
+              "quoted_text": "The Nudm_EventExposure service is used by consumer NFs (e.g. NEF) to subscribe to notifications of event occurrence",
+              "rationale": "A NEF can make the selected subscription request."
+            },
+            {
+              "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the semantic request fields.",
+              "quoted_text": "The request contains a callback URI, the type of event that is monitored",
+              "rationale": "The callback URI and monitored event are represented by the inventoried callbackReference and monitoringConfigurations parent fields."
+            },
+            {
+              "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:5.5.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the condition in which the check is skipped.",
+              "quoted_text": "otherwise, the UDM shall skip the MTC provider and/or AF authorization check.",
+              "rationale": "Construct the subscription without MTC Provider information or an AF ID. No exact path for either identity is available to put in body_absent_fields."
+            },
+            {
+              "context_id": "Nudm_EE POST /{ueIdentity}/ee-subscriptions::TS29503:6.4.3.2:resource-eesubscriptions-collection:resource-with-children",
+              "evidence_role": "Identifies the POST resource and UE scope.",
+              "quoted_text": "Resource URI: {apiRoot}/nudm-ee/v1/{ueIdentity}/ee-subscriptions",
+              "rationale": "POST to this collection with ueIdentity addressing a provisioned single UE."
+            }
+          ],
+          "gaps": [
+            "The supplied inventory does not expose nested AF ID or MTC Provider paths; ensure the assembled monitoring configuration contains neither identity."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}",
+    "target": {
+      "service": "Nudm_EE",
+      "method": "DELETE",
+      "path": "/{ueIdentity}/ee-subscriptions/{subscriptionId}",
+      "operation_id": "DeleteEeSubscription"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ee"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "subscribing_consumer_unsubscribes",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity",
+            "subscriptionId"
+          ],
+          "relation_type": "original_subscribing_consumer",
+          "relation_statement": "The authenticated requester should be the NF service consumer that previously subscribed to notifications through the addressed EE subscription.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes unsubscription by a previously subscribed consumer using the subscription URI, but does not require the UDM to verify that the authenticated DELETE requester is the consumer that subscribed."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "requester-to-subscription relation"
+          },
+          {
+            "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "DELETE operation applicability"
+          },
+          {
+            "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:6.4.3.3:resource-individual-subscription-document:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Describes the intended requester and URI use"
+          },
+          {
+            "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:5.5.2:service-operations:service-operations-with-children",
+            "role": "Defines the DELETE procedure and stated failure condition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "delete_existing_nef_ee_subscription",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "An existing EE subscription was created by an owner NEF. Obtain its ueIdentity and subscriptionId from the subscription URI returned in the Location header.",
+            "Send the DELETE as a distinct authenticated NEF to exercise the original-subscribing-consumer binding."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:5.5.2:service-operations:service-operations-with-children",
+              "evidence_role": "requester and subscription relationship",
+              "quoted_text": "The Nudm_EventExposure service is also used by the consumer NFs (e.g. NEF) that have previously subscribed to notificatios, to unsubscribe by means of the Unsubscribe service operation.",
+              "rationale": "Supports selecting NEF and testing whether the DELETE requester is the consumer that previously subscribed."
+            },
+            {
+              "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:5.5.2:service-operations:service-operations-with-children",
+              "evidence_role": "path-and-method trigger",
+              "quoted_text": "1.The NF service consumer sends a DELETE request to the resource identified by the URI previously received during subscription creation.",
+              "rationale": "The previously returned subscription URI identifies the resource; DELETE on that URI exercises unsubscription without payload selection."
+            },
+            {
+              "context_id": "Nudm_EE DELETE /{ueIdentity}/ee-subscriptions/{subscriptionId}::TS29503:6.4.3.3:resource-individual-subscription-document:resource-with-children",
+              "evidence_role": "empty request body",
+              "quoted_text": "The request body shall be empty.",
+              "rationale": "No body fields are needed or permitted for this DELETE procedure."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}",
+      "operation_id": "GetDataSets"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_subscription_profile_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "serves_identified_ue",
+          "relation_statement": "The authenticated requester NF may retrieve data sets from the profile of the UE identified by {supi} when it serves that UE and the data is relevant to its service.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the SUPI-addressed subscription profile and describes retrieval of requested data sets, but does not require a check binding the requesting NF to that UE's profile."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}::TS29503:6.1.3.11:resource-supi-document:resource-with-children",
+            "role": "addressed resource"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "applicable requester example and operation"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "inferred UE relationship"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}::TS29503:6.1.3.11:resource-supi-document:resource-with-children",
+            "role": "identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "describes the applicable retrieval behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_am_and_smf_selection_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "dataset-names"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {
+            "dataset-names": "AM,SMF_SEL"
+          },
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects an AMF request and the two requested data sets.",
+              "quoted_text": "In this example scenario the UE's Access and Mobility Subscription data and the the UE's SMF Selection Subscription data are retrieved with a single request; see clause 6.1.3.11.3.1 for other data sets that can be retrieved with a single request. The request contains the UE's identity (/{supi}) and query parameters identifying the requested data sets (in this example: ?dataset-names=AM, SMF_SEL).",
+              "rationale": "Use the TS example: an AMF requests AM and SMF_SEL for the UE identified by the SUPI. The query value represents the two listed array items."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}::TS29503:6.1.3.11:resource-supi-document:resource-with-children",
+              "evidence_role": "Confirms the path-and-method trigger and absence of a request body.",
+              "quoted_text": "6.1.3.11.1Description\nThis resource represents the subscription profile of the subscriber identified by a given SUPI.",
+              "rationale": "GET on the SUPI resource targets the identified UE's subscription profile; the same resource's GET request-body table specifies n/a."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_02"
+  }
+]

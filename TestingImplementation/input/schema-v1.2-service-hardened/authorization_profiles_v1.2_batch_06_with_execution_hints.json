@@ -1,0 +1,1945 @@
+[
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update",
+    "target": {
+      "service": "Nnef_SMContext",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextId}/update",
+      "operation_id": "Update"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nnef-smcontext"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "related_pdu_session_context",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "smContextId"
+          ],
+          "relation_type": "manages_related_pdu_session",
+          "relation_statement": "The requesting SMF may update the Individual SM Context for the PDU session whose configuration it manages.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes updating the related SM Context but does not require the NEF to verify that the authenticated requester is associated with the PDU session or addressed SM Context. CONTEXT_NOT_FOUND concerns resource existence, not requester-to-resource binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update::TS29541:5.2.2:service-operations:service-operations-with-children",
+            "role": "requester-to-resource relationship"
+          },
+          {
+            "context_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update::TS29541:6.1.3.3:resource-individual-sm-context:resource-with-children",
+            "role": "addressed resource identifier"
+          },
+          {
+            "context_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update::TS29541:5.2.2:service-operations:service-operations-with-children",
+            "role": "Update procedure"
+          },
+          {
+            "context_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update::TS29541:6.1.3.3:resource-individual-sm-context:resource-with-children",
+            "role": "Specified update error"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMF",
+          "status": "executable",
+          "representative_variant": "update_notification_uri",
+          "body_required_fields": [
+            "notificationUri"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update::TS29541:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the SMF update procedure",
+              "quoted_text": "The Update service operation is invoked by a NF Service Consumer, e.g. a SMF, towards the NEF, when the SMF detects that some of the configurations of the PDU session has changed and the related SM Context for NIDD needs to be updated accordingly.",
+              "rationale": "An SMF updating the context related to its PDU session exercises the supplied requester-to-resource relation."
+            },
+            {
+              "context_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update::TS29541:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects a concrete request-body variant",
+              "quoted_text": "-Notification URI to receive the SM Context notifications;",
+              "rationale": "A changed notificationUri is one explicitly described update attribute and is present in the OpenAPI request schema inventory."
+            },
+            {
+              "context_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/update::TS29541:6.1.3.3:resource-individual-sm-context:resource-with-children",
+              "evidence_role": "identifies the addressed resource",
+              "quoted_text": "smContextId\nSM context identifier assigned by the NEF during the Create service operation.",
+              "rationale": "The request targets an existing Individual SM Context by its NEF-assigned path identifier."
+            }
+          ],
+          "gaps": [
+            "The replacement notification URI must be supplied from the lab fixture; the supplied TS evidence specifies no fixed URI value."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver",
+    "target": {
+      "service": "Nsmf_NIDD",
+      "method": "POST",
+      "path": "/pdu-sessions/{pduSessionRef}/deliver",
+      "operation_id": "Deliver"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nsmf-nidd"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "nef_bound_to_pdu_session",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "pduSessionRef"
+          ],
+          "relation_type": "nef_session_connection_binding",
+          "relation_statement": "The requesting NEF is the NEF associated with the SMF-NEF connection for the addressed PDU session.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes the NEF as the consumer and states that the SMF provides the PDU session URI to the NEF, but does not require the SMF to verify that the requesting NEF is bound to the addressed PDU session."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver::TS29542:6.1.3.2:resource-individual-pdu-session:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver::TS29542:5.2.2:service-operations:service-operations-with-children",
+            "role": "requester and session relationship"
+          },
+          {
+            "context_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver::TS29542:5.2.2:service-operations:service-operations-with-children",
+            "role": "resource URI provenance"
+          },
+          {
+            "context_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver::TS29542:5.2.2:service-operations:service-operations-with-children",
+            "role": "URI provenance without a requester-binding requirement"
+          },
+          {
+            "context_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver::TS29542:6.1.3.2:resource-individual-pdu-session:resource-with-children",
+            "role": "Resource identifier definition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "unresolved",
+          "representative_variant": "nef_anchored_mt_data_delivery",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver::TS29542:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the NEF request and its mandatory MT-data payload",
+              "quoted_text": "The payload body of the POST request shall contain the MT data to be delivered.",
+              "rationale": "The supplied OpenAPI field inventory contains no field or multipart-part definition through which to specify the required MT data, so a concrete request cannot be constructed from the supplied evidence."
+            },
+            {
+              "context_id": "Nsmf_NIDD POST /pdu-sessions/{pduSessionRef}/deliver::TS29542:6.1.3.2:resource-individual-pdu-session:resource-with-children",
+              "evidence_role": "Identifies the addressed session and delivery operation",
+              "quoted_text": "pduSessionRef\nPDU session reference assigned by the SMF during SMF-NEF Connection creation.",
+              "rationale": "The session reference connects the addressed resource to the SMF-NEF connection relevant to this case."
+            }
+          ],
+          "gaps": [
+            "The request body is mandatory under the TS, but the supplied OpenAPI request schema inventory exposes no fields or multipart-part definitions for carrying MT data. A path-and-method-only POST is therefore not a supported concrete trigger."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize",
+    "target": {
+      "service": "Nudm_NIDDAU",
+      "method": "POST",
+      "path": "/{ueIdentity}/authorize",
+      "operation_id": "AuthorizeNiddData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-niddau"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "nef_ue_nidd_authorization",
+        "applies_when": [
+          "Neither MTC Provider information nor AF ID is supplied."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity"
+          ],
+          "relation_type": "requesting_nef_relevant_ue_authorization",
+          "relation_statement": "The authenticated NEF may obtain NIDD authorization data for the addressed UE identity only insofar as the data is relevant to that requesting NEF.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "When neither MTC Provider information nor AF ID is supplied, the specified provider and AF authorization checks are skipped. No check binding the requesting NEF to the addressed UE is stated."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:6.6.3.2:resource-ueidentity-document:resource-with-children",
+            "role": "resource and operation identification"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+            "role": "requester relevance and condition"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+            "role": "requester relevance"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+            "role": "conditional authorization rule"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:6.6.3.2:resource-ueidentity-document:resource-with-children",
+            "role": "requester and resource identification"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [
+            "mtcProviderInformation",
+            "afId"
+          ],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the condition that would skip provider and AF checks",
+              "quoted_text": "otherwise, the UDM shall skip the MTC provider and/or AF authorization check.",
+              "rationale": "This case requires neither MTC Provider information nor AF ID, but the supplied OpenAPI inventory marks mtcProviderInformation required, so no conforming concrete request can be selected."
+            },
+            {
+              "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the TS payload requirement conflicting with the case condition",
+              "quoted_text": "The payload of the request shall be an object of \"AuthorizationInfo\" which shall contain NSSAI, DNN, MTC Provider Information, callback URI.",
+              "rationale": "The TS also requires MTC Provider Information in the request payload."
+            }
+          ],
+          "gaps": [
+            "The case requires mtcProviderInformation to be absent, while both the supplied TS procedure and OpenAPI request schema require it. No TS-supported, OpenAPI-conforming request trigger for this case is established."
+          ],
+          "confidence": "high"
+        }
+      },
+      {
+        "case_id": "nef_ue_nidd_authorization_with_provider_or_af",
+        "applies_when": [
+          "MTC Provider information and/or AF ID is supplied."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity"
+          ],
+          "relation_type": "requesting_nef_relevant_ue_authorization_with_provider_or_af_allowance",
+          "relation_statement": "The authenticated NEF may obtain NIDD authorization data relevant to it for the addressed UE identity only where the supplied MTC provider and/or AF is allowed to perform this operation for that UE. The TS does not establish that either supplied identity is the authenticated NEF.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM checks whether the supplied MTC Provider and/or AF is allowed to perform the operation for the UE.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [
+            "MTC_PROVIDER_NOT_ALLOWED",
+            "AF_INSTANCE_NOT_ALLOWED"
+          ],
+          "protected_relation": "Supplied MTC Provider and/or AF to the addressed UE",
+          "coverage_notes": "This check protects the provider or AF relation to the UE when the corresponding information is supplied. The specification does not state that the supplied provider or AF identity is bound to the authenticated requesting NEF."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:6.6.3.2:resource-ueidentity-document:resource-with-children",
+            "role": "resource and requester identification"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+            "role": "conditional UE-specific allowance"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+            "role": "requester relevance"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+            "role": "resource-relation check"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+            "role": "failure behavior"
+          },
+          {
+            "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:6.6.3.2:resource-ueidentity-document:resource-with-children",
+            "role": "associated failure causes"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "nef_with_mtc_provider",
+          "body_required_fields": [
+            "snssai",
+            "dnn",
+            "mtcProviderInformation",
+            "authUpdateCallbackUri"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [
+            "afId"
+          ],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:6.6.3.2:resource-ueidentity-document:resource-with-children",
+              "evidence_role": "Identifies the requester and operation",
+              "quoted_text": "This custom operation is used by the NF service consumer (NEF) to request UDM to authorize the NIDD configuration request for the GPSI/External Group Identifier.",
+              "rationale": "A NEF invokes the authorize operation for the addressed UE identity."
+            },
+            {
+              "context_id": "Nudm_NIDDAU POST /{ueIdentity}/authorize::TS29503:5.7.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects a concrete provider-only request and its TS-required payload",
+              "quoted_text": "The payload of the request shall be an object of \"AuthorizationInfo\" which shall contain NSSAI, DNN, MTC Provider Information, callback URI.If MTC Provider information and/or AF ID are received in the request, the UDM shall check whether the MTC Provider and/or the AF is allowed to perform this operation for the UE;",
+              "rationale": "Supplying MTC Provider Information without the optional AF ID exercises the provider authorization check. The other listed fields are required by the TS procedure."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_PP PATCH /{ueId}/pp-data",
+    "target": {
+      "service": "Nudm_PP",
+      "method": "PATCH",
+      "path": "/{ueId}/pp-data",
+      "operation_id": "Update"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-pp"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "subscription_data_update",
+        "applies_when": [
+          "The PATCH modifies the addressed UE's or group of UEs' subscription data rather than conveying updated SoR Information."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF",
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_subscription_provisioner_for_subject",
+          "relation_statement": "The authenticated consumer NF should be authorized to modify subscription data for the UE or group identified by ueId. Where an originating AF or MTC provider is identified, that originator should also be allowed to perform the operation for the subject.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM checks whether an identified originating AF or MTC Provider is allowed to perform the operation for the UE, subject to configuration and receipt of the respective identifier.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [
+            "AF_NOT_ALLOWED",
+            "MTC_PROVIDER_NOT_ALLOWED"
+          ],
+          "protected_relation": "The identified originating AF or MTC Provider is allowed to update the addressed UE's subscription data.",
+          "coverage_notes": "The checks are skipped under the specified conditions. The specification does not state that the supplied AF or MTC Provider identifier is bound to the authenticated NF service consumer, and it describes the authorization check in terms of a UE rather than a group of UEs."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "applicable PATCH procedure and consumer examples"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "subject-specific originator authorization"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:6.5.3.2:resource-ppdata:resource-with-children",
+            "role": "resource identifier scope"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "Conditional authorization checks"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:6.5.3.2:resource-ppdata:resource-with-children",
+            "role": "Associated failure causes"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "dl_packet_count_update",
+          "body_required_fields": [
+            "communicationCharacteristics",
+            "communicationCharacteristics.ppDlPacketCount"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [
+            "sorInfo"
+          ],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed ueId identifies a UE whose subscription data can be modified in the test fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the requester and subscription-update procedure",
+              "quoted_text": "The NF service consumer (e.g. NEF, AMF) sends a PATCH request to the resource that represents a UE's modifiable subscription data.",
+              "rationale": "NEF is an explicitly identified consumer of this PATCH procedure."
+            },
+            {
+              "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects a concrete subscription parameter to update",
+              "quoted_text": "Upon reception of an update or removal of maximum latency, maximum response time or DL Buffering Suggested Packet Count",
+              "rationale": "An update to the OpenAPI communicationCharacteristics.ppDlPacketCount field provides a concrete modification instruction rather than relying on an empty PpData object."
+            }
+          ],
+          "gaps": [
+            "The packet-count value must be chosen for the test fixture; no exact value is specified."
+          ],
+          "confidence": "medium"
+        }
+      },
+      {
+        "case_id": "sor_information_update",
+        "applies_when": [
+          "The PATCH conveys updated Steering of Roaming Information for the UE identified by ueId."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_sor_originator_for_ue",
+          "relation_statement": "The authenticated SoR-originating AF should be authorized to send updated SoR Information for the UE identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The SoR update procedure describes a possible authorization failure, but does not specify a check relating the NF service consumer to the UE identified by ueId. UE registration status is not requester-to-resource binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "condition-specific use of the same method and resource"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "SoR requester and operation"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:6.5.3.1:overview",
+            "role": "method-path applicability"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "SoR authorization language"
+          },
+          {
+            "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "Addressed resource"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AF",
+          "status": "executable",
+          "representative_variant": "secured_sor_packet_update",
+          "body_required_fields": [
+            "sorInfo",
+            "sorInfo.sorTransparentContainer"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed ueId is the SUPI of a registered UE.",
+            "A valid secured SoR packet is available for the UE."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the SoR consumer and addressed identifier",
+              "quoted_text": "the NF service consumer (e.g. SOR-AF) sends updated SoR Information for a UE to the UDM",
+              "rationale": "The selected AF acts as the SoR-originating AF, not as a subscription-data-update consumer."
+            },
+            {
+              "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the secured-packet payload variant",
+              "quoted_text": "or a secured packet for a UE",
+              "rationale": "The OpenAPI sorInfo.sorTransparentContainer field is selected to carry the secured-packet variant; sorInfo marks the request as an SoR update."
+            },
+            {
+              "context_id": "Nudm_PP PATCH /{ueId}/pp-data::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "Constrains the URI identifier",
+              "quoted_text": "the SUPI in this case",
+              "rationale": "For this procedure, ueId must identify the UE by SUPI."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not specify the secured packet's encoding or content; a valid packet must come from the test fixture."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}",
+    "target": {
+      "service": "Nudm_PP",
+      "method": "DELETE",
+      "path": "/{ueId}/pp-data-store/{afInstanceId}",
+      "operation_id": "Delete PP Data Entry"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-pp"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "delete_af_provisioning_entry",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "afInstanceId"
+          ],
+          "relation_type": "authorized_af_provisioning_for_ue",
+          "relation_statement": "The requesting NEF may delete the entry for the AF identified by afInstanceId only when that AF is allowed to perform the operation for the UE or group identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "If configured, the UDM checks whether the AF is allowed to perform the deletion for the UE. If configured and MTC Provider information is received, it also checks whether that provider is allowed to perform the operation for the UE.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [
+            "AF_NOT_ALLOWED",
+            "MTC_PROVIDER_NOT_ALLOWED"
+          ],
+          "protected_relation": "AF or MTC Provider permission to perform the operation for the addressed UE",
+          "coverage_notes": "Both checks can be skipped under the stated conditions. The specification does not require binding the authenticated NF consumer to the AF identified by afInstanceId or to the supplied MTC Provider information."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "DELETE procedure and authorization relation"
+          },
+          {
+            "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "AF-to-UE authorization check"
+          },
+          {
+            "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "resource identifiers"
+          },
+          {
+            "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "Conditional authorization checks for DELETE"
+          },
+          {
+            "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "Conditional MTC Provider authorization check"
+          },
+          {
+            "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "Defined authorization failure causes"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "delete_existing_af_entry",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the NEF deletion procedure and its resource",
+              "quoted_text": "the NF service consumer (e.g. NEF) sends a request to the UDM to delete a Parameter Provisioning Data Entry for a certain AF",
+              "rationale": "NEF is the case's requester type, and the DELETE operation targets the existing entry identified by ueId and afInstanceId."
+            },
+            {
+              "context_id": "Nudm_PP DELETE /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a request body or required query parameter",
+              "quoted_text": "Table 6.5.3.4.3.2-2: Data structures supported by the DELETE Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "Deleting an existing addressed entry is exercised by DELETE on its resource URI; the TS specifies no DELETE request body. Its sole listed DELETE query parameter is optional."
+            }
+          ],
+          "gaps": [
+            "The lab fixture must supply an existing entry and concrete ueId and afInstanceId values. Whether the UDM performs the conditional AF authorization check depends on its configuration."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}",
+    "target": {
+      "service": "Nudm_PP",
+      "method": "PUT",
+      "path": "/{ueId}/pp-data-store/{afInstanceId}",
+      "operation_id": "Create PP Data Entry"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-pp"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "originating_af_ue_provisioning",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "afInstanceId"
+          ],
+          "relation_type": "acts_for_af_authorized_for_ue",
+          "relation_statement": "The requesting NF acts for the AF identified by afInstanceId, and that AF is allowed to provision data for the UE or UE group identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM checks whether the AF is allowed to perform the operation for the UE. The check is mandatory for updates but may be skipped for creation when AF authorization checking is not configured.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [
+            "AF_NOT_ALLOWED"
+          ],
+          "protected_relation": "The AF's permission to provision data for the UE identified by ueId.",
+          "coverage_notes": "The specification does not explicitly require binding the authenticated NF consumer to the originating AF identified by afInstanceId. For creation, the AF authorization check is conditional on configuration."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "resource identifiers"
+          },
+          {
+            "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "applicable PUT procedure and authorization relation"
+          },
+          {
+            "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "AF-to-UE authorization relation"
+          },
+          {
+            "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "Identifies the AF represented by the resource path."
+          },
+          {
+            "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "Defines the authorization check for updates."
+          },
+          {
+            "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "Defines the authorization check and its limitation for creation."
+          },
+          {
+            "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "Identifies the associated failure response and cause."
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "existing_af_entry_maximum_latency_update",
+          "body_required_fields": [
+            "communicationCharacteristics.maximumLatency"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the requester and update procedure",
+              "quoted_text": "The NF service consumer (e.g. NEF) sends a PUT request to the resource that represents an existing Parameter Provisioning Data entry for the AF identified by the afInstnaceId.",
+              "rationale": "A NEF PUT to an existing entry selects the update procedure, for which the TS requires the UDM to check whether the AF is allowed to operate for the UE."
+            },
+            {
+              "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "Supports the selected payload content",
+              "quoted_text": "Upon reception of an update or removal of maximum latency, maximum response time or DL Buffering Suggested Packet Count",
+              "rationale": "Updating maximum latency is an explicit TS-supported form of this procedure; the OpenAPI inventory places it at communicationCharacteristics.maximumLatency."
+            },
+            {
+              "context_id": "Nudm_PP PUT /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+              "evidence_role": "Identifies the originating AF in the resource URI",
+              "quoted_text": "afInstanceId\nstring\nThe string identifying the originating AF.",
+              "rationale": "The path identifies the AF whose permission to provision data for the addressed UE is at issue."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not specify concrete ueId, afInstanceId, or maximumLatency values; use valid values from the lab fixture and OpenAPI schema."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}",
+    "target": {
+      "service": "Nudm_PP",
+      "method": "GET",
+      "path": "/{ueId}/pp-data-store/{afInstanceId}",
+      "operation_id": "Get PP Data Entry"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-pp"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "originating_af_ue_entry_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "afInstanceId"
+          ],
+          "relation_type": "authorized_originating_af_access",
+          "relation_statement": "An NEF retrieving the entry on behalf of the originating AF should access only an entry for an AF allowed to perform this operation for the UE identified by ueId. If an MTC provider originates the operation, that provider should also be allowed to perform it for the UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "When configured to perform the AF authorization check, the UDM checks whether the AF is allowed to perform the GET operation for the UE.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [
+            "AF_NOT_ALLOWED"
+          ],
+          "protected_relation": "AF authorization to retrieve a Parameter Provisioning Data entry for the addressed UE",
+          "coverage_notes": "The AF-to-UE check is skipped when not configured. The supplied text does not require verification that the authenticated requester represents the originating AF identified by afInstanceId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "GET procedure and UE-specific authorization relation"
+          },
+          {
+            "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "conditional AF and MTC-provider authorization"
+          },
+          {
+            "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "resource identifier meaning"
+          },
+          {
+            "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+            "role": "conditional authorization check"
+          },
+          {
+            "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "meaning of addressed AF identifier"
+          },
+          {
+            "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+            "role": "associated failure cause"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "nef_get_af_entry",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Address an existing Parameter Provisioning Data entry using its UE identifier and originating AF instance identifier.",
+            "To exercise the AF-to-UE authorization check, configure the UDM to perform that check."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the requester and GET procedure",
+              "quoted_text": "Figure 5.6.2.5.3-1 shows a scenario where the NF service consumer (e.g. NEF) sends a request to the UDM to get a Parameter Provisioning Data Entry for a certain AF.",
+              "rationale": "NEF is an explicitly supported consumer for this GET procedure."
+            },
+            {
+              "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "establishes the path-and-method authorization trigger",
+              "quoted_text": "The NF service consumer sends a GET request to the resource .../{ueId}/pp-data-store/{afInstanceId}, to get the Parameter Provisioning Data Entry for the AF identified by afInstanceId.",
+              "rationale": "GET on the addressed entry selects the procedure without a request body or required query parameter."
+            },
+            {
+              "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:6.5.3.4:resource-parameterprovisioningdataentry:resource-with-children",
+              "evidence_role": "confirms GET has no request body",
+              "quoted_text": "Table 6.5.3.4.3.3-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "No body fields are needed for this representative request."
+            },
+            {
+              "context_id": "Nudm_PP GET /{ueId}/pp-data-store/{afInstanceId}::TS29503:5.6.2:service-operations:service-operations-with-children",
+              "evidence_role": "identifies the conditional AF authorization check",
+              "quoted_text": "if configured to perform AF authorization check, the UDM shall check whether the AF is allowed to perform this operation for the UE; otherwise, the UDM shall skip the AF authorization check;",
+              "rationale": "The GET exercises the AF-to-UE check when the UDM is configured to perform it."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not establish verification that the authenticated NEF represents the originating AF identified by afInstanceId."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_RSDS POST /{ueIdentity}/sm-delivery-status",
+    "target": {
+      "service": "Nudm_RSDS",
+      "method": "POST",
+      "path": "/{ueIdentity}/sm-delivery-status",
+      "operation_id": "ReportSMDeliveryStatus"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-rsds"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_sm_delivery_status_reporter",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMS-GMSC",
+            "IP-SM-GW"
+          ],
+          "resource_identifiers": [
+            "ueIdentity"
+          ],
+          "relation_type": "authorized_reporter_for_gpsi",
+          "relation_statement": "The authenticated requester is an SMS-GMSC or IP-SM-GW authorized to report SM-Delivery Status for the GPSI addressed by {ueIdentity}.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the consumer NF types and the GPSI-addressed resource, but does not state a check binding the authenticated reporter to that GPSI."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_RSDS POST /{ueIdentity}/sm-delivery-status::TS29503:6.9.3.2:resource-smdeliverystatus-document:resource-with-children",
+            "role": "resource and operation semantics"
+          },
+          {
+            "context_id": "Nudm_RSDS POST /{ueIdentity}/sm-delivery-status::TS29503:5.10.2:service-operations:service-operations-with-children",
+            "role": "addressed UE identity"
+          },
+          {
+            "context_id": "Nudm_RSDS POST /{ueIdentity}/sm-delivery-status::TS29503:6.9.3.2:resource-smdeliverystatus-document:resource-with-children",
+            "role": "Resource and consumer description"
+          },
+          {
+            "context_id": "Nudm_RSDS POST /{ueIdentity}/sm-delivery-status::TS29503:5.10.2:service-operations:service-operations-with-children",
+            "role": "Procedure description"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMS-GMSC",
+          "status": "executable",
+          "representative_variant": "sms_gmsc_status_report",
+          "body_required_fields": [
+            "smStatusReport"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_RSDS POST /{ueIdentity}/sm-delivery-status::TS29503:6.9.3.2:resource-smdeliverystatus-document:resource-with-children",
+              "evidence_role": "Selects the requester, operation, and status-report body",
+              "quoted_text": "This custom operation is used by the NF service consumer (SMS-GMSC, IP-SM-GW) to report the SM-Delivery Status to UDM for the GPSI.",
+              "rationale": "An SMS-GMSC reporting status for the GPSI addressed by the resource exercises the supplied reporter-binding case. The required SmDeliveryStatus request body carries the report through smStatusReport."
+            },
+            {
+              "context_id": "Nudm_RSDS POST /{ueIdentity}/sm-delivery-status::TS29503:5.10.2:service-operations:service-operations-with-children",
+              "evidence_role": "Confirms the concrete request trigger",
+              "quoted_text": "The NF service consumer sends a POST request to the resource representing the SM-Delivery status.",
+              "rationale": "POST to the GPSI-addressed resource is the specified reporting procedure; the UE identity is supplied in the resource URI."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not prescribe an exact smStatusReport string; the test fixture must supply a valid report value."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize",
+    "target": {
+      "service": "Nudm_SSAU",
+      "method": "POST",
+      "path": "/{ueIdentity}/{serviceType}/authorize",
+      "operation_id": "ServiceSpecificAuthorization"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ssau"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "service_relevant_ue_authorization",
+        "applies_when": [
+          "Neither MTC Provider information nor AF ID is received in the request."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity",
+            "serviceType"
+          ],
+          "relation_type": "consumer_service_relevant_subject",
+          "relation_statement": "The authenticated NEF requests authorization information for a service relevant to it and the addressed UE or external group.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "When neither MTC Provider information nor AF ID is supplied, the specified provider/AF authorization check is skipped. The stated subscription-data checks do not establish that the consumer is authorized for the addressed UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "consumer-to-subject relation"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "condition selecting the base check"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "Conditional check is skipped"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "Remaining check is subscription-data membership"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "authorize_without_provider_or_af",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [
+            "mtcProviderInformation",
+            "afId"
+          ],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use an addressed UE or external group and a serviceType for which service-specific authorization information is provisioned."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:6.8.3.2:resource-servicetype-document:resource-with-children",
+              "evidence_role": "consumer and operation",
+              "quoted_text": "This custom operation is used by the NF service consumer (NEF) to request UDM to authorize a specific service's configuration for the GPSI/External Group Identifier.",
+              "rationale": "A NEF invokes the addressed authorize operation with a ServiceSpecificAuthorizationInfo body."
+            },
+            {
+              "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+              "evidence_role": "absence condition",
+              "quoted_text": "otherwise, the UDM shall skip the MTC provider and/or AF authorization check.",
+              "rationale": "Omitting both indicated identifiers selects the case. The POST operation and addressed resource exercise authorization without another body field selecting this branch."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      },
+      {
+        "case_id": "provider_or_af_allowed_for_ue",
+        "applies_when": [
+          "MTC Provider information and/or AF ID is received in the request."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity",
+            "serviceType"
+          ],
+          "relation_type": "consumer_with_ue_allowed_provider_or_af",
+          "relation_statement": "The authenticated NEF requests the service authorization for the addressed UE or external group in a context where the indicated MTC Provider and/or AF is allowed to perform the operation for that subject.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "condition_scoped",
+          "mechanism": "The UDM checks whether the MTC Provider and/or AF indicated in the request is allowed to perform the operation for the UE.",
+          "failure_codes": [
+            403
+          ],
+          "failure_causes": [
+            "MTC_PROVIDER_NOT_ALLOWED",
+            "AF_INSTANCE_NOT_ALLOWED"
+          ],
+          "protected_relation": "Request-indicated MTC Provider and/or AF allowed to perform the operation for the addressed UE.",
+          "coverage_notes": "The check applies only when MTC Provider information and/or AF ID is received. The supplied text does not require binding those request-indicated identifiers to the authenticated consumer."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "conditional subject-specific authorization check"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:6.8.3.2:resource-servicetype-document:resource-with-children",
+            "role": "operation requester and addressed subject"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "UE-specific conditional authorization check"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "Specified rejection"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:6.8.3.2:resource-servicetype-document:resource-with-children",
+            "role": "Associated application causes"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "authorize_with_mtc_provider",
+          "body_required_fields": [
+            "mtcProviderInformation"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [
+            "afId"
+          ],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use an addressed UE with service-specific authorization information and an MTC Provider identifier whose allowed status for that UE is known in the test fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:6.8.3.2:resource-servicetype-document:resource-with-children",
+              "evidence_role": "consumer and request data",
+              "quoted_text": "This IE shall indicate the information for service specific authorization, which should contain the callback URI and may contain S-NSSAI, DNN, MTC Provider Information, AF-ID.",
+              "rationale": "The NEF authorize request supports an MTC Provider Information field."
+            },
+            {
+              "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/authorize::TS29503:5.9.2:service-operations:service-operations-with-children",
+              "evidence_role": "provider-check trigger",
+              "quoted_text": "If MTC Provider information and/or AF ID are received in the request, the UDM shall check whether the MTC Provider and/or the AF is allowed to perform this operation for the UE",
+              "rationale": "Supplying mtcProviderInformation alone selects the provider authorization check for the addressed UE."
+            }
+          ],
+          "gaps": [
+            "The concrete MTC Provider identifier must come from the test fixture; no identifier value is supplied."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove",
+    "target": {
+      "service": "Nudm_SSAU",
+      "method": "POST",
+      "path": "/{ueIdentity}/{serviceType}/remove",
+      "operation_id": "ServiceSpecificAuthorizationRemoval"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ssau"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "prior_authorization_recipient",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueIdentity",
+            "serviceType",
+            "Service Specific Authorization Id"
+          ],
+          "relation_type": "prior_authorization_result_recipient",
+          "relation_statement": "The requesting consumer NF is the prior recipient of the service-specific authorization result for the addressed UE or group and service whose authorization it requests to remove.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes removal by a consumer that previously received the authorization result and requires the request to contain the previously issued authorization ID. It does not state that UDM verifies the authenticated requester was that recipient."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "requester-to-authorization relation"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "operation and authorization-instance identification"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "intended requester"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "request identifier requirement"
+          },
+          {
+            "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove::TS29503:5.9.2:service-operations:service-operations-with-children",
+            "role": "specified removal failure"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "requires_state_setup",
+          "representative_variant": "remove_authorization_issued_to_other_nef",
+          "body_required_fields": [
+            "authId"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "A prior successful Create operation has returned a Service Specific Authorization Id to an owner NEF for the addressed ueIdentity and serviceType, and that authorization remains present at the UDM.",
+            "Submit the remove request as a different authenticated NEF, using that prior authorization ID as authId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove::TS29503:5.9.2:service-operations:service-operations-with-children",
+              "evidence_role": "prior-recipient relation and requester type",
+              "quoted_text": "It is also used by the Consumer NFs (NEF) that have previously received the service specific authorization result, to request UDM to remove the UE's authorization for a specific service relevant to the consumer NF in the UDM by means of the Remove service operation.",
+              "rationale": "The selected requester is a NEF; using an ID issued to another NEF exercises the prior-recipient binding."
+            },
+            {
+              "context_id": "Nudm_SSAU POST /{ueIdentity}/{serviceType}/remove::TS29503:5.9.2:service-operations:service-operations-with-children",
+              "evidence_role": "request trigger and authorization ID source",
+              "quoted_text": "The payload of the request shall be an object of \"ServiceSpecificAuthorizationRemoveData\" which contains the Service Specific Authorization Id previously received from UDM via Create Operation (see clause 5.9.2.2.2).",
+              "rationale": "POST the remove operation with authId, the exact OpenAPI field carrying the previously issued authorization ID."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UEAU POST /{supiOrSuci}/prose-security-information/generate-av",
+    "target": {
+      "service": "Nudm_UEAU",
+      "method": "POST",
+      "path": "/{supiOrSuci}/prose-security-information/generate-av",
+      "operation_id": "GenerateProseAV"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ueau"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ausf_remote_ue_prose_authentication",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AUSF"
+          ],
+          "resource_identifiers": [
+            "supiOrSuci"
+          ],
+          "relation_type": "ausf_authenticating_addressed_remote_ue",
+          "relation_statement": "The authenticated AUSF requesting ProSe authentication vectors is acting for the 5G ProSe Remote UE whose security information is addressed by supiOrSuci.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the AUSF as the consumer and the SUPI or SUCI as the Remote UE identifier, but does not state a check binding that AUSF to the addressed UE. The stated authorization failure concerns UE subscription data, not requester-to-resource authorization."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/prose-security-information/generate-av::TS29503:6.3.3.8:resource-prosesecurityinformation-custom-operation:resource-with-children",
+            "role": "Operation, requester, and addressed subject"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/prose-security-information/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "Applicable procedure and identifier"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/prose-security-information/generate-av::TS29503:6.3.3.8:resource-prosesecurityinformation-custom-operation:resource-with-children",
+            "role": "Identifies the consumer and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/prose-security-information/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "Distinguishes stated authorization failure from resource binding"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AUSF",
+          "status": "executable",
+          "representative_variant": "prose_av_retrieval_without_resynchronization",
+          "body_required_fields": [
+            "relayServiceCode"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [
+            "resynchronizationInfo"
+          ],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UEAU POST /{supiOrSuci}/prose-security-information/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the AUSF ProSe vector retrieval request and its semantic body field.",
+              "quoted_text": "The request contains the UE's identity (supi or suci), Relay Service Code, and may contain resynchronization info.",
+              "rationale": "The addressed UE is identified in the URI; relayServiceCode is the body field needed for this procedure. Omitting optional resynchronizationInfo selects a request without resynchronization."
+            },
+            {
+              "context_id": "Nudm_UEAU POST /{supiOrSuci}/prose-security-information/generate-av::TS29503:6.3.3.8:resource-prosesecurityinformation-custom-operation:resource-with-children",
+              "evidence_role": "Confirms the requester and the POST custom-operation trigger.",
+              "quoted_text": "This custom operation is used by the NF service consumer (AUSF) to request ProSe authentication vector(s) for the 5G ProSe Remote UE from the UDM.",
+              "rationale": "An AUSF POST to the addressed Remote UE's generate-av operation exercises the supplied case."
+            }
+          ],
+          "gaps": [
+            "The concrete UE identifier and Relay Service Code depend on the lab fixture. OpenAPI also requires servingNetworkName to construct the request body, but the supplied TS excerpt does not identify it as a field selecting this ProSe procedure."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data",
+    "target": {
+      "service": "Nudm_UEAU",
+      "method": "POST",
+      "path": "/{supiOrSuci}/security-information/generate-auth-data",
+      "operation_id": "GenerateAuthData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ueau",
+        "nudm-ueau:security-information:generate-auth-data:invoke"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ausf_ue_authentication",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AUSF"
+          ],
+          "resource_identifiers": [
+            "supiOrSuci"
+          ],
+          "relation_type": "ausf_authenticating_addressed_ue",
+          "relation_statement": "The authenticated AUSF requesting authentication information for the addressed UE may access that UE's security-information resource as part of handling the UE's authentication.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the AUSF as the consumer and describes authorization of the subscriber to use a service, but does not require a check binding the authenticated AUSF requester to the UE identified by the addressed SUPI or SUCI."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:6.3.3.2:resource-securityinformation-custom-operation:resource-with-children",
+            "role": "operation and requester"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "applicable HTTP procedure"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:6.3.3.2:resource-securityinformation-custom-operation:resource-with-children",
+            "role": "operation description"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "scope of stated authorization"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "failure-condition limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AUSF",
+          "status": "executable",
+          "representative_variant": "authentication_information_retrieval",
+          "body_required_fields": [
+            "servingNetworkName"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:6.3.3.2:resource-securityinformation-custom-operation:resource-with-children",
+              "evidence_role": "identifies the requester and addressed UE",
+              "quoted_text": "This custom operation is used by the NF service consumer (AUSF) to request authentication information data for the SUPI/SUCI from the UDM.",
+              "rationale": "An AUSF request to this operation targets the UE identified by the path SUPI or SUCI."
+            },
+            {
+              "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:5.4.2:service-operations:service-operations-with-children",
+              "evidence_role": "selects the request trigger and semantic body field",
+              "quoted_text": "The request contains the UE's identity (supi or suci), the serving network name, and may contain resynchronization info.",
+              "rationale": "For authentication information retrieval, supply the addressed UE identity in the path and servingNetworkName in the body; resynchronization information is optional."
+            },
+            {
+              "context_id": "Nudm_UEAU POST /{supiOrSuci}/security-information/generate-auth-data::TS29503:5.4.2:service-operations:service-operations-with-children",
+              "evidence_role": "identifies the HTTP operation",
+              "quoted_text": "1.The NF service consumer sends a POST request (custom method: generate-auth-data) to the resource representing the UE's security information.",
+              "rationale": "POST to the addressed security-information generate-auth-data resource exercises the selected procedure."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UEAU POST /{supi}/gba-security-information/generate-av",
+    "target": {
+      "service": "Nudm_UEAU",
+      "method": "POST",
+      "path": "/{supi}/gba-security-information/generate-av",
+      "operation_id": "GenerateGbaAv"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ueau",
+        "nudm-ueau:gba-security-information:generate-av:invoke"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "gba_bsf_ue_vector_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "BSF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "gba_bsf_access_to_ue_security_information",
+          "relation_statement": "The authenticated BSF requests GBA authentication vectors for the UE identified by the path SUPI. The supplied text does not establish which particular BSF is entitled to access that UE's information.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies GBA's BSF as the consumer and the SUPI as the addressed UE, but does not require a check binding the authenticated BSF to that UE. The stated authorization failure concerns subscription data, not that requester-to-resource relation."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/gba-security-information/generate-av::TS29503:6.3.3.7:resource-gbasecurityinformation-custom-operation:resource-with-children",
+            "role": "Operation and addressed subject"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/gba-security-information/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "Applicable procedure"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/gba-security-information/generate-av::TS29503:6.3.3.7:resource-gbasecurityinformation-custom-operation:resource-with-children",
+            "role": "Identifies the consumer and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/gba-security-information/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "Distinguishes the stated authorization failure from resource binding"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "BSF",
+          "status": "executable",
+          "representative_variant": "gba_vector_retrieval",
+          "body_required_fields": [
+            "authType"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "authType": "DIGEST_AKAV1_MD5"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UEAU POST /{supi}/gba-security-information/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the BSF request and its authentication-method content",
+              "quoted_text": "The request contains the UE's identity (SUPI), the authentication method and may contain resynchronization info.",
+              "rationale": "The path supplies the UE identity, and authType supplies the authentication method. The OpenAPI inventory permits the exact authType value DIGEST_AKAV1_MD5; resynchronizationInfo is optional."
+            },
+            {
+              "context_id": "Nudm_UEAU POST /{supi}/gba-security-information/generate-av::TS29503:6.3.3.7:resource-gbasecurityinformation-custom-operation:resource-with-children",
+              "evidence_role": "Identifies the operation and requester",
+              "quoted_text": "This custom operation is used by the NF service consumer (GBA's BSF) to request calculation of authentication vector(s) for the provided SUPI.",
+              "rationale": "A BSF POST to the generate-av operation for the addressed SUPI exercises the supplied case."
+            }
+          ],
+          "gaps": [
+            "The path SUPI and BSF identity must come from the test fixture; the supplied evidence does not specify which particular BSF is entitled to that UE's information."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av",
+    "target": {
+      "service": "Nudm_UEAU",
+      "method": "POST",
+      "path": "/{supi}/hss-security-information/{hssAuthType}/generate-av",
+      "operation_id": "GenerateAv"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ueau",
+        "nudm-ueau:hss-security-information:generate-av:invoke"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "hss_ue_authentication_vector_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS"
+          ],
+          "resource_identifiers": [
+            "supi",
+            "hssAuthType"
+          ],
+          "relation_type": "hss_authorized_for_ue_authentication",
+          "relation_statement": "The authenticated HSS may request authentication vectors for the UE identified by the addressed SUPI when it is authorized to handle that UE's EPS or IMS authentication.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the HSS as the consumer and describes a 403 response when the UE lacks required subscription data, but does not require a check binding the authenticated HSS to the SUPI whose authentication vectors are requested."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av::TS29503:6.3.3.5:resource-hsssecurityinformation-custom-operation:resource-with-children",
+            "role": "Operation consumer and subject"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "Applicable method, resource, and URI qualifier"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av::TS29503:6.3.3.5:resource-hsssecurityinformation-custom-operation:resource-with-children",
+            "role": "Identifies the requester and addressed resource"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+            "role": "Distinguishes the stated authorization failure from requester-to-resource binding"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "HSS",
+          "status": "executable",
+          "representative_variant": "eps_aka_vector_retrieval",
+          "body_required_fields": [
+            "hssAuthType",
+            "numOfRequestedVectors",
+            "servingNetworkId"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "hssAuthType": "EPS_AKA"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the HSS consumer and request content",
+              "quoted_text": "The request contains the UE's identity (SUPI), the authentication method, serving network id, and may contain resynchronization info.",
+              "rationale": "Selects HSS retrieval for the addressed SUPI. The supplied OpenAPI body inventory permits EPS_AKA as the authentication method; resynchronization information is optional."
+            },
+            {
+              "context_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av::TS29503:6.3.3.5:resource-hsssecurityinformation-custom-operation:resource-with-children",
+              "evidence_role": "Identifies the operation and requested vector count",
+              "quoted_text": "Contains the authentication method, number of requested vectors, serving network id and resynchronization information",
+              "rationale": "The POST generate-av request uses HssAuthenticationInfoRequest. The authentication method, vector count, and serving network ID are the selected procedure's request content."
+            },
+            {
+              "context_id": "Nudm_UEAU POST /{supi}/hss-security-information/{hssAuthType}/generate-av::TS29503:5.4.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the URI and method trigger",
+              "quoted_text": "the type of requested AV is included as part of the resource URI.",
+              "rationale": "Send POST to the addressed SUPI's HSS security-information generate-av URI, selecting the EPS AV type in the URI consistently with the body."
+            }
+          ],
+          "gaps": [
+            "The supplied material does not enumerate HssAuthTypeInUri values; confirm the URI value corresponding to the body value EPS_AKA against the deployed OpenAPI definition."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg",
+    "target": {
+      "service": "Nudm_UEAU",
+      "method": "GET",
+      "path": "/{supiOrSuci}/security-information-rg",
+      "operation_id": "GetRgAuthData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ueau",
+        "nudm-ueau:security-information-rg:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ausf_fn_rg_authentication",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AUSF"
+          ],
+          "resource_identifiers": [
+            "supiOrSuci"
+          ],
+          "relation_type": "authenticating_ausf_to_fn_rg",
+          "relation_statement": "The authenticated AUSF accesses the addressed FN-RG security information in its role of requesting UDM authentication of that FN-RG.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification context identifies the AUSF as a consumer and identifies the FN-RG through the resource URI, but does not require a check binding the requesting AUSF to that FN-RG."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:5.4.2.1:introduction",
+            "role": "requester and procedure context"
+          },
+          {
+            "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:6.3.3.4:resource-securityinformationforrg:resource-with-children",
+            "role": "addressed resource and identifier"
+          },
+          {
+            "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:6.3.3.1:overview",
+            "role": "SUCI resolution for this GET resource"
+          },
+          {
+            "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:5.4.2.1:introduction",
+            "role": "Identifies the intended consumer"
+          },
+          {
+            "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:6.3.3.4:resource-securityinformationforrg:resource-with-children",
+            "role": "Identifies the addressed resource and specified outcomes"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AUSF",
+          "status": "executable",
+          "representative_variant": "ausf_fn_rg_auth_data_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "authenticated-ind"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The authenticated-ind value reflects whether the W-AGF authenticated the addressed FN-RG."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:5.4.2.1:introduction",
+              "evidence_role": "identifies the requester and FN-RG authentication purpose",
+              "quoted_text": "The Nudm_UEAuthentication service is also used by the AUSF to request the UDM to authenticate the FN-RG accessing to 5GC via W-AGF.",
+              "rationale": "Selects an AUSF request concerning FN-RG authentication."
+            },
+            {
+              "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:6.3.3.4:resource-securityinformationforrg:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger and required query parameter",
+              "quoted_text": "Resource URI: {apiRoot}/nudm-ueau/v1/{supiOrSuci}/security-information-rg",
+              "rationale": "A GET on this FN-RG security-information resource addresses the FN-RG through supiOrSuci. The same section marks authenticated-ind mandatory and specifies no GET request-body data structure."
+            },
+            {
+              "context_id": "Nudm_UEAU GET /{supiOrSuci}/security-information-rg::TS29503:6.3.3.4:resource-securityinformationforrg:resource-with-children",
+              "evidence_role": "defines the query parameter's meaning",
+              "quoted_text": "Indicates whether authenticated by the W-AGF or not:",
+              "rationale": "The required boolean must reflect the fixture's W-AGF authentication status; the supplied evidence does not require one fixed value."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_UEAU POST /{supi}/auth-events",
+    "target": {
+      "service": "Nudm_UEAU",
+      "method": "POST",
+      "path": "/{supi}/auth-events",
+      "operation_id": "ConfirmAuth"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-ueau",
+        "nudm-ueau:auth-events:create"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ausf_authentication_event_for_supi",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AUSF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "ausf_authentication_result_for_ue",
+          "relation_statement": "The authenticated AUSF is reporting an authentication result for the UE identified by the addressed {supi}.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the AUSF as a consumer of authentication result confirmation and the SUPI as the resource identifier, but states no check binding the authenticated AUSF to the addressed SUPI."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/auth-events::TS29503:6.3.3.3:resource-authevents-collection:resource-with-children",
+            "role": "HTTP resource and request contract"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/auth-events::TS29503:6.3.3.3:resource-authevents-collection:resource-with-children",
+            "role": "POST resource semantics"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/auth-events::TS29503:5.4.2.1:introduction",
+            "role": "requester and result-reporting context"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/auth-events::TS29503:5.4.2.1:introduction",
+            "role": "Consumer context"
+          },
+          {
+            "context_id": "Nudm_UEAU POST /{supi}/auth-events::TS29503:6.3.3.3:resource-authevents-collection:resource-with-children",
+            "role": "Resource definition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AUSF",
+          "status": "executable",
+          "representative_variant": "authentication_result_confirmation",
+          "body_required_fields": [
+            "success"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_UEAU POST /{supi}/auth-events::TS29503:5.4.2.1:introduction",
+              "evidence_role": "identifies the requester and procedure",
+              "quoted_text": "The Nudm_UEAuthentication service is also used by the AUSF to inform the UDM about the occurrence of a successful or unsuccessful authentication by means of the ResultConfirmation service operation.",
+              "rationale": "An AUSF authentication-result confirmation exercises the supplied requester-to-UE case; success carries the reported outcome."
+            },
+            {
+              "context_id": "Nudm_UEAU POST /{supi}/auth-events::TS29503:6.3.3.3:resource-authevents-collection:resource-with-children",
+              "evidence_role": "identifies the request trigger and addressed UE",
+              "quoted_text": "Resource URI: {apiRoot}/nudm-ueau/v1/{supi}/auth-events",
+              "rationale": "POST to this SUPI-addressed collection creates the authentication event using an AuthEvent request body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_06"
+  }
+]

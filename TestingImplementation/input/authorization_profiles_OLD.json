@@ -1,0 +1,1011 @@
+[
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_UECM PUT /{supi}/registrations/amf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PUT",
+      "path": "/{supi}/registrations/amf-3gpp-access",
+      "operation_id": "3GppRegistration"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "supi"
+      ],
+      "relation_type": "serving_nf",
+      "relation_statement": "The ownership invariant requires that only the AMF currently serving a UE may update its AMF association in the 5G core network.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-uecm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "UDM validation of UE eligibility for registration. NO explicit AMFUE ownership verification identified",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access",
+    "target": {
+      "service": "Nudm_UECM",
+      "method": "PATCH",
+      "path": "/{ueId}/registrations/amf-3gpp-access",
+      "operation_id": "Update3GppRegistration"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueId"
+      ],
+      "relation_type": "registered_nf",
+      "relation_statement": "Only the AMF currently registered for the UE should modify or purge that UE's AMF registration.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-uecm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "condition_scoped",
+        "mechanism": "The received GUAMI must match the stored GUAMI.",
+        "applies_when": [
+          "The PATCH performs the purgeFlag deregistration update."
+        ],
+        "failure_codes": [
+          403
+        ],
+        "failure_causes": [
+          "INVALID_GUAMI"
+        ]
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29503:6.2.3.2",
+        "role": "resource_and_method"
+      },
+      {
+        "context_id": "TS29503:5.3.2.4.2",
+        "role": "procedure_and_protection"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_SDM GET /{supi}/am-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/am-data",
+      "operation_id": "GetAmData"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "supi"
+      ],
+      "relation_type": "subscription_owner_nf",
+      "relation_statement": "Requesting AMF should be authorized to access subscription data of the target UE",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-sdm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit SUPI ownership verification identified",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nudm_SDM GET /{supi}/sm-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/sm-data",
+      "operation_id": "GetSmData"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "supi"
+      ],
+      "relation_type": "subscription_owner_nf",
+      "relation_statement": "Requesting SMF should be authorized to access subscription data of the target UE",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nudm-sdm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit SUPI ownership verification identified",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nsmf_PDUSession POST /sm-contexts/{smContextRef}/release",
+    "target": {
+      "service": "Nsmf_PDUSession",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextRef}/release",
+      "operation_id": "ReleaseSmContext"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "smContextRef"
+      ],
+      "relation_type": "authorized_consumer_nf",
+      "relation_statement": "The PDU session owner invariant must be enforced by validating the requester's identity against the session's ownership metadata.",
+      "strength": "not_identified"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nsmf-pdusession"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "Not documented in AttacksList.md — needs manual investigation.",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication PUT /ue-contexts/{ueContextId}",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "PUT",
+      "path": "/ue-contexts/{ueContextId}",
+      "operation_id": "CreateUEContext"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "handover_peer_nf",
+      "relation_statement": "Only the legitimate source AMF actively performing an inter NG-RAN N2-based handover (or AMF relocation) for a UE must be authorized to create or overwrite the UE context on the target AMF instance.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "518 V19 Table 6.1.9-1). NO explicit verification described in clause 5.2.2.2.3 that the caller is the actual source AMF / a genuine handover peer for this UE",
+        "applies_when": [],
+        "failure_codes": [
+          518
+        ],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.2.3.1",
+        "role": "resource_and_method"
+      },
+      {
+        "context_id": "TS29518:6.1.9",
+        "role": "procedure_and_protection"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/assign-ebi",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/assign-ebi",
+      "operation_id": "EBIAssignment"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "authorized_consumer_nf",
+      "relation_statement": "The serving SMF must be explicitly verified as the owner of the PDU session referenced by pduSessionId before processing EBI allocation/release requests.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "1.9-1). NO explicit verification described in clause 5.2.2.6 that the requesting SMF is the SMF actually holding the PDU Session referenced by the pduSessionId in the request",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.6.1",
+        "role": "resource_and_method"
+      },
+      {
+        "context_id": "TS29518:6.1.9",
+        "role": "procedure_and_protection"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/cancel-relocate",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/cancel-relocate",
+      "operation_id": "CancelRelocateUEContext"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "handover_peer_nf",
+      "relation_statement": "The AMF must enforce that only the initial AMF associated with an ongoing relocation for a UE is authorized to cancel the relocation and force release of the UE context.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification described in clause 5.2.2.2.6 that the caller is the initial AMF associated with an ongoing relocation for this UE",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.2.6.1",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/n1-n2-messages",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/n1-n2-messages",
+      "operation_id": "N1N2MessageTransfer"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "owning_nf",
+      "relation_statement": "The AMF must enforce that the NF Service Consumer (SMF) initiating an N1N2MessageTransfer owns the PDU session referenced by the message.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "ambiguous",
+        "mechanism": "Clause 5.2.2.3.1.2 (p.48) describes a check that rejects a request whose \"nfId\" indicates an SMF instance different from the one stored for that PDU session (\"403 Forbidden\" / cause \"INVALID_SM_CONTEXT\"), but this binds to the PDU-session<->SMF pairing already stored in the AMF's SM-context state — it does not appear to stop a second SMF instance from targeting a UE context (SUPI) it has no PDU session on at all",
+        "applies_when": [],
+        "failure_codes": [
+          403
+        ],
+        "failure_causes": [
+          "INVALID_SM_CONTEXT"
+        ]
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.3.1.1",
+        "role": "resource_and_method"
+      },
+      {
+        "context_id": "TS29518:5.2.2.3.1.2",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/n1-n2-messages/subscriptions",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/n1-n2-messages/subscriptions",
+      "operation_id": "N1N2MessageSubscribe"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "PCF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "subscription_owner_nf",
+      "relation_statement": "The AMF must enforce that only the PCF holding the UE's AM/UE Policy Association (PCF-1) is authorized to subscribe to N1/N2 message notifications for that UE context.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification described in clause 5.2.2.3.3 that the requesting PCF is the one associated with the UE's policy association",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.3.3.1",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication DELETE /ue-contexts/{ueContextId}/n1-n2-messages/subscriptions/{subscriptionId}",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "DELETE",
+      "path": "/ue-contexts/{ueContextId}/n1-n2-messages/subscriptions/{subscriptionId}",
+      "operation_id": "N1N2MessageUnSubscribe"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "PCF"
+      ],
+      "resource_identifiers": [
+        "ueContextId",
+        "subscriptionId"
+      ],
+      "relation_type": "subscription_owner_nf",
+      "relation_statement": "Only the PCF (or other NF) that created a given N1N2 subscription should be authorized to delete it",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification described in clause 5.2.2.3.4 that the caller is the subscription's original creator",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.3.4.1",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/release",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/release",
+      "operation_id": "ReleaseUEContext"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "handover_peer_nf",
+      "relation_statement": "The Namf_Communication service must enforce that the caller AMF is the source AMF of an ongoing handover-cancel procedure for the target UE context before allowing UE context release.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification described in clause 5.2.2.2.4 that the caller is the source AMF of an actual ongoing handover for this UE",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.2.4.1",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/relocate",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/relocate",
+      "operation_id": "RelocateUEContext"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "handover_peer_nf",
+      "relation_statement": "The AMF must enforce that only the initial AMF performing an EPS-to-5GS handover with AMF re-allocation is authorized to relocate the UE context to the target AMF.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification described in clause 5.2.2.2.5 that the caller is a legitimate initial AMF for an ongoing EPS-to-5GS relocation of this UE",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.2.5.1",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/transfer",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/transfer",
+      "operation_id": "UEContextTransfer"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "handover_peer_nf",
+      "relation_statement": "The ownership invariant that the target AMF must be the legitimate AMF processing the UE's registration (via 5G-GUTI/SUPI) before being authorized to retrieve the full UE context must be enforced.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "Clause 5.2.2.2.1.1 requires an \"integrity check\" of the registration-request message embedded in the transfer request as the only described anti-spoofing measure; NO explicit check described that the caller is a genuine target AMF the UE is actually (re)registering through",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.2.1.1",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Communication POST /ue-contexts/{ueContextId}/transfer-update",
+    "target": {
+      "service": "Namf_Communication",
+      "method": "POST",
+      "path": "/ue-contexts/{ueContextId}/transfer-update",
+      "operation_id": "RegistrationStatusUpdate"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "AMF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "handover_peer_nf",
+      "relation_statement": "The AMF must enforce that only the AMF that received a UE context via a prior UEContextTransfer is authorized to report transferStatus='TRANSFERRED' for that UE context.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-comm"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification described in clause 5.2.2.2.2 that the caller previously performed a genuine UEContextTransfer for this UE before accepting transferStatus=\"TRANSFERRED\"",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "medium",
+    "evidence_refs": [
+      {
+        "context_id": "TS29518:5.2.2.2.2.1",
+        "role": "resource_and_method"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Location POST /{ueContextId}/cancel-pos-info",
+    "target": {
+      "service": "Namf_Location",
+      "method": "POST",
+      "path": "/{ueContextId}/cancel-pos-info",
+      "operation_id": "CancelLocation"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "GMLC"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "serving_nf",
+      "relation_statement": "The AMF must enforce that only the GMLC which originated a pending positioning request is authorized to cancel it.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-loc"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification identified that the requesting GMLC is the one that issued the positioning request being cancelled",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Location POST /{ueContextId}/provide-loc-info",
+    "target": {
+      "service": "Namf_Location",
+      "method": "POST",
+      "path": "/{ueContextId}/provide-loc-info",
+      "operation_id": "ProvideLocationInfo"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "GMLC"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "authorized_consumer_nf",
+      "relation_statement": "The Namf_Location service must enforce explicit ownership and LCS authorization checks for the target UE context, beyond OAuth2 scope validation.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-loc"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit SUPI/UE-context ownership or LCS-authorization verification identified at this endpoint beyond the scope check",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_Location POST /{ueContextId}/provide-pos-info",
+    "target": {
+      "service": "Namf_Location",
+      "method": "POST",
+      "path": "/{ueContextId}/provide-pos-info",
+      "operation_id": "ProvidePositioningInfo"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "GMLC"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "authorized_consumer_nf",
+      "relation_statement": "The AMF must enforce ownership invariants by verifying the LCS client's authorization to request location for the target UE, not merely relying on OAuth2 scope 'namf-loc'.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-loc"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit LCS-authorization/ownership verification identified beyond the scope check",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_MT GET /ue-contexts/{ueContextId}",
+    "target": {
+      "service": "Namf_MT",
+      "method": "GET",
+      "path": "/ue-contexts/{ueContextId}",
+      "operation_id": "Provide Domain Selection Info"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMSF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "serving_nf",
+      "relation_statement": "Only the SMSF (or UDM, for MT-SMS domain selection) currently serving the target UE should be authorized to read its UE context MT information (registration/reachability state) to decide the SMS delivery domain",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-mt"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification identified that the requesting consumer is the UE's actual serving SMSF/UDM",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Namf_MT PUT /ue-contexts/{ueContextId}/ue-reachind",
+    "target": {
+      "service": "Namf_MT",
+      "method": "PUT",
+      "path": "/ue-contexts/{ueContextId}/ue-reachind",
+      "operation_id": "EnableUeReachability"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMSF"
+      ],
+      "resource_identifiers": [
+        "ueContextId"
+      ],
+      "relation_type": "serving_nf",
+      "relation_statement": "The serving AMF must enforce that only the SMSF with a pending MT-SMS for a UE is authorized to request reachability notifications for that UE.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "namf-mt"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification identified that the requesting SMSF has a legitimate pending MT-SMS for this UE",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nausf_SoRProtection POST /{supi}/ue-sor",
+    "target": {
+      "service": "Nausf_SoRProtection",
+      "method": "POST",
+      "path": "/{supi}/ue-sor",
+      "operation_id": null
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "UDM"
+      ],
+      "resource_identifiers": [
+        "supi"
+      ],
+      "relation_type": "subscription_owner_nf",
+      "relation_statement": "The UDM instance must enforce ownership invariants by verifying that the SUPI in the request corresponds to a subscription managed by the requesting UDM instance before authorizing SoR protection operations.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nausf-sorprotection"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit SUPI-ownership verification identified — the request supplies the SUPI and SoR payload directly, and any caller holding an nausf-sorprotection token can request AUSF compute a valid MAC for it",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nausf_UPUProtection POST /{supi}/ue-upu",
+    "target": {
+      "service": "Nausf_UPUProtection",
+      "method": "POST",
+      "path": "/{supi}/ue-upu",
+      "operation_id": null
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "UDM"
+      ],
+      "resource_identifiers": [
+        "supi"
+      ],
+      "relation_type": "subscription_owner_nf",
+      "relation_statement": "The UDM instance must enforce ownership verification of the SUPI in the request body or path parameter to ensure only the UDM serving the target UE's subscription can request UPU protection.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nausf-upuprotection"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit SUPI-ownership verification identified, symmetric to Section 22",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/deliver",
+    "target": {
+      "service": "Nnef_SMContext",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextId}/deliver",
+      "operation_id": "Deliver"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "smContextId"
+      ],
+      "relation_type": "authorized_consumer_nf",
+      "relation_statement": "The NEF must enforce that only the SMF that created the NIDD SM Context is authorized to deliver uplink MO data through it.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nnef-smcontext"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification identified that the requesting SMF is the one that created/owns smContextId",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nnef_SMContext POST /sm-contexts/{smContextId}/release",
+    "target": {
+      "service": "Nnef_SMContext",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextId}/release",
+      "operation_id": "Delete"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMF"
+      ],
+      "resource_identifiers": [
+        "smContextId"
+      ],
+      "relation_type": "authorized_consumer_nf",
+      "relation_statement": "The SMF that created the NIDD SM Context must be the only entity authorized to release it.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nnef-smcontext"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit verification identified that the requesting SMF owns smContextId",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  },
+  {
+    "schema_version": "1.0",
+    "endpoint_id": "Nnef_SMService POST /sm-contexts/{supi}/sendsms",
+    "target": {
+      "service": "Nnef_SMService",
+      "method": "POST",
+      "path": "/sm-contexts/{supi}/sendsms",
+      "operation_id": "SendSMS"
+    },
+    "expected_binding": {
+      "requester_nf_types": [
+        "SMSF"
+      ],
+      "resource_identifiers": [
+        "supi"
+      ],
+      "relation_type": "serving_nf",
+      "relation_statement": "The NEF must enforce SUPI-ownership verification to ensure only the serving NEF instance can forward SMS payloads for a given SUPI.",
+      "strength": "implicit"
+    },
+    "existing_protection": {
+      "operation_level": {
+        "oauth_scopes": [
+          "nnef-smservice"
+        ]
+      },
+      "resource_binding": {
+        "coverage": "not_identified",
+        "mechanism": "NO explicit SUPI-ownership verification identified beyond the scope check",
+        "applies_when": [],
+        "failure_codes": [],
+        "failure_causes": []
+      }
+    },
+    "confidence": "low",
+    "evidence_refs": []
+  }
+]

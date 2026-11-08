@@ -1,0 +1,1484 @@
+openapi: 3.0.0
+info:
+  version: 1.2.2
+  title: Nudm_UEAU
+  description: "UDM UE Authentication Service.  \n\xA9 2023, 3GPP Organizational Partners\
+    \ (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  \nAll rights reserved.\n"
+servers:
+- url: http://udm:8000/nudm-ueau/v1
+security:
+- oAuth2ClientCredentials:
+  - nudm-ueau
+- {}
+externalDocs:
+  description: 3GPP TS 29.503 Unified Data Management Services, version 17.10.0
+  url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.503/
+paths:
+  /{supiOrSuci}/security-information/generate-auth-data:
+    post:
+      summary: Generate authentication data for the UE
+      operationId: GenerateAuthData
+      tags:
+      - Generate Auth Data
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+        - nudm-ueau:security-information:generate-auth-data:invoke
+      parameters:
+      - name: supiOrSuci
+        in: path
+        description: SUPI or SUCI of the user
+        required: true
+        schema:
+          $ref: '#/components/schemas/SupiOrSuci'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationInfoRequest'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationInfoResult'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{supiOrSuci}/security-information-rg:
+    get:
+      summary: Get authentication data for the FN-RG
+      operationId: GetRgAuthData
+      tags:
+      - Get Auth Data for FN-RG
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+        - nudm-ueau:security-information-rg:read
+      parameters:
+      - name: supiOrSuci
+        in: path
+        description: SUPI or SUCI of the user
+        required: true
+        schema:
+          $ref: '#/components/schemas/SupiOrSuci'
+      - name: authenticated-ind
+        in: query
+        description: Authenticated indication
+        required: true
+        schema:
+          $ref: '#/components/schemas/AuthenticatedInd'
+      - name: supported-features
+        in: query
+        description: Supported Features
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      - name: plmn-id
+        in: query
+        description: serving PLMN ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlmnId'
+      - name: If-None-Match
+        in: header
+        description: Validator for conditional requests, as described in RFC 7232,
+          3.2
+        schema:
+          type: string
+      - name: If-Modified-Since
+        in: header
+        description: Validator for conditional requests, as described in RFC 7232,
+          3.3
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RgAuthCtx'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{supi}/auth-events:
+    post:
+      summary: Create a new confirmation event
+      operationId: ConfirmAuth
+      tags:
+      - Confirm Auth
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+        - nudm-ueau:auth-events:create
+      parameters:
+      - name: supi
+        in: path
+        description: SUPI of the user
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthEvent'
+        required: true
+      responses:
+        '201':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthEvent'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-ueau/v1/{supi}/auth-events/{authEventId}'
+              required: true
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+      callbacks:
+        dataRestorationNotification:
+          '{request.body#/dataRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DataRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '409':
+                  $ref: '#/components/responses/409'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+  /{supi}/hss-security-information/{hssAuthType}/generate-av:
+    post:
+      summary: Generate authentication data for the UE in EPS or IMS domain
+      operationId: GenerateAv
+      tags:
+      - Generate HSS Authentication Vectors
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+        - nudm-ueau:hss-security-information:generate-av:invoke
+      parameters:
+      - name: supi
+        in: path
+        description: SUPI of the user
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: hssAuthType
+        in: path
+        description: Type of AV requested by HSS
+        required: true
+        schema:
+          $ref: '#/components/schemas/HssAuthTypeInUri'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HssAuthenticationInfoRequest'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HssAuthenticationInfoResult'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{supi}/auth-events/{authEventId}:
+    put:
+      summary: Deletes the authentication result in the UDM
+      operationId: DeleteAuth
+      tags:
+      - Delete Auth
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+        - nudm-ueau:auth-event-id:modify
+      parameters:
+      - name: supi
+        in: path
+        description: SUPI of the user
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: authEventId
+        in: path
+        description: authEvent Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthEvent'
+        required: true
+      responses:
+        '204':
+          description: Expected response to a successful authentication result removal
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+  /{supi}/gba-security-information/generate-av:
+    post:
+      summary: Generate authentication data for the UE in GBA domain
+      operationId: GenerateGbaAv
+      tags:
+      - Generate GBA Authentication Vectors
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+      - oAuth2ClientCredentials:
+        - nudm-ueau
+        - nudm-ueau:gba-security-information:generate-av:invoke
+      parameters:
+      - name: supi
+        in: path
+        description: SUPI of the user
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GbaAuthenticationInfoRequest'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GbaAuthenticationInfoResult'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{supiOrSuci}/prose-security-information/generate-av:
+    post:
+      summary: Generate authentication data for ProSe
+      operationId: GenerateProseAV
+      tags:
+      - Generate ProSe Authentication Vectors
+      parameters:
+      - name: supiOrSuci
+        in: path
+        description: SUPI or SUCI of the user
+        required: true
+        schema:
+          $ref: '#/components/schemas/SupiOrSuci'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProSeAuthenticationInfoRequest'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProSeAuthenticationInfoResult'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+components:
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: http://nrf:8000/oauth2/token
+          scopes:
+            nudm-ueau: Access to the nudm-ueau API
+            nudm-ueau:security-information:generate-auth-data:invoke: Acess to invoke
+              the "generate-auth-data" custom operation on the "security-information"
+              resource
+            nudm-ueau:security-information-rg:read: Access to read the "security-information-rg"
+              resource
+            nudm-ueau:auth-events:create: Access to create a new child resource on
+              the "auth-events" collection resource
+            nudm-ueau:auth-event-id:modify: Access to modify (delete) an "auth-event-id"
+              individual resource
+            nudm-ueau:hss-security-information:generate-av:invoke: Acess to invoke
+              the "generate-av" custom operation on the "hss-security-information"
+              resource
+            nudm-ueau:gba-security-information:generate-av:invoke: Acess to invoke
+              the "generate-av" custom operation on the "gba-security-information"
+              resource
+  schemas:
+    AuthenticationInfoRequest:
+      type: object
+      required:
+      - servingNetworkName
+      - ausfInstanceId
+      properties:
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        servingNetworkName:
+          $ref: '#/components/schemas/ServingNetworkName'
+        resynchronizationInfo:
+          $ref: '#/components/schemas/ResynchronizationInfo'
+        ausfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        cellCagInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/CagId'
+          minItems: 1
+        n5gcInd:
+          type: boolean
+          default: false
+        nswoInd:
+          type: boolean
+          default: false
+        disasterRoamingInd:
+          type: boolean
+          default: false
+    AuthenticationInfoResult:
+      type: object
+      required:
+      - authType
+      properties:
+        authType:
+          $ref: '#/components/schemas/AuthType'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        authenticationVector:
+          $ref: '#/components/schemas/AuthenticationVector'
+        supi:
+          $ref: '#/components/schemas/Supi'
+        akmaInd:
+          type: boolean
+          default: false
+        authAaa:
+          type: boolean
+          default: false
+        routingId:
+          type: string
+          pattern: ^[0-9]{1,4}$
+        pvsInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerAddressingInfo'
+          minItems: 1
+    AuthenticationVector:
+      oneOf:
+      - $ref: '#/components/schemas/AvEapAkaPrime'
+      - $ref: '#/components/schemas/Av5GHeAka'
+      discriminator:
+        propertyName: avType
+        mapping:
+          5G_HE_AKA: '#/components/schemas/Av5GHeAka'
+          EAP_AKA_PRIME: '#/components/schemas/AvEapAkaPrime'
+    AvEapAkaPrime:
+      type: object
+      required:
+      - avType
+      - rand
+      - xres
+      - autn
+      - ckPrime
+      - ikPrime
+      properties:
+        avType:
+          $ref: '#/components/schemas/AvType'
+        rand:
+          $ref: '#/components/schemas/Rand'
+        xres:
+          $ref: '#/components/schemas/Xres'
+        autn:
+          $ref: '#/components/schemas/Autn'
+        ckPrime:
+          $ref: '#/components/schemas/CkPrime'
+        ikPrime:
+          $ref: '#/components/schemas/IkPrime'
+    Av5GHeAka:
+      type: object
+      required:
+      - avType
+      - rand
+      - xresStar
+      - autn
+      - kausf
+      properties:
+        avType:
+          $ref: '#/components/schemas/AvType'
+        rand:
+          $ref: '#/components/schemas/Rand'
+        xresStar:
+          $ref: '#/components/schemas/XresStar'
+        autn:
+          $ref: '#/components/schemas/Autn'
+        kausf:
+          $ref: '#/components/schemas/Kausf'
+    ResynchronizationInfo:
+      type: object
+      required:
+      - rand
+      - auts
+      properties:
+        rand:
+          $ref: '#/components/schemas/Rand'
+        auts:
+          $ref: '#/components/schemas/Auts'
+    AuthEvent:
+      type: object
+      required:
+      - nfInstanceId
+      - success
+      - timeStamp
+      - authType
+      - servingNetworkName
+      properties:
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        success:
+          $ref: '#/components/schemas/Success'
+        timeStamp:
+          $ref: '#/components/schemas/DateTime'
+        authType:
+          $ref: '#/components/schemas/AuthType'
+        servingNetworkName:
+          $ref: '#/components/schemas/ServingNetworkName'
+        authRemovalInd:
+          type: boolean
+          default: false
+        nfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        dataRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        udrRestartInd:
+          type: boolean
+          default: false
+    RgAuthCtx:
+      type: object
+      required:
+      - authInd
+      properties:
+        authInd:
+          type: boolean
+          default: false
+        supi:
+          $ref: '#/components/schemas/Supi'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    HssAuthenticationInfoRequest:
+      type: object
+      required:
+      - hssAuthType
+      - numOfRequestedVectors
+      properties:
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        hssAuthType:
+          $ref: '#/components/schemas/HssAuthType'
+        numOfRequestedVectors:
+          $ref: '#/components/schemas/NumOfRequestedVectors'
+        requestingNodeType:
+          $ref: '#/components/schemas/NodeType'
+        servingNetworkId:
+          $ref: '#/components/schemas/PlmnId'
+        resynchronizationInfo:
+          $ref: '#/components/schemas/ResynchronizationInfo'
+        anId:
+          $ref: '#/components/schemas/AccessNetworkId'
+    HssAuthenticationInfoResult:
+      type: object
+      required:
+      - hssAuthenticationVectors
+      properties:
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        hssAuthenticationVectors:
+          $ref: '#/components/schemas/HssAuthenticationVectors'
+    HssAuthenticationVectors:
+      oneOf:
+      - type: array
+        items:
+          $ref: '#/components/schemas/AvEpsAka'
+        minItems: 1
+        maxItems: 5
+      - type: array
+        items:
+          $ref: '#/components/schemas/AvImsGbaEapAka'
+        minItems: 1
+        maxItems: 5
+      - type: array
+        items:
+          $ref: '#/components/schemas/AvEapAkaPrime'
+        minItems: 1
+        maxItems: 5
+    AvEpsAka:
+      type: object
+      required:
+      - avType
+      - rand
+      - xres
+      - autn
+      - kasme
+      properties:
+        avType:
+          $ref: '#/components/schemas/HssAvType'
+        rand:
+          $ref: '#/components/schemas/Rand'
+        xres:
+          $ref: '#/components/schemas/Xres'
+        autn:
+          $ref: '#/components/schemas/Autn'
+        kasme:
+          $ref: '#/components/schemas/Kasme'
+    AvImsGbaEapAka:
+      type: object
+      required:
+      - avType
+      - rand
+      - xres
+      - autn
+      - ck
+      - ik
+      properties:
+        avType:
+          $ref: '#/components/schemas/HssAvType'
+        rand:
+          $ref: '#/components/schemas/Rand'
+        xres:
+          $ref: '#/components/schemas/Xres'
+        autn:
+          $ref: '#/components/schemas/Autn'
+        ck:
+          $ref: '#/components/schemas/ConfidentialityKey'
+        ik:
+          $ref: '#/components/schemas/IntegrityKey'
+    GbaAuthenticationInfoRequest:
+      type: object
+      required:
+      - authType
+      properties:
+        authType:
+          $ref: '#/components/schemas/GbaAuthType'
+        resynchronizationInfo:
+          $ref: '#/components/schemas/schemas-ResynchronizationInfo'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    GbaAuthenticationInfoResult:
+      type: object
+      properties:
+        3gAkaAv:
+          $ref: '#/components/schemas/3GAkaAv'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    ProSeAuthenticationInfoRequest:
+      type: object
+      required:
+      - servingNetworkName
+      - relayServiceCode
+      properties:
+        servingNetworkName:
+          $ref: '#/components/schemas/ServingNetworkName'
+        relayServiceCode:
+          $ref: '#/components/schemas/RelayServiceCode'
+        resynchronizationInfo:
+          $ref: '#/components/schemas/ResynchronizationInfo'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    ProSeAuthenticationInfoResult:
+      type: object
+      required:
+      - authType
+      properties:
+        authType:
+          $ref: '#/components/schemas/AuthType'
+        proseAuthenticationVectors:
+          $ref: '#/components/schemas/ProSeAuthenticationVectors'
+        supi:
+          $ref: '#/components/schemas/Supi'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    ProSeAuthenticationVectors:
+      oneOf:
+      - type: array
+        items:
+          $ref: '#/components/schemas/AvEapAkaPrime'
+        minItems: 1
+        maxItems: 5
+    Autn:
+      type: string
+      pattern: ^[A-Fa-f0-9]{32}$
+    Auts:
+      type: string
+      pattern: ^[A-Fa-f0-9]{28}$
+    CkPrime:
+      type: string
+      pattern: ^[A-Fa-f0-9]{32}$
+    IkPrime:
+      type: string
+      pattern: ^[A-Fa-f0-9]{32}$
+    Kausf:
+      type: string
+      pattern: ^[A-Fa-f0-9]{64}$
+    Rand:
+      type: string
+      pattern: ^[A-Fa-f0-9]{32}$
+    Xres:
+      type: string
+      pattern: ^[A-Fa-f0-9]{8,32}$
+    XresStar:
+      type: string
+      pattern: ^[A-Fa-f0-9]{32}$
+    ServingNetworkName:
+      type: string
+      pattern: ^(5G:mnc[0-9]{3}[.]mcc[0-9]{3}[.]3gppnetwork[.]org(:[A-F0-9]{11})?)|5G:NSWO$
+    Success:
+      type: boolean
+    AuthenticatedInd:
+      type: boolean
+    ConfidentialityKey:
+      type: string
+      pattern: ^[A-Fa-f0-9]{32}$
+    IntegrityKey:
+      type: string
+      pattern: ^[A-Fa-f0-9]{32}$
+    Kasme:
+      type: string
+      pattern: ^[A-Fa-f0-9]{64}$
+    NumOfRequestedVectors:
+      type: integer
+      minimum: 1
+      maximum: 5
+    AuthType:
+      anyOf:
+      - type: string
+        enum:
+        - 5G_AKA
+        - EAP_AKA_PRIME
+        - EAP_TLS
+        - NONE
+        - EAP_TTLS
+      - type: string
+    AvType:
+      anyOf:
+      - type: string
+        enum:
+        - 5G_HE_AKA
+        - EAP_AKA_PRIME
+      - type: string
+    HssAuthType:
+      anyOf:
+      - type: string
+        enum:
+        - EPS_AKA
+        - EAP_AKA
+        - EAP_AKA_PRIME
+        - IMS_AKA
+        - GBA_AKA
+        - UMTS_AKA
+      - type: string
+    HssAvType:
+      anyOf:
+      - type: string
+        enum:
+        - EPS_AKA
+        - EAP_AKA
+        - IMS_AKA
+        - GBA_AKA
+        - UMTS_AKA
+      - type: string
+    HssAuthTypeInUri:
+      anyOf:
+      - type: string
+        enum:
+        - eps-aka
+        - eap-aka
+        - eap-aka-prime
+        - ims-aka
+        - gba-aka
+      - type: string
+    AccessNetworkId:
+      anyOf:
+      - type: string
+        enum:
+        - HRPD
+        - WIMAX
+        - WLAN
+        - ETHERNET
+      - type: string
+    NodeType:
+      anyOf:
+      - type: string
+        enum:
+        - AUSF
+        - VLR
+        - SGSN
+        - S_CSCF
+        - BSF
+        - GAN_AAA_SERVER
+        - WLAN_AAA_SERVER
+        - MME
+      - type: string
+    GbaAuthType:
+      anyOf:
+      - type: string
+        enum:
+        - DIGEST_AKAV1_MD5
+      - type: string
+    SupiOrSuci:
+      type: string
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|gli-.+|gci-.+|suci-(0-[0-9]{3}-[0-9]{2,3}|[1-7]-.+)-[0-9]{1,4}-(0-0-.*|[a-fA-F1-9]-([1-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])-[a-fA-F0-9]+)|.+)$
+      description: String identifying a SUPI or a SUCI.
+    SupportedFeatures:
+      type: string
+      pattern: ^[A-Fa-f0-9]*$
+      description: "A string used to indicate the features supported by an API that\
+        \ is used as defined in clause  6.6 in 3GPP TS 29.500. The string shall contain\
+        \ a bitmask indicating supported features in  hexadecimal representation Each\
+        \ character in the string shall take a value of \"0\" to \"9\",  \"a\" to\
+        \ \"f\" or \"A\" to \"F\" and shall represent the support of 4 features as\
+        \ described in  table\_5.2.2-3. The most significant character representing\
+        \ the highest-numbered features shall  appear first in the string, and the\
+        \ character representing features 1 to 4 shall appear last  in the string.\
+        \ The list of features and their numbering (starting with 1) are defined \
+        \ separately for each API. If the string contains a lower number of characters\
+        \ than there are  defined features for an API, all features that would be\
+        \ represented by characters that are not  present in the string are not supported.\n"
+    NfInstanceId:
+      type: string
+      format: uuid
+      description: "String uniquely identifying a NF instance. The format of the NF\
+        \ Instance ID shall be a  Universally Unique Identifier (UUID) version 4,\
+        \ as described in IETF RFC 4122. \n"
+    CagId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{8}$
+      description: String containing a Closed Access Group Identifier.
+    Supi:
+      type: string
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|gci-.+|gli-.+|.+)$
+      description: "String identifying a Supi that shall contain either an IMSI, a\
+        \ network specific identifier,\na Global Cable Identifier (GCI) or a Global\
+        \ Line Identifier (GLI) as specified in clause \n2.2A of 3GPP TS 23.003. It\
+        \ shall be formatted as follows\n - for an IMSI \"imsi-<imsi>\", where <imsi>\
+        \ shall be formatted according to clause 2.2\n   of 3GPP TS 23.003 that describes\
+        \ an IMSI.\n - for a network specific identifier \"nai-<nai>, where <nai>\
+        \ shall be formatted\n   according to clause 28.7.2 of 3GPP TS 23.003 that\
+        \ describes an NAI.\n - for a GCI \"gci-<gci>\", where <gci> shall be formatted\
+        \ according to clause 28.15.2\n   of 3GPP TS 23.003.\n - for a GLI \"gli-<gli>\"\
+        , where <gli> shall be formatted according to clause 28.16.2 of\n   3GPP TS\
+        \ 23.003.To enable that the value is used as part of an URI, the string shall\n\
+        \   only contain characters allowed according to the \"lower-with-hyphen\"\
+        \ naming convention\n   defined in 3GPP TS 29.501.\n"
+    Ipv4Addr:
+      type: string
+      pattern: ^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
+      example: 198.51.100.1
+      description: 'String identifying a IPv4 address formatted in the ''dotted decimal''
+        notation as defined in RFC 1166.
+
+        '
+    Ipv6Addr:
+      type: string
+      allOf:
+      - pattern: ^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))$
+      - pattern: ^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))$
+      example: 2001:db8:85a3::8a2e:370:7334
+      description: 'String identifying an IPv6 address formatted according to clause
+        4 of RFC5952. The mixed IPv4 IPv6 notation according to clause 5 of RFC5952
+        shall not be used.
+
+        '
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: ^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$
+      minLength: 4
+      maxLength: 253
+    ServerAddressingInfo:
+      description: Contains addressing information (IP addresses and/or FQDNs) of
+        a server.
+      type: object
+      anyOf:
+      - required:
+        - ipv4Addresses
+      - required:
+        - ipv6Addresses
+      - required:
+        - fqdnList
+      properties:
+        ipv4Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        fqdnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fqdn'
+          minItems: 1
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+    InvalidParam:
+      type: object
+      properties:
+        param:
+          type: string
+          description: 'If the invalid parameter is an attribute in a JSON body, this
+            IE shall contain the  attribute''s name and shall be encoded as a JSON
+            Pointer. If the invalid parameter is  an HTTP header, this IE shall be
+            formatted as the concatenation of the string "header "  plus the name
+            of such header. If the invalid parameter is a query parameter, this IE  shall
+            be formatted as the concatenation of the string "query " plus the name
+            of such  query parameter. If the invalid parameter is a variable part
+            in the path of a resource  URI, this IE shall contain the name of the
+            variable, including the symbols "{" and "}"  used in OpenAPI specification
+            as the notation to represent variable path segments.
+
+            '
+        reason:
+          type: string
+          description: 'A human-readable reason, e.g. "must be a positive integer".
+            In cases involving failed  operations in a PATCH request, the reason string
+            should identify the operation that  failed using the operation''s array
+            index to assist in correlation of the invalid  parameter with the failed
+            operation, e.g." Replacement value invalid for attribute  (failed operation
+            index= 4)"
+
+            '
+      required:
+      - param
+      description: It contains an invalid parameter and a related description.
+    AccessTokenErr:
+      description: Error returned in the access token response message
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+          - invalid_scope
+        error_description:
+          type: string
+        error_uri:
+          type: string
+    NFType:
+      description: NF types known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - NRF
+        - UDM
+        - AMF
+        - SMF
+        - AUSF
+        - NEF
+        - PCF
+        - SMSF
+        - NSSF
+        - UDR
+        - LMF
+        - GMLC
+        - 5G_EIR
+        - SEPP
+        - UPF
+        - N3IWF
+        - AF
+        - UDSF
+        - BSF
+        - CHF
+        - NWDAF
+        - PCSCF
+        - CBCF
+        - HSS
+        - UCMF
+        - SOR_AF
+        - SPAF
+        - MME
+        - SCSAS
+        - SCEF
+        - SCP
+        - NSSAAF
+        - ICSCF
+        - SCSCF
+        - DRA
+        - IMS_AS
+        - AANF
+        - 5G_DDNMF
+        - NSACF
+        - MFAF
+        - EASDF
+        - DCCF
+        - MB_SMF
+        - TSCTSF
+        - ADRF
+        - GBA_BSF
+        - CEF
+        - MB_UPF
+        - NSWOF
+        - PKMF
+        - MNPF
+        - SMS_GMSC
+        - SMS_IWMSC
+        - MBSF
+        - MBSTF
+        - PANF
+        - IP_SM_GW
+        - SMS_ROUTER
+      - type: string
+    Mcc:
+      type: string
+      pattern: ^\d{3}$
+      description: "Mobile Country Code part of the PLMN, comprising 3 digits, as\
+        \ defined in clause 9.3.3.5 of 3GPP TS 38.413. \n"
+    Mnc:
+      type: string
+      pattern: ^\d{2,3}$
+      description: Mobile Network Code part of the PLMN, comprising 2 or 3 digits,
+        as defined in clause 9.3.3.5 of 3GPP TS 38.413.
+    PlmnId:
+      type: object
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+      description: 'When PlmnId needs to be converted to string (e.g. when used in
+        maps as key), the string  shall be composed of three digits "mcc" followed
+        by "-" and two or three digits "mnc".
+
+        '
+      required:
+      - mcc
+      - mnc
+    Snssai:
+      type: object
+      properties:
+        sst:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: "Unsigned integer, within the range 0 to 255, representing\
+            \ the Slice/Service Type.  It indicates the expected Network Slice behaviour\
+            \ in terms of features and services. Values 0 to 127 correspond to the\
+            \ standardized SST range. Values 128 to 255 correspond  to the Operator-specific\
+            \ range. See clause 28.4.2 of 3GPP TS 23.003. Standardized values are\
+            \ defined in clause 5.15.2.2 of 3GPP TS 23.501. \n"
+        sd:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: '3-octet string, representing the Slice Differentiator, in
+            hexadecimal representation. Each character in the string shall take a
+            value of "0" to "9", "a" to "f" or "A" to "F" and shall represent 4 bits.
+            The most significant character representing the 4 most significant bits
+            of the SD shall appear first in the string, and the character representing
+            the 4 least significant bit of the SD shall appear last in the string.
+            This is an optional parameter that complements the Slice/Service type(s)
+            to allow to  differentiate amongst multiple Network Slices of the same
+            Slice/Service type. This IE shall be absent if no SD value is associated
+            with the SST.
+
+            '
+      description: 'When Snssai needs to be converted to string (e.g. when used in
+        maps as key), the string shall be composed of one to three digits "sst" optionally
+        followed by "-" and 6 hexadecimal digits "sd".
+
+        '
+      required:
+      - sst
+    Nid:
+      type: string
+      pattern: ^[A-Fa-f0-9]{11}$
+      description: "This represents the Network Identifier, which together with a\
+        \ PLMN ID is used to identify an SNPN (see 3GPP TS 23.003 and 3GPP TS 23.501\
+        \ clause 5.30.2.1). \n"
+    PlmnIdNid:
+      description: 'Contains the serving core network operator PLMN ID and, for an
+        SNPN, the NID that together with the PLMN ID identifies the SNPN.
+
+        '
+      type: object
+      required:
+      - mcc
+      - mnc
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+        nid:
+          $ref: '#/components/schemas/Nid'
+    NfSetId:
+      type: string
+      description: "NF Set Identifier (see clause 28.12 of 3GPP TS 23.003), formatted\
+        \ as the following string \"set<Set ID>.<nftype>set.5gc.mnc<MNC>.mcc<MCC>\"\
+        , or  \"set<SetID>.<NFType>set.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\" with  <MCC>\
+        \ encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)  <MNC>\
+        \ encoding the Mobile Network Code part of the PLMN, comprising 3 digits.\
+        \ \n  If there are only 2 significant digits in the MNC, one \"0\" digit shall\
+        \ be inserted \n  at the left side to fill the 3 digits coding of MNC.  Pattern:\
+        \ '^[0-9]{3}$'\n<NFType> encoded as a value defined in Table 6.1.6.3.3-1 of\
+        \ 3GPP TS 29.510 but \n  with lower case characters <Set ID> encoded as a\
+        \ string of characters consisting of \n  alphabetic characters (A-Z and a-z),\
+        \ digits (0-9) and/or the hyphen (-) and that \n  shall end with either an\
+        \ alphabetic character or a digit. \n"
+    NfServiceSetId:
+      type: string
+      description: "NF Service Set Identifier (see clause 28.12 of 3GPP TS 23.003)\
+        \ formatted as the following  string \"set<Set ID>.sn<Service Name>.nfi<NF\
+        \ Instance ID>.5gc.mnc<MNC>.mcc<MCC>\", or  \"set<SetID>.sn<ServiceName>.nfi<NFInstanceID>.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\"\
+        \ with  <MCC> encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)\
+        \   <MNC> encoding the Mobile Network Code part of the PLMN, comprising 3\
+        \ digits. \n  If there are only 2 significant digits in the MNC, one \"0\"\
+        \ digit shall be inserted \n  at the left side to fill the 3 digits coding\
+        \ of MNC.  Pattern: '^[0-9]{3}$'\n<NID> encoded as defined in clause\_5.4.2\
+        \ (\"Nid\" data type definition)  <NFInstanceId> encoded as defined in clause\
+        \ 5.3.2  <ServiceName> encoded as defined in 3GPP TS 29.510  <Set ID> encoded\
+        \ as a string of characters consisting of alphabetic \n  characters (A-Z and\
+        \ a-z), digits (0-9) and/or the hyphen (-) and that shall end \n  with either\
+        \ an alphabetic character or a digit.\n"
+    AccessTokenReq:
+      description: Contains information related to the access token request
+      type: object
+      required:
+      - grant_type
+      - nfInstanceId
+      - scope
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfType:
+          $ref: '#/components/schemas/NFType'
+        targetNfType:
+          $ref: '#/components/schemas/NFType'
+        scope:
+          type: string
+          pattern: ^([a-zA-Z0-9_:-]+)( [a-zA-Z0-9_:-]+)*$
+        targetNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        requesterPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        requesterPlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 2
+        requesterSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        requesterFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        requesterSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        targetPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        targetSnpn:
+          $ref: '#/components/schemas/PlmnIdNid'
+        targetSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        targetNsiList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        targetNfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        targetNfServiceSetId:
+          $ref: '#/components/schemas/NfServiceSetId'
+        hnrfAccessTokenUri:
+          $ref: '#/components/schemas/Uri'
+        sourceNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+    ProblemDetails:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+        instance:
+          $ref: '#/components/schemas/Uri'
+        cause:
+          type: string
+          description: 'A machine-readable application error cause specific to this
+            occurrence of the problem.  This IE should be present and provide application-related
+            error information, if available.
+
+            '
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+          minItems: 1
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        accessTokenError:
+          $ref: '#/components/schemas/AccessTokenErr'
+        accessTokenRequest:
+          $ref: '#/components/schemas/AccessTokenReq'
+        nrfId:
+          $ref: '#/components/schemas/Fqdn'
+    DateTime:
+      format: date-time
+      type: string
+      description: string with format 'date-time' as defined in OpenAPI.
+    SupiRange:
+      description: 'A range of SUPIs (subscriber identities), either based on a numeric
+        range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]+$
+        end:
+          type: string
+          pattern: ^[0-9]+$
+        pattern:
+          type: string
+    IdentityRange:
+      description: 'A range of GPSIs (subscriber identities), either based on a numeric
+        range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]+$
+        end:
+          type: string
+          pattern: ^[0-9]+$
+        pattern:
+          type: string
+    Dnn:
+      type: string
+      description: 'String representing a Data Network as defined in clause 9A of
+        3GPP TS 23.003;  it shall contain either a DNN Network Identifier, or a full
+        DNN with both the Network  Identifier and Operator Identifier, as specified
+        in 3GPP TS 23.003 clause 9.1.1 and 9.1.2. It shall be coded as string in which
+        the labels are separated by dots  (e.g. "Label1.Label2.Label3").
+
+        '
+    NfGroupId:
+      type: string
+      description: Identifier of a group of NFs.
+    DataRestorationNotification:
+      description: Contains identities representing those UEs potentially affected
+        by a data-loss event at the UDR
+      type: object
+      properties:
+        lastReplicationTime:
+          $ref: '#/components/schemas/DateTime'
+        recoveryTime:
+          $ref: '#/components/schemas/DateTime'
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        sNssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        dnnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnn'
+          minItems: 1
+        udmGroupId:
+          $ref: '#/components/schemas/NfGroupId'
+    RedirectResponse:
+      description: 'The response shall include a Location header field containing
+        a different URI  (pointing to a different URI of an other service instance),
+        or the same URI if a request  is redirected to the same target resource via
+        a different SCP.
+
+        '
+      type: object
+      properties:
+        cause:
+          type: string
+        targetScp:
+          $ref: '#/components/schemas/Uri'
+        targetSepp:
+          $ref: '#/components/schemas/Uri'
+    schemas-ResynchronizationInfo:
+      description: Contains RAND and AUTS
+      type: object
+      required:
+      - rand
+      - auts
+      properties:
+        rand:
+          $ref: '#/components/schemas/Rand'
+        auts:
+          $ref: '#/components/schemas/Auts'
+    3GAkaAv:
+      description: Contains RAND, XRES, AUTN, CK, and IK
+      type: object
+      required:
+      - rand
+      - xres
+      - autn
+      - ck
+      - ik
+      properties:
+        rand:
+          $ref: '#/components/schemas/Rand'
+        xres:
+          $ref: '#/components/schemas/Xres'
+        autn:
+          $ref: '#/components/schemas/Autn'
+        ck:
+          $ref: '#/components/schemas/ConfidentialityKey'
+        ik:
+          $ref: '#/components/schemas/IntegrityKey'
+    RelayServiceCode:
+      type: integer
+      minimum: 0
+      maximum: 16777215
+      description: 'Relay Service Code to identify a connectivity service provided
+        by the UE-to-Network relay.
+
+        '
+  responses:
+    '307':
+      description: Temporary Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: Identifier of target NF (service) instance towards which the
+            request is redirected
+          schema:
+            type: string
+    '308':
+      description: Permanent Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: '''Identifier of target NF (service) instance towards which
+            the request is redirected''
+
+            '
+          schema:
+            type: string
+    '400':
+      description: Bad request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '403':
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '404':
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '409':
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '500':
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '501':
+      description: Not Implemented
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '503':
+      description: Service Unavailable
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    default:
+      description: Generic Error

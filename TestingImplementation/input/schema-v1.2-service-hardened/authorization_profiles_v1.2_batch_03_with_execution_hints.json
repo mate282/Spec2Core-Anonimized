@@ -1,0 +1,1256 @@
+[
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/am-data/ecr-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/am-data/ecr-data",
+      "operation_id": "GetEcrData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_ecr_data_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "ue_specific_retrieval_entitlement",
+          "relation_statement": "The authenticated requester should be entitled to retrieve Enhanced Coverage Restriction Data for the UE identified by the addressed SUPI, rather than for an arbitrary UE.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE by the SUPI in the resource URI and describes retrieval of that UE's data, but does not state a check binding the authenticated NF service consumer to that UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/am-data/ecr-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Applicable GET procedure and example requester"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/am-data/ecr-data::TS29503:6.1.3.25:resource-enhancedcoveragerestrictiondata:resource-with-children",
+            "role": "Resource-instance identifier"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/am-data/ecr-data::TS29503:6.1.3.25:resource-enhancedcoveragerestrictiondata:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/am-data/ecr-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "retrieval and failure condition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NEF",
+          "status": "executable",
+          "representative_variant": "nef_ue_ecr_data_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/am-data/ecr-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects the NEF requester and the UE-specific retrieval procedure.",
+              "quoted_text": "Figure 5.2.2.2.17-1 shows a scenario where the NF service consumer (e.g. NEF) sends a request to the UDM to retrieve a UE's subscribed Enhanced Coverage Restriction data",
+              "rationale": "An authenticated NEF can issue the retrieval request for the SUPI addressed in the URI."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/am-data/ecr-data::TS29503:6.1.3.25:resource-enhancedcoveragerestrictiondata:resource-with-children",
+              "evidence_role": "Establishes that the GET path and method trigger the operation without a request body or mandatory query parameter.",
+              "quoted_text": "Resource URI: {apiRoot}/nudm-sdm/<apiVersion>/{supi}/am-data/ecr-data",
+              "rationale": "The resource defines GET with no request-body data structure; its supported-features query parameter is optional. The addressed SUPI selects the UE."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/lcs-bca-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/lcs-bca-data",
+      "operation_id": "GetLcsBcaData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "amf_serving_ue",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "serves_ue",
+          "relation_statement": "The authenticated AMF is authorized to retrieve the addressed UE's LCS Broadcast Assistance subscription data when it serves that UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the AMF as a consumer and the SUPI as the addressed UE, but does not state a check that the requesting AMF serves that UE. The plmn-id parameter selects which subscription data to return, not whether the requester is authorized for the UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:6.1.3.28:resource-lcsbroadcastassistancesubscriptiondata-document:resource-with-children",
+            "role": "resource subject and requester"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "method-specific requester and addressed resource"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "serving-UE inference"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:6.1.3.28:resource-lcsbroadcastassistancesubscriptiondata-document:resource-with-children",
+            "role": "Resource and requester description"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:6.1.3.28:resource-lcsbroadcastassistancesubscriptiondata-document:resource-with-children",
+            "role": "Scope of plmn-id handling"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Retrieval failure condition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_hplmn_lcs_bca_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "plmn-id"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:6.1.3.28:resource-lcsbroadcastassistancesubscriptiondata-document:resource-with-children",
+              "evidence_role": "requester and path-and-method trigger",
+              "quoted_text": "This resource represents the subscribed LCS Broadcast Assistance Data Types for a SUPI. It is queried by the AMF.",
+              "rationale": "An AMF exercises the retrieval by sending GET to the addressed SUPI's lcs-bca-data resource; the GET request has no body."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/lcs-bca-data::TS29503:6.1.3.28:resource-lcsbroadcastassistancesubscriptiondata-document:resource-with-children",
+              "evidence_role": "concrete optional-query choice",
+              "quoted_text": "If \"plmn-id\" is not included, the UDM shall return the LCS Broadcast Assistance Data Types for the SUPI associated to the HPLMN.",
+              "rationale": "Omitting plmn-id selects the specified HPLMN retrieval without requiring a lab-specific PLMN value."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/lcs-mo-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/lcs-mo-data",
+      "operation_id": "GetLcsMoData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_amf_ue_lcs_mo_data",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "registered_amf_for_ue",
+          "relation_statement": "The requesting AMF is the AMF serving the UE identified by the path SUPI after registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes retrieval by an AMF after registration, but does not require the UDM to verify that the requesting AMF is registered for the UE identified by {supi}."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-mo-data::TS29503:6.1.3.24:resource-lcsmobileoriginatedsubscriptiondata-document:resource-with-children",
+            "role": "resource subject and requester context"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-mo-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "applicable GET procedure"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-mo-data::TS29503:6.1.3.24:resource-lcsmobileoriginatedsubscriptiondata-document:resource-with-children",
+            "role": "resource description"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/lcs-mo-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "retrieval behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_lcs_mo_data_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The target UE has registered with its serving AMF, and its SUPI and LCS Mobile Originated Subscription Data are available in the ordinary test fixture.",
+            "To exercise the binding case, send the request as an AMF other than the target UE's registered serving AMF."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/lcs-mo-data::TS29503:6.1.3.24:resource-lcsmobileoriginatedsubscriptiondata-document:resource-with-children",
+              "evidence_role": "Path-and-method trigger and optional query parameter",
+              "quoted_text": "It is queried by the AMF after registering.",
+              "rationale": "An AMF GET to the target SUPI's lcs-mo-data resource exercises the retrieval. The resource's GET request-body table specifies n/a, and its supported-features query parameter is optional."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/lcs-mo-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Concrete requester and procedure",
+              "quoted_text": "The NF service consumer (e.g. AMF) sends a GET request to the resource representing the UE's LCS Mobile Originated Subscription Data",
+              "rationale": "The specified AMF GET selects the LCS Mobile Originated Data Retrieval procedure without a request payload or procedure-selecting query field."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/nssai",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/nssai",
+      "operation_id": "GetNSSAI"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "amf_ue_slice_selection",
+        "applies_when": [
+          "The AMF queries the UE's subscribed NSSAI before registering the UE."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "amf_handling_ue",
+          "relation_statement": "The requesting AMF should be the AMF handling registration of the UE identified by the addressed SUPI.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes AMF retrieval of NSSAI for the SUPI in the request, but does not state a check binding the requesting AMF to that UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+            "role": "resource and AMF use"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "method and addressed subject"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+            "role": "Resource and intended consumer"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Retrieval behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_nssai_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+              "evidence_role": "AMF procedure and request shape",
+              "quoted_text": "It is queried by the AMF before registering, and is used to assist network slice selection.",
+              "rationale": "An AMF GET addressed to the UE's SUPI exercises this case."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+              "evidence_role": "path-and-method trigger without a request body or required query parameter",
+              "quoted_text": "Table 6.1.3.2.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET has no request-body data structure; the listed query parameters are optional, so the resource URI and GET method suffice."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      },
+      {
+        "case_id": "smf_ue_pdn_connection",
+        "applies_when": [
+          "The PGW-C+SMF queries the UE's subscribed NSSAI during PDN connection establishment in the EPC."
+        ],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "smf_handling_ue_pdn_connection",
+          "relation_statement": "The requesting SMF, acting as part of the PGW-C+SMF, should be handling PDN connection establishment for the UE identified by the addressed SUPI.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes PGW-C+SMF retrieval during PDN connection establishment and constrains subsequent slice selection, but does not state a check binding the requester or its PDN connection to the UE identified by the SUPI."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+            "role": "alternative requester and procedure"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+            "role": "resource URI and method"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+            "role": "Consumer scenario"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+            "role": "Distinguishes slice-selection restriction"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMF",
+          "status": "executable",
+          "representative_variant": "smf_epc_pdn_nssai_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "supported-features"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+              "evidence_role": "SMF procedure and feature constraint",
+              "quoted_text": "This resource is also queried by the PGW-C+SMF during PDN connection establishment in the EPC, and is used to select the S-NSSAI provided to the UE, see 3GPP TS 23.502 [3] clause 4.11.0a.5. The PGW-C+SMF shall not indicate support to \"Nssaa\" feature (see clause 6.1.8) in this query to UDM.",
+              "rationale": "Use an SMF acting as PGW-C+SMF to GET the addressed UE's NSSAI. Omitting the optional supported-features parameter ensures this request does not indicate Nssaa support."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/nssai::TS29503:6.1.3.2:resource-nssai-document:resource-with-children",
+              "evidence_role": "path-and-method trigger without a request body",
+              "quoted_text": "Table 6.1.3.2.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET resource URI and method exercise NSSAI retrieval without a request body; no query parameter is required."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/prose-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/prose-data",
+      "operation_id": "GetProseData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "prose_consumer_ue_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "DDNMF",
+            "PKMF",
+            "PANF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "applicable_prose_consumer_for_ue",
+          "relation_statement": "The authenticated requester is an applicable ProSe-data consumer for the UE identified by the addressed SUPI.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies ProSe data consumers and returns data for the UE identified by the path SUPI, but does not state a check that binds the requesting consumer to that UE's ProSe data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:6.1.3.30:resource-prosesubscriptiondata-document:resource-with-children",
+            "role": "resource subject and consumers"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "method-specific requester and subject"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "consumer relevance"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:6.1.3.30:resource-prosesubscriptiondata-document:resource-with-children",
+            "role": "Resource definition and GET behavior"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:6.1.3.30:resource-prosesubscriptiondata-document:resource-with-children",
+            "role": "Addressed UE and response behavior"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Endpoint-specific retrieval procedure"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "DDNMF",
+          "status": "executable",
+          "representative_variant": "ddnmf_prose_data_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed SUPI identifies a UE with provisioned ProSe subscription data.",
+            "Authenticate as a DDNMF that is not the applicable ProSe-data consumer for the addressed UE."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:6.1.3.30:resource-prosesubscriptiondata-document:resource-with-children",
+              "evidence_role": "Path-and-method trigger and optional request inputs",
+              "quoted_text": "This resource represents the subscribed ProSe Data for a UE. It is queried by the 5G DDNMF, 5G PKMF, PAnF.",
+              "rationale": "A DDNMF is an identified consumer of this UE-specific resource."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/prose-data::TS29503:6.1.3.30:resource-prosesubscriptiondata-document:resource-with-children",
+              "evidence_role": "GET request construction",
+              "quoted_text": "UDM shall return the ProSe Data for the UE identified by the supi.",
+              "rationale": "GET on the addressed SUPI's /prose-data resource exercises retrieval without a request body; the resource table marks supported-features optional."
+            }
+          ],
+          "gaps": [
+            "The supplied TS does not define a per-UE test for whether a DDNMF is an applicable ProSe-data consumer; the fixture must establish that distinction."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/smf-select-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/smf-select-data",
+      "operation_id": "GetSmfSelData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "serving_amf_ue_subscription_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "serving_amf_for_ue",
+          "relation_statement": "The authenticated AMF requesting the data is the AMF serving the UE identified by the path SUPI.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes AMF retrieval of data for the SUPI but does not require the UDM to verify that the authenticated requester is the AMF serving that UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/smf-select-data::TS29503:6.1.3.6:resource-smfselectionsubscriptiondata-document:resource-with-children",
+            "role": "resource subject and requester context"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/smf-select-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "operation-specific requester and addressed resource"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/smf-select-data::TS29503:6.1.3.6:resource-smfselectionsubscriptiondata-document:resource-with-children",
+            "role": "resource description"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/smf-select-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "retrieval behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_hplmn_smf_selection_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/smf-select-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the AMF request that exercises this retrieval procedure.",
+              "quoted_text": "The NF service consumer (e.g. AMF) sends a GET request to the resource representing the UE's SMF Selection Subscription Data, with query parameters indicating the supported-features and/or plmn-id.",
+              "rationale": "Use an authenticated AMF to GET the target UE's SMF selection data resource."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/smf-select-data::TS29503:6.1.3.6:resource-smfselectionsubscriptiondata-document:resource-with-children",
+              "evidence_role": "Establishes that the path and method suffice for the selected HPLMN variant.",
+              "quoted_text": "If \"plmn-id\" is not included, UDM shall return the SMF Selection Subscription Data for the SUPI associated to the HPLMN.",
+              "rationale": "Omit the optional query parameters. GET on the SUPI-specific resource selects HPLMN data without a request body or additional procedure-selecting fields."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/sms-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/sms-data",
+      "operation_id": "GetSmsData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "serving_amf_ue_sms_data",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "serves_identified_ue",
+          "relation_statement": "The authenticated AMF may retrieve the SMS Subscription Data for the UE identified by {supi} when it serves that UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes retrieval by an AMF after registration but does not require the UDM to verify that the requesting AMF serves the UE identified by {supi}."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-data::TS29503:6.1.3.9:resource-smssubscriptiondata-document:resource-with-children",
+            "role": "resource subject and AMF usage"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "applicable GET procedure"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-data::TS29503:6.1.3.9:resource-smssubscriptiondata-document:resource-with-children",
+            "role": "Resource description"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Retrieval procedure"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_sms_data_get_after_registration",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The baseline fixture provides a registered UE identified by {supi}, its serving AMF, and provisioned SMS Subscription Data."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/sms-data::TS29503:6.1.3.9:resource-smssubscriptiondata-document:resource-with-children",
+              "evidence_role": "Establishes the AMF consumer and body-free GET trigger.",
+              "quoted_text": "It is queried by the AMF after registering.",
+              "rationale": "The selected requester is an AMF retrieving data for the registered UE."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/sms-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Identifies the path and method that select SMS Subscription Data Retrieval.",
+              "quoted_text": "The request contains the UE's identity (/{supi}) and the type of the requested information (/sms-data).",
+              "rationale": "GET on /{supi}/sms-data exercises the selected procedure without a body or procedure-selecting query parameter."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/sms-data::TS29503:6.1.3.9:resource-smssubscriptiondata-document:resource-with-children",
+              "evidence_role": "Confirms that the GET request has no body.",
+              "quoted_text": "Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "No body fields are needed or supported for this request trigger."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/sms-mng-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/sms-mng-data",
+      "operation_id": "GetSmsMngtData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_smsf_ue_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "SMSF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "registered_smsf_for_ue",
+          "relation_statement": "The requesting SMSF is authorized to retrieve SMS Management Subscription Data for the UE identified by the path SUPI when it is the SMSF serving that UE after registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes retrieval by an SMSF after registering, but does not require the UDM to verify that the authenticated requester is the SMSF registered for the SUPI in the addressed resource."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-mng-data::TS29503:6.1.3.10:resource-smsmanagementsubscriptiondata-document:resource-with-children",
+            "role": "Resource subject and SMSF context"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-mng-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Applicable GET requester and addressed UE"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-mng-data::TS29503:6.1.3.10:resource-smsmanagementsubscriptiondata-document:resource-with-children",
+            "role": "resource description"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/sms-mng-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "retrieval procedure"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "SMSF",
+          "status": "executable",
+          "representative_variant": "smsf_get_sms_management_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "plmn-id"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The path SUPI identifies a UE with provisioned SMS Management Subscription Data and a registered serving SMSF.",
+            "The UE is not being identified as belonging to an SNPN, so omission of plmn-id uses the H-PLMN ID."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/sms-mng-data::TS29503:6.1.3.10:resource-smsmanagementsubscriptiondata-document:resource-with-children",
+              "evidence_role": "requester and registration context",
+              "quoted_text": "It is queried by the SMSF after registering.",
+              "rationale": "Selects the registered serving SMSF as the requester for the addressed UE."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/sms-mng-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "path-and-method trigger",
+              "quoted_text": "The NF Service Consumer (e.g. SMSF) sends a GET request to the resource representing the UE's SMS Management Subscription Data.",
+              "rationale": "A GET on this SUPI-addressed resource exercises the retrieval without request-body fields."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/sms-mng-data::TS29503:6.1.3.10:resource-smsmanagementsubscriptiondata-document:resource-with-children",
+              "evidence_role": "body and query conditions",
+              "quoted_text": "if absent, H-PLMN ID is used as defaultshall be present if identifying an SNPN",
+              "rationale": "Supports omitting plmn-id for the selected non-SNPN variant; the GET request-body data structure is listed as n/a."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/trace-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/trace-data",
+      "operation_id": "GetTraceConfigData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "registered_nf_ue_trace_data",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF",
+            "SMF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "registered_nf_for_ue",
+          "relation_statement": "The authenticated AMF or SMF retrieving the trace data is registered for the UE identified by the path SUPI.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes retrieval by an AMF or SMF after registering, but does not require the UDM to verify that the requesting NF is registered for, or otherwise authorized to access, the UE identified by the path SUPI."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/trace-data::TS29503:6.1.3.14:resource-tracedata-document:resource-with-children",
+            "role": "resource and requester context"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/trace-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "GET procedure context"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/trace-data::TS29503:6.1.3.14:resource-tracedata-document:resource-with-children",
+            "role": "Resource description"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/trace-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Trace retrieval behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_hplmn_trace_data_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "plmn-id"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the ordinary owner/attacker fixture: an AMF is registered for the UE identified by the path SUPI, and the requesting test AMF is not registered for that UE.",
+            "The UDM has HPLMN trace configuration data for the UE identified by the path SUPI."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/trace-data::TS29503:6.1.3.14:resource-tracedata-document:resource-with-children",
+              "evidence_role": "Selects the registered-AMF retrieval and the bodyless HPLMN request",
+              "quoted_text": "This resource represents the trace configuration data for a SUPI. It is queried by the AMF and SMF after registering.",
+              "rationale": "AMF is an explicitly supported requester. A GET to the trace-data resource for the UE's SUPI exercises the retrieval; the TS specifies no GET request body."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/trace-data::TS29503:6.1.3.14:resource-tracedata-document:resource-with-children",
+              "evidence_role": "Selects the HPLMN query variant",
+              "quoted_text": "If \"plmn-id\" is not included, UDM shall return the Trace Data for the SUPI associated to the HPLMN.",
+              "rationale": "Omitting the optional plmn-id parameter selects a concrete HPLMN retrieval without needing a lab-specific PLMN value."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/trace-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Confirms the method-and-resource trigger",
+              "quoted_text": "1.The NF service consumer (e.g. AMF, SMF) shall send a GET request to the resource representing the UE's trace Data, with query parameters.",
+              "rationale": "The GET method and /{supi}/trace-data URI select trace data retrieval; neither a body nor a particular query parameter is required."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/uc-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/uc-data",
+      "operation_id": "GetUcData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_user_consent_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "NWDAF",
+            "DCCF",
+            "NEF",
+            "AF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "ue_specific_consent_data_entitlement",
+          "relation_statement": "The authenticated requester must be entitled to retrieve User Consent Subscription Data for the particular UE identified by the path SUPI. An AF requester is described as a trusted AF.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specified GET retrieves User Consent Subscription Data for the SUPI in the request, but the supplied context states no check binding the authenticated consumer to that UE or its data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/uc-data::TS29503:6.1.3.32:resource-ucsubscriptiondata-document:resource-with-children",
+            "role": "resource subject and GET behavior"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/uc-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "applicable requester types"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/uc-data::TS29503:6.1.3.32:resource-ucsubscriptiondata-document:resource-with-children",
+            "role": "Resource-specific GET behavior"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/uc-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Applicable retrieval procedure"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "NWDAF",
+          "status": "executable",
+          "representative_variant": "nwdaf_analytics_consent_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "uc-purpose"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {
+            "uc-purpose": "ANALYTICS"
+          },
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/uc-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "identifies the requester and retrieval procedure",
+              "quoted_text": "The NF service consumer (e.g. NWDAF, DCCF, NEF, trusted AF) sends a GET request to the resource representing the UE's User Consent Subscription Data, with query parameters indicating the uc-purpose and/or supported-features.",
+              "rationale": "Select NWDAF and send GET /{supi}/uc-data with uc-purpose. ANALYTICS is an exact permitted value in the supplied OpenAPI query parameter inventory."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/uc-data::TS29503:6.1.3.32:resource-ucsubscriptiondata-document:resource-with-children",
+              "evidence_role": "establishes UE-specific retrieval and absence of a request body",
+              "quoted_text": "UDM shall return the User Consent Subscription Data for the UE identified by the supi.",
+              "rationale": "The path SUPI identifies the UE whose consent data is requested; the resource's GET request-body table specifies n/a."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/ue-context-in-amf-data",
+      "operation_id": "GetUeCtxInAmfData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_ue_context_consumer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "HSS",
+            "NWDAF",
+            "DCCF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "authorized_access_to_ue_context",
+          "relation_statement": "The authenticated requester is authorized to retrieve the AMF-context data for the particular UE identified by the path SUPI.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the UE context by SUPI and describes retrieval by an NF service consumer, but does not require a check that the authenticated consumer is authorized for that UE's context. The specified 404 response concerns unavailable subscription data, not requester-to-resource authorization."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data::TS29503:6.1.3.26:resource-uecontextinamfdata-document:resource-with-children",
+            "role": "resource subject"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "applicable requester and operation"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "requester-to-subject relevance"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data::TS29503:6.1.3.26:resource-uecontextinamfdata-document:resource-with-children",
+            "role": "identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "describes retrieval and its stated failure condition"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "HSS",
+          "status": "executable",
+          "representative_variant": "hss_ue_context_in_amf_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The path SUPI identifies a UE whose allocated-AMF context is available in the UDM for a successful retrieval."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "Selects HSS and the retrieval request",
+              "quoted_text": "The NF service consumer (e.g. HSS) shall send a GET request to the resource representing the UE's Context In AMF Data, with query parameters indicating the supported-features.",
+              "rationale": "HSS is an explicitly illustrated requester for this GET procedure."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/ue-context-in-amf-data::TS29503:6.1.3.26:resource-uecontextinamfdata-document:resource-with-children",
+              "evidence_role": "Establishes the path-and-method trigger without a body or mandatory query parameter",
+              "quoted_text": "Resource URI: {apiRoot}/nudm-sdm/<apiVersion>/{supi}/ue-context-in-amf-data",
+              "rationale": "GET on this SUPI-addressed resource selects the UE's AMF-context data; the resource's GET tables mark supported-features optional and the request body n/a."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data",
+    "target": {
+      "service": "Nudm_SDM",
+      "method": "GET",
+      "path": "/{supi}/ue-context-in-smf-data",
+      "operation_id": "GetUeCtxInSmfData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-sdm"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_context_consumer_for_supi",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "AMF",
+            "NWDAF",
+            "DCCF"
+          ],
+          "resource_identifiers": [
+            "supi"
+          ],
+          "relation_type": "relevant_ue_context_consumer",
+          "relation_statement": "The authenticated requester may retrieve the addressed UE's Context in SMF Data when it is a legitimate consumer of that UE's context; for an AMF, the described use is after registering for the UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes retrieval of the UE context addressed by the SUPI, but does not state a check binding the authenticated consumer to that UE."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data::TS29503:6.1.3.7:resource-uecontextinsmfdata-document:resource-with-children",
+            "role": "Resource subject and AMF use"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Applicable GET consumers and addressed resource"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data::TS29503:6.1.3.7:resource-uecontextinsmfdata-document:resource-with-children",
+            "role": "Resource definition"
+          },
+          {
+            "context_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+            "role": "Retrieval behavior"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "AMF",
+          "status": "executable",
+          "representative_variant": "amf_ue_context_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use a lab-provisioned UE SUPI and an authenticated AMF requester. For the legitimate-consumer comparison, the AMF has registered that UE."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data::TS29503:6.1.3.7:resource-uecontextinsmfdata-document:resource-with-children",
+              "evidence_role": "AMF use and path-and-method trigger",
+              "quoted_text": "This resource represents the allocated SMFs for a SUPI. It is queried by the AMF after registering.",
+              "rationale": "Selects the AMF variant and identifies the addressed UE by the resource SUPI."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data::TS29503:5.2.2:service-operations:service-operations-with-children",
+              "evidence_role": "concrete retrieval request",
+              "quoted_text": "The NF service consumer (e.g. AMF) shall send a GET request to the resource representing the UE's Context In SMF Data",
+              "rationale": "A GET on the addressed UE-context resource exercises the selected retrieval procedure."
+            },
+            {
+              "context_id": "Nudm_SDM GET /{supi}/ue-context-in-smf-data::TS29503:6.1.3.7:resource-uecontextinsmfdata-document:resource-with-children",
+              "evidence_role": "absence of required request body or query parameter",
+              "quoted_text": "supported-features\nSupportedFeatures\nO\n0..1",
+              "rationale": "The only listed query parameter is optional; the GET request-body data structure is listed as n/a. The method and resource URI therefore provide a concrete trigger without body or query fields."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_03"
+  }
+]

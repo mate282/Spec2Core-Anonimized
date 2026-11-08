@@ -1,0 +1,1101 @@
+openapi: 3.0.0
+info:
+  title: Nnef_PFDmanagement Service API
+  version: 1.2.2
+  description: "Packet Flow Description Management Service.  \n\xA9 2023, 3GPP Organizational\
+    \ Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  \nAll rights reserved.\n"
+servers:
+- url: http://nef:8000/nnef-pfdmanagement/v1
+security:
+- {}
+- oAuth2ClientCredentials:
+  - nnef-pfdmanagement
+externalDocs:
+  description: 3GPP TS 29.551 v17.9.0, 5G System; Packet Flow Description Management
+    Service
+  url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.551/
+paths:
+  /applications:
+    get:
+      summary: Retrieve PFDs for all applications or for one or multiple applications
+        with query parameter.
+      tags:
+      - PFD of applications
+      operationId: Nnef_PFDmanagement_AllFetch
+      parameters:
+      - name: application-ids
+        description: The required application identifier(s) for the returned PFDs.
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationId'
+          minItems: 1
+      - name: supported-features
+        in: query
+        description: To filter irrelevant responses related to unsupported features
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: 'The PFDs for one or more application identifier(s) in the
+            request URI are returned.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PfdDataForApp'
+                minItems: 0
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '414':
+          $ref: '#/components/responses/414'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+  /applications/partialpull:
+    post:
+      summary: retrieve the PFD(s) by partial update
+      operationId: Nnef_PFDmanagement_AppFetchPartialUpdate
+      tags:
+      - PFD of applications by partial update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApplicationForPfdRequest'
+              minItems: 1
+      responses:
+        '200':
+          description: OK. Changed PFD(s) is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PfdDataForApp'
+                minItems: 1
+        '204':
+          description: The PFD(s) is not changed
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+  /applications/{appId}:
+    get:
+      summary: Retrieve the PFD for an application.
+      tags:
+      - Individual application PFD
+      operationId: Nnef_PFDmanagement_IndAppFetch
+      parameters:
+      - name: appId
+        description: The required application identifier(s) for the returned PFDs.
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: supported-features
+        in: query
+        description: To filter irrelevant responses related to unsupported features
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: A representation of PFDs for an application in the request
+            URI is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PfdDataForApp'
+        '307':
+          $ref: '#/components/responses/307'
+        '308':
+          $ref: '#/components/responses/308'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '414':
+          $ref: '#/components/responses/414'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+  /subscriptions:
+    post:
+      summary: Subscribe the notification of PFD changes.
+      tags:
+      - PFD subscriptions
+      operationId: Nnef_PFDmanagement_CreateSubscr
+      requestBody:
+        description: a PfdSubscription resource to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PfdSubscription'
+      callbacks:
+        PfdChangeNotification:
+          '{request.body#/notifyUri}':
+            post:
+              summary: Notification of PFD change.
+              tags:
+              - PfdChangeNotification data
+              operationId: Nnef_PFDmanagement_Notify
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/PfdChangeNotification'
+                      minItems: 1
+              responses:
+                '200':
+                  description: 'The PFD operation in the notification is performed
+                    and the PfdChangeReport indicates failure reason.
+
+                    '
+                  content:
+                    application/json:
+                      schema:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PfdChangeReport'
+                        minItems: 1
+                '204':
+                  description: The PFD operation in the notification is performed
+                    successfully.
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '401':
+                  $ref: '#/components/responses/401'
+                '403':
+                  $ref: '#/components/responses/403'
+                '404':
+                  $ref: '#/components/responses/404'
+                '411':
+                  $ref: '#/components/responses/411'
+                '413':
+                  $ref: '#/components/responses/413'
+                '415':
+                  $ref: '#/components/responses/415'
+                '429':
+                  $ref: '#/components/responses/429'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  $ref: '#/components/responses/default'
+        NotificationPush:
+          '{request.body#/notifyUri}/notifypush':
+            post:
+              summary: Notification Push.
+              tags:
+              - NotificationPush data
+              operationId: Nnef_PFDmanagement_PushNotify
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/NotificationPush'
+                      minItems: 1
+              responses:
+                '204':
+                  description: Notificaiton PUSH is accepted.
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '401':
+                  $ref: '#/components/responses/401'
+                '403':
+                  $ref: '#/components/responses/403'
+                '404':
+                  $ref: '#/components/responses/404'
+                '411':
+                  $ref: '#/components/responses/411'
+                '413':
+                  $ref: '#/components/responses/413'
+                '415':
+                  $ref: '#/components/responses/415'
+                '429':
+                  $ref: '#/components/responses/429'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  $ref: '#/components/responses/default'
+      responses:
+        '201':
+          description: 'The creation of a PfdSubscription resource is confirmed and
+            a representation of that resource is returned.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PfdSubscription'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure {apiRoot}/nnef-pfdmanagement/v1/subscriptions/{subscriptionId}
+
+                '
+              required: true
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+  /subscriptions/{subscriptionId}:
+    put:
+      summary: Updates/replaces an existing subscription resource
+      tags:
+      - Individual PFD subscription
+      operationId: Nnef_PFDmanagement_ModifySubscr
+      parameters:
+      - name: subscriptionId
+        description: Identify the subscription.
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Parameters to update/replace the existing subscription
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PfdSubscription'
+      responses:
+        '200':
+          description: OK (Successful update of the subscription)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PfdSubscription'
+        '307':
+          $ref: '#/components/responses/307'
+        '308':
+          $ref: '#/components/responses/308'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+    delete:
+      summary: Delete a subscription of PFD change notification.
+      tags:
+      - Individual PFD subscription
+      operationId: Nnef_PFDmanagement_Unsubscribe
+      parameters:
+      - name: subscriptionId
+        description: Identify the subscription.
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: 'The PfdSubscription resource matching the subscriptionId was
+            deleted successfully.
+
+            '
+        '307':
+          $ref: '#/components/responses/307'
+        '308':
+          $ref: '#/components/responses/308'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+components:
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: http://nrf:8000/oauth2/token
+          scopes:
+            nnef-pfdmanagement: Access to the Nnef_PFDmanagement API
+  schemas:
+    PfdContent:
+      description: Represents the content of a PFD for an application identifier.
+      type: object
+      properties:
+        pfdId:
+          type: string
+          description: Identifies a PDF of an application identifier.
+        flowDescriptions:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: 'Represents a 3-tuple with protocol, server ip and server port
+            for UL/DL application traffic.
+
+            '
+        urls:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: 'Indicates a URL or a regular expression which is used to match
+            the significant parts of the URL.
+
+            '
+        domainNames:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: Indicates an FQDN or a regular expression as a domain name
+            matching criteria.
+        dnProtocol:
+          $ref: '#/components/schemas/DomainNameProtocol'
+    PfdDataForApp:
+      description: Represents the PFDs for an application identifier.
+      type: object
+      properties:
+        applicationId:
+          $ref: '#/components/schemas/ApplicationId'
+        pfds:
+          type: array
+          items:
+            $ref: '#/components/schemas/PfdContent'
+          minItems: 1
+        cachingTime:
+          $ref: '#/components/schemas/DateTime'
+        cachingTimer:
+          $ref: '#/components/schemas/DurationSec'
+        pfdTimestamp:
+          $ref: '#/components/schemas/DateTime'
+        partialFlag:
+          type: boolean
+          description: 'Indication of partial update of PFDs for an existing application
+            identifier if it is  included and set to true. Otherwise set to false
+            indicates not supporting partial  update of PFDs for an existing application
+            identifier. The default value false  applies if the attribute is not present.
+
+            '
+          default: false
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+      required:
+      - applicationId
+    PfdSubscription:
+      description: Represents a PFD subscription.
+      type: object
+      properties:
+        applicationIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationId'
+          minItems: 1
+        notifyUri:
+          $ref: '#/components/schemas/Uri'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+      required:
+      - notifyUri
+      - supportedFeatures
+    PfdChangeNotification:
+      description: Represents information related to a notification of PFD change.
+      type: object
+      properties:
+        applicationId:
+          $ref: '#/components/schemas/ApplicationId'
+        removalFlag:
+          type: boolean
+          description: 'Indication of removal of PFDs for an existing application
+            identifier. Set to true indicates the PFDs are removed. Set to false indicates
+            the PFDs are not removed. Default value is false if omitted.
+
+            '
+          default: false
+        partialFlag:
+          type: boolean
+          description: 'Indication of partial update of PFDs for an existing application
+            identifier  if this operation is supported according to feature negotiation.
+            Set to true indicates partial update PFDs for the included application
+            identifier. Set to false indicates not partial update PFDs for the included
+            application identifier. Default value is "false" if omitted.
+
+            '
+          default: false
+        pfds:
+          type: array
+          items:
+            $ref: '#/components/schemas/PfdContent'
+          minItems: 1
+      required:
+      - applicationId
+    NotificationPush:
+      description: 'Represents the information to be used by the NF service consumer
+        to retrieve the PFDs and/or remove the PFDs of the applicable application
+        identifier(s).
+
+        '
+      type: object
+      properties:
+        appIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationId'
+          minItems: 1
+        allowedDelay:
+          $ref: '#/components/schemas/DurationSec'
+        pfdOp:
+          $ref: '#/components/schemas/PfdOperation'
+      required:
+      - appIds
+    PfdChangeReport:
+      description: Represents an error report on PFD change.
+      type: object
+      properties:
+        pfdError:
+          $ref: '#/components/schemas/ProblemDetails'
+        applicationId:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationId'
+          minItems: 1
+      required:
+      - pfdError
+      - applicationId
+    PfdOperation:
+      description: Indicates the operation to be applied on PFD(s).
+      anyOf:
+      - type: string
+        enum:
+        - RETRIEVE
+        - FULLPULL
+        - PARTIALPULL
+        - REMOVE
+      - type: string
+    ApplicationForPfdRequest:
+      description: Contains the application identifier(s) for the PFD(s) request.
+      type: object
+      properties:
+        applicationId:
+          $ref: '#/components/schemas/ApplicationId'
+        pfdTimestamp:
+          $ref: '#/components/schemas/DateTime'
+      required:
+      - applicationId
+    ApplicationId:
+      type: string
+      description: String providing an application identifier.
+    SupportedFeatures:
+      type: string
+      pattern: ^[A-Fa-f0-9]*$
+      description: "A string used to indicate the features supported by an API that\
+        \ is used as defined in clause  6.6 in 3GPP TS 29.500. The string shall contain\
+        \ a bitmask indicating supported features in  hexadecimal representation Each\
+        \ character in the string shall take a value of \"0\" to \"9\",  \"a\" to\
+        \ \"f\" or \"A\" to \"F\" and shall represent the support of 4 features as\
+        \ described in  table\_5.2.2-3. The most significant character representing\
+        \ the highest-numbered features shall  appear first in the string, and the\
+        \ character representing features 1 to 4 shall appear last  in the string.\
+        \ The list of features and their numbering (starting with 1) are defined \
+        \ separately for each API. If the string contains a lower number of characters\
+        \ than there are  defined features for an API, all features that would be\
+        \ represented by characters that are not  present in the string are not supported.\n"
+    DomainNameProtocol:
+      anyOf:
+      - type: string
+        enum:
+        - DNS_QNAME
+        - TLS_SNI
+        - TLS_SAN
+        - TSL_SCN
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are - DNS_QNAME: Identifies the DNS protocol and
+        the question name in DNS query. - TLS_SNI: Identifies the Server Name Indication
+        in TLS ClientHello message. - TLS_SAN: Identifies the Subject Alternative
+        Name in TLS ServerCertificate message. - TSL_SCN: Identifies the Subject Common
+        Name in TLS ServerCertificate message.
+
+        '
+    DateTime:
+      format: date-time
+      type: string
+      description: string with format 'date-time' as defined in OpenAPI.
+    DurationSec:
+      type: integer
+      description: indicating a time in seconds.
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+    InvalidParam:
+      type: object
+      properties:
+        param:
+          type: string
+          description: 'If the invalid parameter is an attribute in a JSON body, this
+            IE shall contain the  attribute''s name and shall be encoded as a JSON
+            Pointer. If the invalid parameter is  an HTTP header, this IE shall be
+            formatted as the concatenation of the string "header "  plus the name
+            of such header. If the invalid parameter is a query parameter, this IE  shall
+            be formatted as the concatenation of the string "query " plus the name
+            of such  query parameter. If the invalid parameter is a variable part
+            in the path of a resource  URI, this IE shall contain the name of the
+            variable, including the symbols "{" and "}"  used in OpenAPI specification
+            as the notation to represent variable path segments.
+
+            '
+        reason:
+          type: string
+          description: 'A human-readable reason, e.g. "must be a positive integer".
+            In cases involving failed  operations in a PATCH request, the reason string
+            should identify the operation that  failed using the operation''s array
+            index to assist in correlation of the invalid  parameter with the failed
+            operation, e.g." Replacement value invalid for attribute  (failed operation
+            index= 4)"
+
+            '
+      required:
+      - param
+      description: It contains an invalid parameter and a related description.
+    AccessTokenErr:
+      description: Error returned in the access token response message
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+          - invalid_scope
+        error_description:
+          type: string
+        error_uri:
+          type: string
+    NfInstanceId:
+      type: string
+      format: uuid
+      description: "String uniquely identifying a NF instance. The format of the NF\
+        \ Instance ID shall be a  Universally Unique Identifier (UUID) version 4,\
+        \ as described in IETF RFC 4122. \n"
+    NFType:
+      description: NF types known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - NRF
+        - UDM
+        - AMF
+        - SMF
+        - AUSF
+        - NEF
+        - PCF
+        - SMSF
+        - NSSF
+        - UDR
+        - LMF
+        - GMLC
+        - 5G_EIR
+        - SEPP
+        - UPF
+        - N3IWF
+        - AF
+        - UDSF
+        - BSF
+        - CHF
+        - NWDAF
+        - PCSCF
+        - CBCF
+        - HSS
+        - UCMF
+        - SOR_AF
+        - SPAF
+        - MME
+        - SCSAS
+        - SCEF
+        - SCP
+        - NSSAAF
+        - ICSCF
+        - SCSCF
+        - DRA
+        - IMS_AS
+        - AANF
+        - 5G_DDNMF
+        - NSACF
+        - MFAF
+        - EASDF
+        - DCCF
+        - MB_SMF
+        - TSCTSF
+        - ADRF
+        - GBA_BSF
+        - CEF
+        - MB_UPF
+        - NSWOF
+        - PKMF
+        - MNPF
+        - SMS_GMSC
+        - SMS_IWMSC
+        - MBSF
+        - MBSTF
+        - PANF
+        - IP_SM_GW
+        - SMS_ROUTER
+      - type: string
+    Mcc:
+      type: string
+      pattern: ^\d{3}$
+      description: "Mobile Country Code part of the PLMN, comprising 3 digits, as\
+        \ defined in clause 9.3.3.5 of 3GPP TS 38.413. \n"
+    Mnc:
+      type: string
+      pattern: ^\d{2,3}$
+      description: Mobile Network Code part of the PLMN, comprising 2 or 3 digits,
+        as defined in clause 9.3.3.5 of 3GPP TS 38.413.
+    PlmnId:
+      type: object
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+      description: 'When PlmnId needs to be converted to string (e.g. when used in
+        maps as key), the string  shall be composed of three digits "mcc" followed
+        by "-" and two or three digits "mnc".
+
+        '
+      required:
+      - mcc
+      - mnc
+    Snssai:
+      type: object
+      properties:
+        sst:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: "Unsigned integer, within the range 0 to 255, representing\
+            \ the Slice/Service Type.  It indicates the expected Network Slice behaviour\
+            \ in terms of features and services. Values 0 to 127 correspond to the\
+            \ standardized SST range. Values 128 to 255 correspond  to the Operator-specific\
+            \ range. See clause 28.4.2 of 3GPP TS 23.003. Standardized values are\
+            \ defined in clause 5.15.2.2 of 3GPP TS 23.501. \n"
+        sd:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: '3-octet string, representing the Slice Differentiator, in
+            hexadecimal representation. Each character in the string shall take a
+            value of "0" to "9", "a" to "f" or "A" to "F" and shall represent 4 bits.
+            The most significant character representing the 4 most significant bits
+            of the SD shall appear first in the string, and the character representing
+            the 4 least significant bit of the SD shall appear last in the string.
+            This is an optional parameter that complements the Slice/Service type(s)
+            to allow to  differentiate amongst multiple Network Slices of the same
+            Slice/Service type. This IE shall be absent if no SD value is associated
+            with the SST.
+
+            '
+      description: 'When Snssai needs to be converted to string (e.g. when used in
+        maps as key), the string shall be composed of one to three digits "sst" optionally
+        followed by "-" and 6 hexadecimal digits "sd".
+
+        '
+      required:
+      - sst
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: ^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$
+      minLength: 4
+      maxLength: 253
+    Nid:
+      type: string
+      pattern: ^[A-Fa-f0-9]{11}$
+      description: "This represents the Network Identifier, which together with a\
+        \ PLMN ID is used to identify an SNPN (see 3GPP TS 23.003 and 3GPP TS 23.501\
+        \ clause 5.30.2.1). \n"
+    PlmnIdNid:
+      description: 'Contains the serving core network operator PLMN ID and, for an
+        SNPN, the NID that together with the PLMN ID identifies the SNPN.
+
+        '
+      type: object
+      required:
+      - mcc
+      - mnc
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+        nid:
+          $ref: '#/components/schemas/Nid'
+    NfSetId:
+      type: string
+      description: "NF Set Identifier (see clause 28.12 of 3GPP TS 23.003), formatted\
+        \ as the following string \"set<Set ID>.<nftype>set.5gc.mnc<MNC>.mcc<MCC>\"\
+        , or  \"set<SetID>.<NFType>set.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\" with  <MCC>\
+        \ encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)  <MNC>\
+        \ encoding the Mobile Network Code part of the PLMN, comprising 3 digits.\
+        \ \n  If there are only 2 significant digits in the MNC, one \"0\" digit shall\
+        \ be inserted \n  at the left side to fill the 3 digits coding of MNC.  Pattern:\
+        \ '^[0-9]{3}$'\n<NFType> encoded as a value defined in Table 6.1.6.3.3-1 of\
+        \ 3GPP TS 29.510 but \n  with lower case characters <Set ID> encoded as a\
+        \ string of characters consisting of \n  alphabetic characters (A-Z and a-z),\
+        \ digits (0-9) and/or the hyphen (-) and that \n  shall end with either an\
+        \ alphabetic character or a digit. \n"
+    NfServiceSetId:
+      type: string
+      description: "NF Service Set Identifier (see clause 28.12 of 3GPP TS 23.003)\
+        \ formatted as the following  string \"set<Set ID>.sn<Service Name>.nfi<NF\
+        \ Instance ID>.5gc.mnc<MNC>.mcc<MCC>\", or  \"set<SetID>.sn<ServiceName>.nfi<NFInstanceID>.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\"\
+        \ with  <MCC> encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)\
+        \   <MNC> encoding the Mobile Network Code part of the PLMN, comprising 3\
+        \ digits. \n  If there are only 2 significant digits in the MNC, one \"0\"\
+        \ digit shall be inserted \n  at the left side to fill the 3 digits coding\
+        \ of MNC.  Pattern: '^[0-9]{3}$'\n<NID> encoded as defined in clause\_5.4.2\
+        \ (\"Nid\" data type definition)  <NFInstanceId> encoded as defined in clause\
+        \ 5.3.2  <ServiceName> encoded as defined in 3GPP TS 29.510  <Set ID> encoded\
+        \ as a string of characters consisting of alphabetic \n  characters (A-Z and\
+        \ a-z), digits (0-9) and/or the hyphen (-) and that shall end \n  with either\
+        \ an alphabetic character or a digit.\n"
+    AccessTokenReq:
+      description: Contains information related to the access token request
+      type: object
+      required:
+      - grant_type
+      - nfInstanceId
+      - scope
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfType:
+          $ref: '#/components/schemas/NFType'
+        targetNfType:
+          $ref: '#/components/schemas/NFType'
+        scope:
+          type: string
+          pattern: ^([a-zA-Z0-9_:-]+)( [a-zA-Z0-9_:-]+)*$
+        targetNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        requesterPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        requesterPlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 2
+        requesterSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        requesterFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        requesterSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        targetPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        targetSnpn:
+          $ref: '#/components/schemas/PlmnIdNid'
+        targetSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        targetNsiList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        targetNfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        targetNfServiceSetId:
+          $ref: '#/components/schemas/NfServiceSetId'
+        hnrfAccessTokenUri:
+          $ref: '#/components/schemas/Uri'
+        sourceNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+    ProblemDetails:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+        instance:
+          $ref: '#/components/schemas/Uri'
+        cause:
+          type: string
+          description: 'A machine-readable application error cause specific to this
+            occurrence of the problem.  This IE should be present and provide application-related
+            error information, if available.
+
+            '
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+          minItems: 1
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        accessTokenError:
+          $ref: '#/components/schemas/AccessTokenErr'
+        accessTokenRequest:
+          $ref: '#/components/schemas/AccessTokenReq'
+        nrfId:
+          $ref: '#/components/schemas/Fqdn'
+    RedirectResponse:
+      description: 'The response shall include a Location header field containing
+        a different URI  (pointing to a different URI of an other service instance),
+        or the same URI if a request  is redirected to the same target resource via
+        a different SCP.
+
+        '
+      type: object
+      properties:
+        cause:
+          type: string
+        targetScp:
+          $ref: '#/components/schemas/Uri'
+        targetSepp:
+          $ref: '#/components/schemas/Uri'
+  responses:
+    '307':
+      description: Temporary Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: Identifier of target NF (service) instance towards which the
+            request is redirected
+          schema:
+            type: string
+    '308':
+      description: Permanent Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: '''Identifier of target NF (service) instance towards which
+            the request is redirected''
+
+            '
+          schema:
+            type: string
+    '400':
+      description: Bad request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '401':
+      description: Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '403':
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '404':
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '406':
+      description: 406 Not Acceptable
+    '411':
+      description: Length Required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '413':
+      description: Payload Too Large
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '414':
+      description: URI Too Long
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '415':
+      description: Unsupported Media Type
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '429':
+      description: Too Many Requests
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '500':
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '503':
+      description: Service Unavailable
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    default:
+      description: Generic Error

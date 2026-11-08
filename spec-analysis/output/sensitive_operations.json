@@ -1,0 +1,2916 @@
+[
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}",
+    "method": "PUT",
+    "operationId": "CreateUEContext",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/assign-ebi",
+    "method": "POST",
+    "operationId": "EBIAssignment",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/cancel-relocate",
+    "method": "POST",
+    "operationId": "CancelRelocateUEContext",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/n1-n2-messages",
+    "method": "POST",
+    "operationId": "N1N2MessageTransfer",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/n1-n2-messages/subscriptions",
+    "method": "POST",
+    "operationId": "N1N2MessageSubscribe",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/n1-n2-messages/subscriptions/{subscriptionId}",
+    "method": "DELETE",
+    "operationId": "N1N2MessageUnSubscribe",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/release",
+    "method": "POST",
+    "operationId": "ReleaseUEContext",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/relocate",
+    "method": "POST",
+    "operationId": "RelocateUEContext",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/transfer",
+    "method": "POST",
+    "operationId": "UEContextTransfer",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Communication_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/transfer-update",
+    "method": "POST",
+    "operationId": "RegistrationStatusUpdate",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Location_bundled.yaml",
+    "path": "/{ueContextId}/cancel-pos-info",
+    "method": "POST",
+    "operationId": "CancelLocation",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Location_bundled.yaml",
+    "path": "/{ueContextId}/provide-loc-info",
+    "method": "POST",
+    "operationId": "ProvideLocationInfo",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_Location_bundled.yaml",
+    "path": "/{ueContextId}/provide-pos-info",
+    "method": "POST",
+    "operationId": "ProvidePositioningInfo",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_MT_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}",
+    "method": "GET",
+    "operationId": "Provide Domain Selection Info",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Namf_MT_bundled.yaml",
+    "path": "/ue-contexts/{ueContextId}/ue-reachind",
+    "method": "PUT",
+    "operationId": "EnableUeReachability",
+    "parameters": [
+      "ueContextId"
+    ],
+    "resource_categories": [
+      "UE_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nausf_SoRProtection_bundled.yaml",
+    "path": "/{supi}/ue-sor",
+    "method": "POST",
+    "operationId": "",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nausf_UPUProtection_bundled.yaml",
+    "path": "/{supi}/ue-upu",
+    "method": "POST",
+    "operationId": "",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nnef_SMContext_bundled.yaml",
+    "path": "/sm-contexts/{smContextId}/deliver",
+    "method": "POST",
+    "operationId": "Deliver",
+    "parameters": [
+      "smContextId"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nnef_SMContext_bundled.yaml",
+    "path": "/sm-contexts/{smContextId}/release",
+    "method": "POST",
+    "operationId": "Delete",
+    "parameters": [
+      "smContextId"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nnef_SMContext_bundled.yaml",
+    "path": "/sm-contexts/{smContextId}/update",
+    "method": "POST",
+    "operationId": "Update",
+    "parameters": [
+      "smContextId"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nnef_SMService_bundled.yaml",
+    "path": "/sm-contexts/{supi}/sendsms",
+    "method": "POST",
+    "operationId": "SendSMS",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_NIDD_bundled.yaml",
+    "path": "/pdu-sessions/{pduSessionRef}/deliver",
+    "method": "POST",
+    "operationId": "Deliver",
+    "parameters": [
+      "pduSessionRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/pdu-sessions/{pduSessionRef}/modify",
+    "method": "POST",
+    "operationId": "UpdatePduSession",
+    "parameters": [
+      "pduSessionRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/pdu-sessions/{pduSessionRef}/release",
+    "method": "POST",
+    "operationId": "ReleasePduSession",
+    "parameters": [
+      "pduSessionRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/pdu-sessions/{pduSessionRef}/retrieve",
+    "method": "POST",
+    "operationId": "RetrievePduSession",
+    "parameters": [
+      "pduSessionRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/pdu-sessions/{pduSessionRef}/transfer-mo-data",
+    "method": "POST",
+    "operationId": "TransferMoData",
+    "parameters": [
+      "pduSessionRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/sm-contexts/{smContextRef}/modify",
+    "method": "POST",
+    "operationId": "UpdateSmContext",
+    "parameters": [
+      "smContextRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/sm-contexts/{smContextRef}/release",
+    "method": "POST",
+    "operationId": "ReleaseSmContext",
+    "parameters": [
+      "smContextRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/sm-contexts/{smContextRef}/retrieve",
+    "method": "POST",
+    "operationId": "RetrieveSmContext",
+    "parameters": [
+      "smContextRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nsmf_PDUSession_bundled.yaml",
+    "path": "/sm-contexts/{smContextRef}/send-mo-data",
+    "method": "POST",
+    "operationId": "SendMoData",
+    "parameters": [
+      "smContextRef"
+    ],
+    "resource_categories": [
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_EE_bundled.yaml",
+    "path": "/{ueIdentity}/ee-subscriptions",
+    "method": "POST",
+    "operationId": "CreateEeSubscription",
+    "parameters": [
+      "ueIdentity"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_EE_bundled.yaml",
+    "path": "/{ueIdentity}/ee-subscriptions/{subscriptionId}",
+    "method": "DELETE",
+    "operationId": "DeleteEeSubscription",
+    "parameters": [
+      "ueIdentity"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_EE_bundled.yaml",
+    "path": "/{ueIdentity}/ee-subscriptions/{subscriptionId}",
+    "method": "PATCH",
+    "operationId": "UpdateEeSubscription",
+    "parameters": [
+      "ueIdentity"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_MT_bundled.yaml",
+    "path": "/{supi}",
+    "method": "GET",
+    "operationId": "QueryUeInfo",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_MT_bundled.yaml",
+    "path": "/{supi}/loc-info/provide-loc-info",
+    "method": "POST",
+    "operationId": "ProvideLocationInfo",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_NIDDAU_bundled.yaml",
+    "path": "/{ueIdentity}/authorize",
+    "method": "POST",
+    "operationId": "AuthorizeNiddData",
+    "parameters": [
+      "ueIdentity"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_PP_bundled.yaml",
+    "path": "/{ueId}/pp-data",
+    "method": "PATCH",
+    "operationId": "Update",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_PP_bundled.yaml",
+    "path": "/{ueId}/pp-data-store/{afInstanceId}",
+    "method": "DELETE",
+    "operationId": "Delete PP Data Entry",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_PP_bundled.yaml",
+    "path": "/{ueId}/pp-data-store/{afInstanceId}",
+    "method": "GET",
+    "operationId": "Get PP Data Entry",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_PP_bundled.yaml",
+    "path": "/{ueId}/pp-data-store/{afInstanceId}",
+    "method": "PUT",
+    "operationId": "Create PP Data Entry",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_RSDS_bundled.yaml",
+    "path": "/{ueIdentity}/sm-delivery-status",
+    "method": "POST",
+    "operationId": "ReportSMDeliveryStatus",
+    "parameters": [
+      "ueIdentity"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}",
+    "method": "GET",
+    "operationId": "GetDataSets",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/5mbs-data",
+    "method": "GET",
+    "operationId": "GetMbsData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/am-data",
+    "method": "GET",
+    "operationId": "GetAmData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/am-data/cag-ack",
+    "method": "PUT",
+    "operationId": "CAG Ack",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/am-data/ecr-data",
+    "method": "GET",
+    "operationId": "GetEcrData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/am-data/sor-ack",
+    "method": "PUT",
+    "operationId": "SorAckInfo",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/am-data/subscribed-snssais-ack",
+    "method": "PUT",
+    "operationId": "S-NSSAIs Ack",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/am-data/update-sor",
+    "method": "POST",
+    "operationId": "Update SOR Info",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/am-data/upu-ack",
+    "method": "PUT",
+    "operationId": "UpuAck",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/lcs-bca-data",
+    "method": "GET",
+    "operationId": "GetLcsBcaData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/lcs-mo-data",
+    "method": "GET",
+    "operationId": "GetLcsMoData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/nssai",
+    "method": "GET",
+    "operationId": "GetNSSAI",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/prose-data",
+    "method": "GET",
+    "operationId": "GetProseData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/sm-data",
+    "method": "GET",
+    "operationId": "GetSmData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/smf-select-data",
+    "method": "GET",
+    "operationId": "GetSmfSelData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/sms-data",
+    "method": "GET",
+    "operationId": "GetSmsData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/sms-mng-data",
+    "method": "GET",
+    "operationId": "GetSmsMngtData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/trace-data",
+    "method": "GET",
+    "operationId": "GetTraceConfigData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/uc-data",
+    "method": "GET",
+    "operationId": "GetUcData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/ue-context-in-amf-data",
+    "method": "GET",
+    "operationId": "GetUeCtxInAmfData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/ue-context-in-smf-data",
+    "method": "GET",
+    "operationId": "GetUeCtxInSmfData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/ue-context-in-smsf-data",
+    "method": "GET",
+    "operationId": "GetUeCtxInSmsfData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{supi}/v2x-data",
+    "method": "GET",
+    "operationId": "GetV2xData",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{ueId}/id-translation-result",
+    "method": "GET",
+    "operationId": "GetSupiOrGpsi",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{ueId}/lcs-privacy-data",
+    "method": "GET",
+    "operationId": "GetLcsPrivacyData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{ueId}/sdm-subscriptions",
+    "method": "POST",
+    "operationId": "Subscribe",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{ueId}/sdm-subscriptions/{subscriptionId}",
+    "method": "DELETE",
+    "operationId": "Unsubscribe",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SDM_bundled.yaml",
+    "path": "/{ueId}/sdm-subscriptions/{subscriptionId}",
+    "method": "PATCH",
+    "operationId": "Modify",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SSAU_bundled.yaml",
+    "path": "/{ueIdentity}/{serviceType}/authorize",
+    "method": "POST",
+    "operationId": "ServiceSpecificAuthorization",
+    "parameters": [
+      "ueIdentity"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_SSAU_bundled.yaml",
+    "path": "/{ueIdentity}/{serviceType}/remove",
+    "method": "POST",
+    "operationId": "ServiceSpecificAuthorizationRemoval",
+    "parameters": [
+      "ueIdentity"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UEAU_bundled.yaml",
+    "path": "/{supiOrSuci}/prose-security-information/generate-av",
+    "method": "POST",
+    "operationId": "GenerateProseAV",
+    "parameters": [
+      "supiOrSuci"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UEAU_bundled.yaml",
+    "path": "/{supiOrSuci}/security-information-rg",
+    "method": "GET",
+    "operationId": "GetRgAuthData",
+    "parameters": [
+      "supiOrSuci"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UEAU_bundled.yaml",
+    "path": "/{supiOrSuci}/security-information/generate-auth-data",
+    "method": "POST",
+    "operationId": "GenerateAuthData",
+    "parameters": [
+      "supiOrSuci"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UEAU_bundled.yaml",
+    "path": "/{supi}/auth-events",
+    "method": "POST",
+    "operationId": "ConfirmAuth",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UEAU_bundled.yaml",
+    "path": "/{supi}/auth-events/{authEventId}",
+    "method": "PUT",
+    "operationId": "DeleteAuth",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UEAU_bundled.yaml",
+    "path": "/{supi}/gba-security-information/generate-av",
+    "method": "POST",
+    "operationId": "GenerateGbaAv",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UEAU_bundled.yaml",
+    "path": "/{supi}/hss-security-information/{hssAuthType}/generate-av",
+    "method": "POST",
+    "operationId": "GenerateAv",
+    "parameters": [
+      "supi"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations",
+    "method": "GET",
+    "operationId": "GetRegistrations",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-3gpp-access",
+    "method": "GET",
+    "operationId": "Get3GppRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-3gpp-access",
+    "method": "PATCH",
+    "operationId": "Update3GppRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-3gpp-access",
+    "method": "PUT",
+    "operationId": "3GppRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-3gpp-access/dereg-amf",
+    "method": "POST",
+    "operationId": "deregAMF",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-3gpp-access/pei-update",
+    "method": "POST",
+    "operationId": "PeiUpdate",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-3gpp-access/roaming-info-update",
+    "method": "POST",
+    "operationId": "UpdateRoamingInformation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-non-3gpp-access",
+    "method": "GET",
+    "operationId": "GetNon3GppRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-non-3gpp-access",
+    "method": "PATCH",
+    "operationId": "UpdateNon3GppRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/amf-non-3gpp-access",
+    "method": "PUT",
+    "operationId": "Non3GppRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/ip-sm-gw",
+    "method": "DELETE",
+    "operationId": "IpSmGwDeregistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/ip-sm-gw",
+    "method": "GET",
+    "operationId": "GetIpSmGwRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/ip-sm-gw",
+    "method": "PUT",
+    "operationId": "IpSmGwRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/location",
+    "method": "GET",
+    "operationId": "GetLocationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/nwdaf-registrations",
+    "method": "GET",
+    "operationId": "GetNwdafRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+    "method": "DELETE",
+    "operationId": "NwdafDeregistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+    "method": "PATCH",
+    "operationId": "UpdateNwdafRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}",
+    "method": "PUT",
+    "operationId": "NwdafRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/send-routing-info-sm",
+    "method": "POST",
+    "operationId": "SendRoutingInfoSm",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smf-registrations",
+    "method": "GET",
+    "operationId": "GetSmfRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "method": "DELETE",
+    "operationId": "SmfDeregistration",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "method": "GET",
+    "operationId": "RetrieveSmfRegistration",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "method": "PATCH",
+    "operationId": "UpdateSmfRegistration",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smf-registrations/{pduSessionId}",
+    "method": "PUT",
+    "operationId": "Registration",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smsf-3gpp-access",
+    "method": "DELETE",
+    "operationId": "3GppSmsfDeregistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smsf-3gpp-access",
+    "method": "GET",
+    "operationId": "Get3GppSmsfRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smsf-3gpp-access",
+    "method": "PUT",
+    "operationId": "3GppSmsfRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smsf-non-3gpp-access",
+    "method": "DELETE",
+    "operationId": "Non3GppSmsfDeregistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smsf-non-3gpp-access",
+    "method": "GET",
+    "operationId": "GetNon3GppSmsfRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudm_UECM_bundled.yaml",
+    "path": "/{ueId}/registrations/smsf-non-3gpp-access",
+    "method": "PUT",
+    "operationId": "Non3GppSmsfRegistration",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/exposure-data/{ueId}/access-and-mobility-data",
+    "method": "DELETE",
+    "operationId": "DeleteAccessAndMobilityData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/exposure-data/{ueId}/access-and-mobility-data",
+    "method": "GET",
+    "operationId": "QueryAccessAndMobilityData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/exposure-data/{ueId}/access-and-mobility-data",
+    "method": "PATCH",
+    "operationId": "UpdateAccessAndMobilityData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/exposure-data/{ueId}/access-and-mobility-data",
+    "method": "PUT",
+    "operationId": "CreateOrReplaceAccessAndMobilityData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+    "method": "DELETE",
+    "operationId": "DeleteSessionManagementData",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+    "method": "GET",
+    "operationId": "QuerySessionManagementData",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/exposure-data/{ueId}/session-management-data/{pduSessionId}",
+    "method": "PUT",
+    "operationId": "CreateOrReplaceSessionManagementData",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}",
+    "method": "GET",
+    "operationId": "ReadPolicyData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/am-data",
+    "method": "GET",
+    "operationId": "ReadAccessAndMobilityPolicyData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/operator-specific-data",
+    "method": "DELETE",
+    "operationId": "DeleteOperatorSpecificData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/operator-specific-data",
+    "method": "GET",
+    "operationId": "ReadOperatorSpecificData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/operator-specific-data",
+    "method": "PATCH",
+    "operationId": "UpdateOperatorSpecificData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/operator-specific-data",
+    "method": "PUT",
+    "operationId": "ReplaceOperatorSpecificData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/sm-data",
+    "method": "GET",
+    "operationId": "ReadSessionManagementPolicyData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/sm-data",
+    "method": "PATCH",
+    "operationId": "UpdateSessionManagementPolicyData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+    "method": "DELETE",
+    "operationId": "DeleteUsageMonitoringInformation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+    "method": "GET",
+    "operationId": "ReadUsageMonitoringInformation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/sm-data/{usageMonId}",
+    "method": "PUT",
+    "operationId": "CreateUsageMonitoringResource",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/ue-policy-set",
+    "method": "GET",
+    "operationId": "ReadUEPolicySet",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/ue-policy-set",
+    "method": "PATCH",
+    "operationId": "UpdateUEPolicySet",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/policy-data/ues/{ueId}/ue-policy-set",
+    "method": "PUT",
+    "operationId": "CreateOrReplaceUEPolicySet",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/5mbs-data",
+    "method": "GET",
+    "operationId": "Query5mbsData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-status",
+    "method": "DELETE",
+    "operationId": "DeleteAuthenticationStatus",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-status",
+    "method": "GET",
+    "operationId": "QueryAuthenticationStatus",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-status",
+    "method": "PUT",
+    "operationId": "CreateAuthenticationStatus",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+    "method": "DELETE",
+    "operationId": "DeleteIndividualAuthenticationStatus",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+    "method": "GET",
+    "operationId": "QueryIndividualAuthenticationStatus",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+    "method": "PUT",
+    "operationId": "CreateIndividualAuthenticationStatus",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-subscription",
+    "method": "GET",
+    "operationId": "QueryAuthSubsData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/authentication-data/authentication-subscription",
+    "method": "PATCH",
+    "operationId": "ModifyAuthenticationSubscription",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data",
+    "method": "GET",
+    "operationId": "QueryContextData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/amf-3gpp-access",
+    "method": "GET",
+    "operationId": "QueryAmfContext3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/amf-3gpp-access",
+    "method": "PATCH",
+    "operationId": "AmfContext3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/amf-3gpp-access",
+    "method": "PUT",
+    "operationId": "CreateAmfContext3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/amf-non-3gpp-access",
+    "method": "GET",
+    "operationId": "QueryAmfContextNon3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/amf-non-3gpp-access",
+    "method": "PATCH",
+    "operationId": "AmfContextNon3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/amf-non-3gpp-access",
+    "method": "PUT",
+    "operationId": "CreateAmfContextNon3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions",
+    "method": "GET",
+    "operationId": "Queryeesubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions",
+    "method": "POST",
+    "operationId": "CreateEeSubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}",
+    "method": "DELETE",
+    "operationId": "RemoveeeSubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}",
+    "method": "GET",
+    "operationId": "QueryeeSubscription",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}",
+    "method": "PATCH",
+    "operationId": "ModifyEesubscription",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}",
+    "method": "PUT",
+    "operationId": "UpdateEesubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/amf-subscriptions",
+    "method": "DELETE",
+    "operationId": "RemoveAmfSubscriptionsInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/amf-subscriptions",
+    "method": "GET",
+    "operationId": "GetAmfSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/amf-subscriptions",
+    "method": "PATCH",
+    "operationId": "ModifyAmfSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/amf-subscriptions",
+    "method": "PUT",
+    "operationId": "Create AMF Subscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/hss-subscriptions",
+    "method": "DELETE",
+    "operationId": "RemoveHssSubscriptionsInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/hss-subscriptions",
+    "method": "GET",
+    "operationId": "GetHssSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/hss-subscriptions",
+    "method": "PATCH",
+    "operationId": "ModifyHssSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/hss-subscriptions",
+    "method": "PUT",
+    "operationId": "Create HSS Subscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/smf-subscriptions",
+    "method": "DELETE",
+    "operationId": "RemoveSmfSubscriptionsInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/smf-subscriptions",
+    "method": "GET",
+    "operationId": "GetSmfSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/smf-subscriptions",
+    "method": "PATCH",
+    "operationId": "ModifySmfSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ee-subscriptions/{subsId}/smf-subscriptions",
+    "method": "PUT",
+    "operationId": "Create SMF Subscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ip-sm-gw",
+    "method": "DELETE",
+    "operationId": "DeleteIpSmGwContext",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ip-sm-gw",
+    "method": "GET",
+    "operationId": "QueryIpSmGwContext",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ip-sm-gw",
+    "method": "PATCH",
+    "operationId": "ModifyIpSmGwContext",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/ip-sm-gw",
+    "method": "PUT",
+    "operationId": "CreateIpSmGwContext",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/location",
+    "method": "GET",
+    "operationId": "QueryUeLocation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/mwd",
+    "method": "DELETE",
+    "operationId": "DeleteMessageWaitingData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/mwd",
+    "method": "GET",
+    "operationId": "QueryMessageWaitingData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/mwd",
+    "method": "PATCH",
+    "operationId": "ModifyMessageWaitingData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/mwd",
+    "method": "PUT",
+    "operationId": "CreateMessageWaitingData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/nidd-authorizations",
+    "method": "DELETE",
+    "operationId": "RemoveNiddAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/nidd-authorizations",
+    "method": "GET",
+    "operationId": "GetNiddAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/nidd-authorizations",
+    "method": "PATCH",
+    "operationId": "ModifyNiddAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/nidd-authorizations",
+    "method": "PUT",
+    "operationId": "CreateNIDDAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/pei-info",
+    "method": "GET",
+    "operationId": "QueryPeiInformation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/pei-info",
+    "method": "PUT",
+    "operationId": "CreateOrUpdatePeiInformation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/roaming-information",
+    "method": "GET",
+    "operationId": "QueryRoamingInformation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/roaming-information",
+    "method": "PUT",
+    "operationId": "UpdateRoamingInformation",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions",
+    "method": "GET",
+    "operationId": "Querysdmsubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions",
+    "method": "POST",
+    "operationId": "CreateSdmSubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}",
+    "method": "DELETE",
+    "operationId": "RemovesdmSubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}",
+    "method": "GET",
+    "operationId": "QuerysdmSubscription",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}",
+    "method": "PATCH",
+    "operationId": "ModifysdmSubscription",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}",
+    "method": "PUT",
+    "operationId": "Updatesdmsubscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}/hss-sdm-subscriptions",
+    "method": "DELETE",
+    "operationId": "RemoveHssSDMSubscriptionsInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}/hss-sdm-subscriptions",
+    "method": "GET",
+    "operationId": "GetHssSDMSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}/hss-sdm-subscriptions",
+    "method": "PATCH",
+    "operationId": "ModifyHssSDMSubscriptionInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/sdm-subscriptions/{subsId}/hss-sdm-subscriptions",
+    "method": "PUT",
+    "operationId": "Create HSS SDM Subscriptions",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/service-specific-authorizations/{serviceType}",
+    "method": "DELETE",
+    "operationId": "RemoveServiceSpecificAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/service-specific-authorizations/{serviceType}",
+    "method": "GET",
+    "operationId": "GetServiceSpecificAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/service-specific-authorizations/{serviceType}",
+    "method": "PATCH",
+    "operationId": "ModifyServiceSpecificAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/service-specific-authorizations/{serviceType}",
+    "method": "PUT",
+    "operationId": "CreateServiceSpecificAuthorizationInfo",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smf-registrations",
+    "method": "GET",
+    "operationId": "QuerySmfRegList",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smf-registrations/{pduSessionId}",
+    "method": "DELETE",
+    "operationId": "DeleteSmfRegistration",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smf-registrations/{pduSessionId}",
+    "method": "GET",
+    "operationId": "QuerySmfRegistration",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smf-registrations/{pduSessionId}",
+    "method": "PATCH",
+    "operationId": "UpdateSmfContext",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smf-registrations/{pduSessionId}",
+    "method": "PUT",
+    "operationId": "CreateOrUpdateSmfRegistration",
+    "parameters": [
+      "ueId",
+      "pduSessionId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER",
+      "SESSION_CONTEXT_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smsf-3gpp-access",
+    "method": "DELETE",
+    "operationId": "DeleteSmsfContext3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smsf-3gpp-access",
+    "method": "GET",
+    "operationId": "QuerySmsfContext3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smsf-3gpp-access",
+    "method": "PUT",
+    "operationId": "CreateSmsfContext3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smsf-non-3gpp-access",
+    "method": "DELETE",
+    "operationId": "DeleteSmsfContextNon3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smsf-non-3gpp-access",
+    "method": "GET",
+    "operationId": "QuerySmsfContextNon3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/context-data/smsf-non-3gpp-access",
+    "method": "PUT",
+    "operationId": "CreateSmsfContextNon3gpp",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/coverage-restriction-data",
+    "method": "GET",
+    "operationId": "QueryCoverageRestrictionData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ee-profile-data",
+    "method": "GET",
+    "operationId": "QueryEEData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/identity-data",
+    "method": "GET",
+    "operationId": "GetIdentityData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/lcs-mo-data",
+    "method": "GET",
+    "operationId": "QueryLcsMoData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/lcs-privacy-data",
+    "method": "GET",
+    "operationId": "QueryLcsPrivacyData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/nidd-authorization-data",
+    "method": "GET",
+    "operationId": "GetNiddAuData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/operator-determined-barring-data",
+    "method": "GET",
+    "operationId": "GetOdbData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/operator-specific-data",
+    "method": "DELETE",
+    "operationId": "DeleteOperSpecData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/operator-specific-data",
+    "method": "GET",
+    "operationId": "QueryOperSpecData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/operator-specific-data",
+    "method": "PATCH",
+    "operationId": "ModifyOperSpecData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/operator-specific-data",
+    "method": "PUT",
+    "operationId": "CreateOperSpecData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/pp-data",
+    "method": "GET",
+    "operationId": "GetppData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/pp-data",
+    "method": "PATCH",
+    "operationId": "ModifyPpData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/pp-data-store",
+    "method": "GET",
+    "operationId": "Get Multiple PP Data Entries",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/pp-profile-data",
+    "method": "GET",
+    "operationId": "QueryPPData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/prose-data",
+    "method": "GET",
+    "operationId": "QueryPorseData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/service-specific-authorization-data/{serviceType}",
+    "method": "GET",
+    "operationId": "GetSSAuData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/uc-data",
+    "method": "GET",
+    "operationId": "QueryUserConsentData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+    "method": "GET",
+    "operationId": "QueryAuthSoR",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+    "method": "PATCH",
+    "operationId": "UpdateAuthenticationSoR",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+    "method": "PUT",
+    "operationId": "CreateAuthenticationSoR",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag",
+    "method": "GET",
+    "operationId": "QueryCagAck",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag",
+    "method": "PUT",
+    "operationId": "CreateCagUpdateAck",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/subscribed-snssais",
+    "method": "GET",
+    "operationId": "QueryNssaiAck",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/subscribed-snssais",
+    "method": "PUT",
+    "operationId": "CreateOrUpdateNssaiAck",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/upu-data",
+    "method": "GET",
+    "operationId": "QueryAuthUPU",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/ue-update-confirmation-data/upu-data",
+    "method": "PUT",
+    "operationId": "CreateAuthenticationUPU",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/v2x-data",
+    "method": "GET",
+    "operationId": "QueryV2xData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data",
+    "method": "GET",
+    "operationId": "QueryProvisionedData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data",
+    "method": "GET",
+    "operationId": "QueryAmData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data",
+    "method": "GET",
+    "operationId": "QueryLcsBcaData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data",
+    "method": "GET",
+    "operationId": "QuerySmData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data",
+    "method": "GET",
+    "operationId": "QuerySmfSelectData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data",
+    "method": "GET",
+    "operationId": "QuerySmsData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data",
+    "method": "GET",
+    "operationId": "QuerySmsMngData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  },
+  {
+    "spec": "Nudr_DR_bundled.yaml",
+    "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data",
+    "method": "GET",
+    "operationId": "QueryTraceData",
+    "parameters": [
+      "ueId"
+    ],
+    "resource_categories": [
+      "UE_IDENTIFIER"
+    ]
+  }
+]

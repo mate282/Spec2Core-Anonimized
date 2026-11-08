@@ -1,0 +1,92 @@
+core_adapter: open5gs
+capabilities:
+  oauth2: false
+  mtls_required: false
+  client_cert: null
+  client_key: null
+  ca_bundle: null
+  http2: true
+services:
+  nrf:
+    host: localhost
+    port: 7900
+    container: o5gs-nrf
+  amf_1:
+    host: localhost
+    port: 7901
+    container: o5gs-amf
+  amf_2:
+    host: localhost
+    port: 7901
+    container: o5gs-amf
+  smf_1:
+    host: localhost
+    port: 7905
+    container: o5gs-smf
+  smf_2:
+    host: localhost
+    port: 7905
+    container: o5gs-smf
+  udm_1:
+    host: localhost
+    port: 7906
+    container: o5gs-udm
+  udm_2:
+    host: localhost
+    port: 7906
+    container: o5gs-udm
+  udr_1:
+    host: localhost
+    port: 7907
+    container: o5gs-udr
+  udr_2:
+    host: localhost
+    port: 7907
+    container: o5gs-udr
+  ausf_1:
+    host: localhost
+    port: 7902
+    container: o5gs-ausf
+  ausf_2:
+    host: localhost
+    port: 7902
+    container: o5gs-ausf
+  nssf_1:
+    host: localhost
+    port: 7903
+    container: o5gs-nssf
+  nssf_2:
+    host: localhost
+    port: 7903
+    container: o5gs-nssf
+  pcf_1:
+    host: localhost
+    port: 7904
+    container: o5gs-pcf
+  pcf_2:
+    host: localhost
+    port: 7904
+    container: o5gs-pcf
+  bsf_1:
+    host: localhost
+    port: 7908
+    container: o5gs-bsf
+  bsf_2:
+    host: localhost
+    port: 7908
+    container: o5gs-bsf
+  mongodb:
+    host: localhost
+    port: 27017
+    container: o5gs-mongodb
+    database: open5gs
+fixture:
+  supi: imsi-208930000000001
+  plmn:
+    mcc: '208'
+    mnc: '93'
+  slice:
+    sst: 1
+    sd: '010203'
+  dnn: internet
+  pdu_session_id: 1

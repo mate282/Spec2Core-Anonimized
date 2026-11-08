@@ -1,0 +1,81 @@
+{
+  "UE_IDENTIFIER": [
+    "supi",
+    "supiOrSuci",
+    "ueId",
+    "ueIdentity"
+  ],
+  "UE_CONTEXT_IDENTIFIER": [
+    "ueContextId"
+  ],
+  "NF_IDENTIFIER": [
+    "nfId",
+    "nfInstanceID"
+  ],
+  "SESSION_CONTEXT_IDENTIFIER": [
+    "smContextId",
+    "smContextRef",
+    "pduSessionId",
+    "pduSessionRef"
+  ],
+  "SUBSCRIPTION_IDENTIFIER": [
+    "subscriptionId",
+    "subscriptionID",
+    "subId",
+    "subsId",
+    "n2NotifySubscriptionId",
+    "nwdafRegistrationId"
+  ],
+  "AUTHENTICATION_IDENTIFIER": [
+    "authCtxId",
+    "authEventId"
+  ],
+  "POLICY_IDENTIFIER": [
+    "polAssoId",
+    "smPolicyId",
+    "bdtPolicyId",
+    "mbsPolicyId",
+    "bdtReferenceId",
+    "usageMonId"
+  ],
+  "APPLICATION_AF_IDENTIFIER": [
+    "afInstanceId",
+    "appId",
+    "appSessionId",
+    "appAmContextId",
+    "influenceId",
+    "configurationId",
+    "serviceParamId",
+    "sponsorId"
+  ],
+  "GROUP_IDENTIFIER": [
+    "ueGroupId",
+    "extGroupId",
+    "externalGroupId"
+  ],
+  "MBS_IDENTIFIER": [
+    "mbsContextRef"
+  ],
+  "CHARGING_IDENTIFIER": [
+    "ChargingDataRef",
+    "OfflineChargingDataRef"
+  ],
+  "SHARED_DATA_IDENTIFIER": [
+    "sharedDataId"
+  ],
+  "SEARCH_IDENTIFIER": [
+    "searchId"
+  ],
+  "CONTEXT_IDENTIFIER": [
+    "contextId"
+  ],
+  "NETWORK_SELECTOR_OR_QUALIFIER": [
+    "plmnId",
+    "servingPlmnId",
+    "servingNetworkName"
+  ],
+  "SERVICE_SELECTOR_OR_QUALIFIER": [
+    "serviceType",
+    "hssAuthType"
+  ]
+}

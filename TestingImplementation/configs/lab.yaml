@@ -1,0 +1,102 @@
+core_adapter: free5gc
+capabilities:
+  oauth2: true
+  mtls_required: false
+  client_cert: null
+  client_key: null
+  ca_bundle: null
+services:
+  nrf:
+    host: localhost
+    port: 8000
+    container: nrf
+  amf_1:
+    host: localhost
+    port: 8001
+    container: amf
+    amf_id: cafe00
+  amf_2:
+    host: localhost
+    port: 8101
+    container: amf2
+    amf_id: cafe01
+  smf_1:
+    host: localhost
+    port: 8005
+    container: smf
+  smf_2:
+    host: localhost
+    port: 8105
+    container: smf2
+  udm_1:
+    host: localhost
+    port: 8006
+    container: udm
+  udm_2:
+    host: localhost
+    port: 8106
+    container: udm2
+  udr_1:
+    host: localhost
+    port: 8007
+    container: udr
+  udr_2:
+    host: localhost
+    port: 8107
+    container: udr2
+  ausf_1:
+    host: localhost
+    port: 8002
+    container: ausf
+  ausf_2:
+    host: localhost
+    port: 8102
+    container: ausf2
+  nssf_1:
+    host: localhost
+    port: 8003
+    container: nssf
+  nssf_2:
+    host: localhost
+    port: 8103
+    container: nssf2
+  pcf_1:
+    host: localhost
+    port: 8004
+    container: pcf
+  pcf_2:
+    host: localhost
+    port: 8104
+    container: pcf2
+  chf_1:
+    host: localhost
+    port: 8008
+    container: chf
+  chf_2:
+    host: localhost
+    port: 8108
+    container: chf2
+  nef_1:
+    host: localhost
+    port: 8009
+    container: nef
+  nef_2:
+    host: localhost
+    port: 8109
+    container: nef2
+  mongodb:
+    host: localhost
+    port: 27017
+    container: mongodb
+    database: free5gc
+fixture:
+  supi: imsi-208930000000001
+  plmn:
+    mcc: '208'
+    mnc: '93'
+  slice:
+    sst: 1
+    sd: '010203'
+  dnn: internet
+  pdu_session_id: 1
+  ue_restart_wait_seconds: 30

@@ -1,0 +1,3522 @@
+openapi: 3.0.0
+info:
+  version: 1.2.6
+  title: Nudm_UECM
+  description: "Nudm Context Management Service.  \n\xA9 2024, 3GPP Organizational\
+    \ Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  \nAll rights reserved.\n"
+servers:
+- url: http://udm:8000/nudm-uecm/v1
+security:
+- oAuth2ClientCredentials:
+  - nudm-uecm
+- {}
+externalDocs:
+  description: 3GPP TS 29.503 Unified Data Management Services, version 17.14.0
+  url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.503/
+paths:
+  /{ueId}/registrations:
+    get:
+      summary: retrieve UE registration data sets
+      operationId: GetRegistrations
+      tags:
+      - UECM Registration Info Retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: supported-features
+        in: query
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      - name: registration-dataset-names
+        in: query
+        style: form
+        explode: false
+        description: List of UECM registration dataset names
+        required: true
+        schema:
+          $ref: '#/components/schemas/RegistrationDatasetNames'
+      - name: single-nssai
+        in: query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Snssai'
+      - name: dnn
+        in: query
+        schema:
+          $ref: '#/components/schemas/Dnn'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationDataSets'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/send-routing-info-sm:
+    post:
+      summary: Retreive addressing information for SMS delivery
+      operationId: SendRoutingInfoSm
+      tags:
+      - SendRoutingInfoSM (Custom Operation)
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingInfoSmRequest'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingInfoSmResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/amf-3gpp-access:
+    put:
+      summary: register as AMF for 3GPP access
+      operationId: 3GppRegistration
+      tags:
+      - AMF registration for 3GPP access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:amf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Amf3GppAccessRegistration'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Amf3GppAccessRegistration'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Amf3GppAccessRegistration'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-uecm/v1/{ueId}/registrations/amf-3gpp-access'
+              required: true
+              schema:
+                type: string
+        '204':
+          description: No content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+      callbacks:
+        deregistrationNotification:
+          '{request.body#/deregCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DeregistrationData'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+        pcscfRestorationNotification:
+          '{request.body#/pcscfRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/PcscfRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '409':
+                  $ref: '#/components/responses/409'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+        dataRestorationNotification:
+          '{request.body#/dataRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DataRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '409':
+                  $ref: '#/components/responses/409'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+    patch:
+      summary: Update a parameter in the AMF registration for 3GPP access
+      operationId: Update3GppRegistration
+      tags:
+      - Parameter update in the AMF registration for 3GPP access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:amf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: supported-features
+        in: query
+        description: Features required to be supported by the target NF
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      requestBody:
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Amf3GppAccessRegistrationModification'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatchResult'
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Unprocessable Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    get:
+      summary: retrieve the AMF registration for 3GPP access information
+      operationId: Get3GppRegistration
+      tags:
+      - AMF 3Gpp-access Registration Info Retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: supported-features
+        in: query
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Amf3GppAccessRegistration'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/amf-3gpp-access/dereg-amf:
+    post:
+      summary: trigger AMF for 3GPP access deregistration
+      operationId: deregAMF
+      tags:
+      - Trigger AMF for 3GPP access deregistration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:amf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmfDeregInfo'
+        required: true
+      responses:
+        '204':
+          description: No content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/amf-3gpp-access/pei-update:
+    post:
+      summary: Updates the PEI in the 3GPP access registration context
+      operationId: PeiUpdate
+      tags:
+      - PEI Update
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:amf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PeiUpdateInfo'
+        required: true
+      responses:
+        '204':
+          description: No content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/amf-3gpp-access/roaming-info-update:
+    post:
+      summary: Update the Roaming Information
+      operationId: UpdateRoamingInformation
+      tags:
+      - Roaming Information Update
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:roaming-info-update:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoamingInfoUpdate'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoamingInfoUpdate'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-uecm/<apiVersion>/{ueId}/registrations/amf-3gpp-access/roaming-info-update'
+              required: true
+              schema:
+                type: string
+        '204':
+          description: No content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/amf-non-3gpp-access:
+    put:
+      summary: register as AMF for non-3GPP access
+      operationId: Non3GppRegistration
+      tags:
+      - AMF registration for non-3GPP access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:amf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmfNon3GppAccessRegistration'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmfNon3GppAccessRegistration'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmfNon3GppAccessRegistration'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-uecm/v1/{ueId}/registrations/amf-non-3gpp-access'
+              required: true
+              schema:
+                type: string
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+      callbacks:
+        deregistrationNotification:
+          '{request.body#/deregCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DeregistrationData'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+        pcscfRestorationNotification:
+          '{request.body#/pcscfRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/PcscfRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+        dataRestorationNotification:
+          '{request.body#/dataRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DataRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '409':
+                  $ref: '#/components/responses/409'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+    patch:
+      summary: update a parameter in the AMF registration for non-3GPP access
+      operationId: UpdateNon3GppRegistration
+      tags:
+      - Parameter update in the AMF registration for non-3GPP access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:amf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: supported-features
+        in: query
+        description: Features required to be supported by the target NF
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      requestBody:
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/AmfNon3GppAccessRegistrationModification'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatchResult'
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Unprocessable Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    get:
+      summary: retrieve the AMF registration for non-3GPP access information
+      operationId: GetNon3GppRegistration
+      tags:
+      - AMF non-3GPP-access Registration Info  Retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: supported-features
+        in: query
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmfNon3GppAccessRegistration'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/smf-registrations:
+    get:
+      summary: retrieve the SMF registration information
+      operationId: GetSmfRegistration
+      tags:
+      - SMF SmfRegistration
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: single-nssai
+        in: query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Snssai'
+      - name: dnn
+        in: query
+        schema:
+          $ref: '#/components/schemas/Dnn'
+      - name: supported-features
+        in: query
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmfRegistrationInfo'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/smf-registrations/{pduSessionId}:
+    put:
+      summary: register as SMF
+      operationId: Registration
+      tags:
+      - SMF SmfRegistration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:smf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: pduSessionId
+        in: path
+        description: Identifier of the PDU session
+        required: true
+        schema:
+          $ref: '#/components/schemas/PduSessionId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmfRegistration'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmfRegistration'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmfRegistration'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-uecm/v1/{ueId}/registrations/smf-registrations/{pduSessionId}'
+              required: true
+              schema:
+                type: string
+        '204':
+          description: No content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+      callbacks:
+        deregistrationNotification:
+          '{request.body#/deregCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DeregistrationData'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+        pcscfRestorationNotification:
+          '{request.body#/pcscfRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/PcscfRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+        dataRestorationNotification:
+          '{request.body#/dataRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DataRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '409':
+                  $ref: '#/components/responses/409'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+    delete:
+      summary: delete an SMF registration
+      operationId: SmfDeregistration
+      tags:
+      - SMF Deregistration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:smf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: pduSessionId
+        in: path
+        description: Identifier of the PDU session
+        required: true
+        schema:
+          $ref: '#/components/schemas/PduSessionId'
+      - name: smf-set-id
+        in: query
+        schema:
+          $ref: '#/components/schemas/NfSetId'
+      - name: smf-instance-id
+        in: query
+        schema:
+          $ref: '#/components/schemas/NfInstanceId'
+      responses:
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Unprocessable Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    get:
+      summary: get an SMF registration
+      operationId: RetrieveSmfRegistration
+      tags:
+      - Retrieve SMF Registration
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: pduSessionId
+        in: path
+        description: Identifier of the PDU session
+        required: true
+        schema:
+          $ref: '#/components/schemas/PduSessionId'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmfRegistration'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    patch:
+      summary: update a parameter in the SMF registration
+      operationId: UpdateSmfRegistration
+      tags:
+      - Parameter update in the SMF registration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:smf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: pduSessionId
+        in: path
+        description: Identifier of the PDU session
+        required: true
+        schema:
+          $ref: '#/components/schemas/PduSessionId'
+      - name: supported-features
+        in: query
+        description: Features required to be supported by the target NF
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      requestBody:
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/SmfRegistrationModification'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatchResult'
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Unprocessable Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/smsf-3gpp-access:
+    put:
+      summary: register as SMSF for 3GPP access
+      operationId: 3GppSmsfRegistration
+      tags:
+      - SMSF registration for 3GPP access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:smsf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmsfRegistration'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsfRegistration'
+          headers:
+            ETag:
+              description: Entity Tag, containing a strong validator, as described
+                in IETF RFC 7232, 2.3
+              schema:
+                type: string
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsfRegistration'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-uecm/v1/{ueId}/registrations/smsf-3gpp-access'
+              required: true
+              schema:
+                type: string
+            ETag:
+              description: Entity Tag, containing a strong validator, as described
+                in IETF RFC 7232, 2.3
+              schema:
+                type: string
+        '204':
+          description: No content
+          headers:
+            ETag:
+              description: Entity Tag, containing a strong validator, as described
+                in IETF RFC 7232, 2.3
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+      callbacks:
+        dataRestorationNotification:
+          '{request.body#/dataRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DataRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '409':
+                  $ref: '#/components/responses/409'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+    delete:
+      summary: delete the SMSF registration for 3GPP access
+      operationId: 3GppSmsfDeregistration
+      tags:
+      - SMSF Deregistration for 3GPP Access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:smsf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: smsf-set-id
+        in: query
+        schema:
+          $ref: '#/components/schemas/NfSetId'
+      - name: If-Match
+        in: header
+        description: Validator for conditional requests, as described in IETF RFC
+          7232, 3.1
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Unprocessable Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    get:
+      summary: retrieve the SMSF registration for 3GPP access information
+      operationId: Get3GppSmsfRegistration
+      tags:
+      - SMSF 3GPP access Registration Info Retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Gpsi'
+      - name: supported-features
+        in: query
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsfRegistration'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/smsf-non-3gpp-access:
+    put:
+      summary: register as SMSF for non-3GPP access
+      operationId: Non3GppSmsfRegistration
+      tags:
+      - SMSF registration for non-3GPP access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:smsf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmsfRegistration'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsfRegistration'
+          headers:
+            ETag:
+              description: Entity Tag, containing a strong validator, as described
+                in IETF RFC 7232, 2.3
+              schema:
+                type: string
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsfRegistration'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-uecm/v1/{ueId}/registrations/smsf-non-3gpp-access'
+              required: true
+              schema:
+                type: string
+            ETag:
+              description: Entity Tag, containing a strong validator, as described
+                in IETF RFC 7232, 2.3
+              schema:
+                type: string
+        '204':
+          description: No content
+          headers:
+            ETag:
+              description: Entity Tag, containing a strong validator, as described
+                in IETF RFC 7232, 2.3
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+      callbacks:
+        dataRestorationNotification:
+          '{request.body#/dataRestorationCallbackUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DataRestorationNotification'
+              responses:
+                '204':
+                  description: Successful Notification response
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '404':
+                  $ref: '#/components/responses/404'
+                '409':
+                  $ref: '#/components/responses/409'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  description: Unexpected error
+    delete:
+      summary: delete SMSF registration for non 3GPP access
+      operationId: Non3GppSmsfDeregistration
+      tags:
+      - SMSF Deregistration for non-3GPP access
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:smsf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      - name: smsf-set-id
+        in: query
+        schema:
+          $ref: '#/components/schemas/NfSetId'
+      - name: If-Match
+        in: header
+        description: Validator for conditional requests, as described in IETF RFC
+          7232, 3.1
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Unprocessable Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    get:
+      summary: retrieve the SMSF registration for non-3GPP access information
+      operationId: GetNon3GppSmsfRegistration
+      tags:
+      - SMSF non-3GPP access Registration Info Retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Gpsi'
+      - name: supported-features
+        in: query
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmsfRegistration'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/ip-sm-gw:
+    put:
+      summary: Register an IP-SM-GW
+      operationId: IpSmGwRegistration
+      tags:
+      - IP-SM-GW registration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:ip-sm-gw-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpSmGwRegistration'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpSmGwRegistration'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpSmGwRegistration'
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure: {apiRoot}/nudm-uecm/v1/{ueId}/registrations/ip-sm-gw'
+              required: true
+              schema:
+                type: string
+        '204':
+          description: No content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    delete:
+      summary: Delete the IP-SM-GW registration
+      operationId: IpSmGwDeregistration
+      tags:
+      - IP-SM-GW Deregistration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:ip-sm-gw-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      responses:
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    get:
+      summary: Retrieve the IP-SM-GW registration information
+      operationId: GetIpSmGwRegistration
+      tags:
+      - IP-SM-GW Registration Info Retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpSmGwRegistration'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /restore-pcscf:
+    post:
+      summary: Trigger the Restoration of the P-CSCF
+      operationId: Trigger P-CSCF Restoration
+      tags:
+      - Trigger P-CSCF Restoration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerRequest'
+        required: true
+      responses:
+        '204':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/location:
+    get:
+      summary: retrieve the target UE's location information
+      operationId: GetLocationInfo
+      tags:
+      - UE Location Information retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: supported-features
+        in: query
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationInfo'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/nwdaf-registrations:
+    get:
+      summary: retrieve the NWDAF registration
+      operationId: GetNwdafRegistration
+      tags:
+      - NWDAF Registration Info Retrieval
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: analytics-ids
+        in: query
+        description: List of analytics Id(s) provided by the consumers of NWDAF.
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventId'
+      - name: supported-features
+        in: query
+        description: Supported Features
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NwdafRegistration'
+                minItems: 1
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+  /{ueId}/registrations/nwdaf-registrations/{nwdafRegistrationId}:
+    put:
+      summary: register as NWDAF
+      operationId: NwdafRegistration
+      tags:
+      - NWDAF registration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:nwdaf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: nwdafRegistrationId
+        in: path
+        description: NWDAF registration identifier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NwdafRegistration'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NwdafRegistration'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NwdafRegistration'
+        '204':
+          description: No content
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    delete:
+      summary: delete an NWDAF registration
+      operationId: NwdafDeregistration
+      tags:
+      - NWDAF Deregistration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:nwdaf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: nwdafRegistrationId
+        in: path
+        description: NWDAF registration identifier
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+    patch:
+      summary: Update a parameter in the NWDAF registration
+      operationId: UpdateNwdafRegistration
+      tags:
+      - Parameter update in the NWDAF registration
+      security:
+      - {}
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+      - oAuth2ClientCredentials:
+        - nudm-uecm
+        - nudm-uecm:nwdaf-registration:write
+      parameters:
+      - name: ueId
+        in: path
+        description: Identifier of the UE
+        required: true
+        schema:
+          $ref: '#/components/schemas/VarUeId'
+      - name: nwdafRegistrationId
+        in: path
+        description: NWDAF registration identifier
+        required: true
+        schema:
+          type: string
+      - name: supported-features
+        in: query
+        description: Supported Features
+        schema:
+          $ref: '#/components/schemas/SupportedFeatures'
+      requestBody:
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/NwdafRegistrationModification'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/NwdafRegistration'
+                - $ref: '#/components/schemas/PatchResult'
+        '204':
+          description: Expected response to a valid request
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Unprocessable Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          description: Unexpected error
+components:
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: http://nrf:8000/oauth2/token
+          scopes:
+            nudm-uecm: Access to the nudm-uecm API
+            nudm_uecm:amf-registration:write: Write access (update/modify) to representations
+              of the Amf3GppAccessRegistration and AmfNon3GppAccessRegistration resources
+            nudm_uecm:smf-registration:write: Write access (create/delete/modify)
+              to the representations of individualSmfRegistration resources
+            nudm_uecm:smsf-registration:write: Write access (create/delete/modify)
+              to representations of the Smsf3GppAccessRegistration and SmsfNon3GppAccessRegistration
+              resources
+            nudm_uecm:ip-sm-gw-registration:write: Write access (create/delete/modify)
+              to the representation of the IpSmGwRegistration resource
+            nudm_uecm:nwdaf-registration:write: Write access (create/delete/modify)
+              to the representation of the NwdafRegistration resource
+  schemas:
+    Amf3GppAccessRegistration:
+      type: object
+      required:
+      - amfInstanceId
+      - deregCallbackUri
+      - guami
+      - ratType
+      properties:
+        amfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        purgeFlag:
+          $ref: '#/components/schemas/PurgeFlag'
+        pei:
+          $ref: '#/components/schemas/Pei'
+        imsVoPs:
+          $ref: '#/components/schemas/ImsVoPs'
+        deregCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        amfServiceNameDereg:
+          $ref: '#/components/schemas/ServiceName'
+        pcscfRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        amfServiceNamePcscfRest:
+          $ref: '#/components/schemas/ServiceName'
+        initialRegistrationInd:
+          type: boolean
+        emergencyRegistrationInd:
+          type: boolean
+        guami:
+          $ref: '#/components/schemas/Guami'
+        backupAmfInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackupAmfInfo'
+          minItems: 1
+        drFlag:
+          $ref: '#/components/schemas/DualRegistrationFlag'
+        ratType:
+          $ref: '#/components/schemas/RatType'
+        urrpIndicator:
+          type: boolean
+        amfEeSubscriptionId:
+          $ref: '#/components/schemas/Uri'
+        epsInterworkingInfo:
+          $ref: '#/components/schemas/EpsInterworkingInfo'
+        ueSrvccCapability:
+          type: boolean
+        registrationTime:
+          $ref: '#/components/schemas/DateTime'
+        vgmlcAddress:
+          $ref: '#/components/schemas/VgmlcAddress'
+        contextInfo:
+          $ref: '#/components/schemas/ContextInfo'
+        noEeSubscriptionInd:
+          type: boolean
+        supi:
+          $ref: '#/components/schemas/Supi'
+        ueReachableInd:
+          $ref: '#/components/schemas/UeReachableInd'
+        reRegistrationRequired:
+          type: boolean
+        adminDeregSubWithdrawn:
+          type: boolean
+        dataRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        disasterRoamingInd:
+          type: boolean
+          default: false
+        ueMINTCapability:
+          type: boolean
+        sorSnpnSiSupported:
+          type: boolean
+          default: false
+        udrRestartInd:
+          type: boolean
+          default: false
+        lastSynchronizationTime:
+          $ref: '#/components/schemas/DateTime'
+    Amf3GppAccessRegistrationModification:
+      type: object
+      required:
+      - guami
+      properties:
+        guami:
+          $ref: '#/components/schemas/Guami'
+        purgeFlag:
+          $ref: '#/components/schemas/PurgeFlag'
+        pei:
+          $ref: '#/components/schemas/Pei'
+        imsVoPs:
+          $ref: '#/components/schemas/ImsVoPs'
+        backupAmfInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackupAmfInfo'
+        epsInterworkingInfo:
+          $ref: '#/components/schemas/EpsInterworkingInfo'
+        ueSrvccCapability:
+          type: boolean
+          nullable: true
+        ueMINTCapability:
+          type: boolean
+    EpsInterworkingInfo:
+      type: object
+      properties:
+        epsIwkPgws:
+          description: A map (list of key-value pairs where Dnn serves as key) of
+            EpsIwkPgws
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EpsIwkPgw'
+    EpsIwkPgw:
+      type: object
+      required:
+      - pgwFqdn
+      - smfInstanceId
+      properties:
+        pgwFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        smfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+    AmfNon3GppAccessRegistration:
+      type: object
+      required:
+      - amfInstanceId
+      - imsVoPs
+      - deregCallbackUri
+      - guami
+      - ratType
+      properties:
+        amfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        purgeFlag:
+          $ref: '#/components/schemas/PurgeFlag'
+        pei:
+          $ref: '#/components/schemas/Pei'
+        imsVoPs:
+          $ref: '#/components/schemas/ImsVoPs'
+        deregCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        amfServiceNameDereg:
+          $ref: '#/components/schemas/ServiceName'
+        pcscfRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        amfServiceNamePcscfRest:
+          $ref: '#/components/schemas/ServiceName'
+        guami:
+          $ref: '#/components/schemas/Guami'
+        backupAmfInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackupAmfInfo'
+          minItems: 1
+        ratType:
+          $ref: '#/components/schemas/RatType'
+        urrpIndicator:
+          type: boolean
+        amfEeSubscriptionId:
+          $ref: '#/components/schemas/Uri'
+        registrationTime:
+          $ref: '#/components/schemas/DateTime'
+        vgmlcAddress:
+          $ref: '#/components/schemas/VgmlcAddress'
+        contextInfo:
+          $ref: '#/components/schemas/ContextInfo'
+        noEeSubscriptionInd:
+          type: boolean
+        supi:
+          $ref: '#/components/schemas/Supi'
+        reRegistrationRequired:
+          type: boolean
+        adminDeregSubWithdrawn:
+          type: boolean
+        dataRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        disasterRoamingInd:
+          type: boolean
+          default: false
+        sorSnpnSiSupported:
+          type: boolean
+          default: false
+        udrRestartInd:
+          type: boolean
+          default: false
+        lastSynchronizationTime:
+          $ref: '#/components/schemas/DateTime'
+    AmfNon3GppAccessRegistrationModification:
+      type: object
+      required:
+      - guami
+      properties:
+        guami:
+          $ref: '#/components/schemas/Guami'
+        purgeFlag:
+          $ref: '#/components/schemas/PurgeFlag'
+        pei:
+          $ref: '#/components/schemas/Pei'
+        imsVoPs:
+          $ref: '#/components/schemas/ImsVoPs'
+        backupAmfInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackupAmfInfo'
+    SmfRegistration:
+      type: object
+      required:
+      - smfInstanceId
+      - pduSessionId
+      - singleNssai
+      - plmnId
+      properties:
+        smfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        smfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        pduSessionId:
+          $ref: '#/components/schemas/PduSessionId'
+        singleNssai:
+          $ref: '#/components/schemas/Snssai'
+        dnn:
+          $ref: '#/components/schemas/Dnn'
+        emergencyServices:
+          type: boolean
+        pcscfRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        pgwFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        pgwIpAddr:
+          $ref: '#/components/schemas/IpAddress'
+        epdgInd:
+          type: boolean
+          default: false
+        deregCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        registrationReason:
+          $ref: '#/components/schemas/RegistrationReason'
+        registrationTime:
+          $ref: '#/components/schemas/DateTime'
+        contextInfo:
+          $ref: '#/components/schemas/ContextInfo'
+        pcfId:
+          $ref: '#/components/schemas/NfInstanceId'
+        dataRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        udrRestartInd:
+          type: boolean
+          default: false
+        lastSynchronizationTime:
+          $ref: '#/components/schemas/DateTime'
+    SmsfRegistration:
+      type: object
+      required:
+      - smsfInstanceId
+      - plmnId
+      properties:
+        smsfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        smsfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        smsfMAPAddress:
+          $ref: '#/components/schemas/E164Number'
+        smsfDiameterAddress:
+          $ref: '#/components/schemas/NetworkNodeDiameterAddress'
+        registrationTime:
+          $ref: '#/components/schemas/DateTime'
+        contextInfo:
+          $ref: '#/components/schemas/ContextInfo'
+        dataRestorationCallbackUri:
+          $ref: '#/components/schemas/Uri'
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        smsfSbiSupInd:
+          type: boolean
+          default: false
+        udrRestartInd:
+          type: boolean
+          default: false
+        lastSynchronizationTime:
+          $ref: '#/components/schemas/DateTime'
+        ueMemoryAvailableInd:
+          type: boolean
+          enum:
+          - true
+    DeregistrationData:
+      type: object
+      required:
+      - deregReason
+      properties:
+        deregReason:
+          $ref: '#/components/schemas/DeregistrationReason'
+        accessType:
+          $ref: '#/components/schemas/AccessType'
+        pduSessionId:
+          $ref: '#/components/schemas/PduSessionId'
+        newSmfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+    PcscfRestorationNotification:
+      type: object
+      required:
+      - supi
+      properties:
+        supi:
+          $ref: '#/components/schemas/Supi'
+        failedPcscf:
+          $ref: '#/components/schemas/PcscfAddress'
+    NetworkNodeDiameterAddress:
+      type: object
+      required:
+      - name
+      - realm
+      properties:
+        name:
+          $ref: '#/components/schemas/Fqdn'
+        realm:
+          $ref: '#/components/schemas/Fqdn'
+    TriggerRequest:
+      type: object
+      required:
+      - supi
+      properties:
+        supi:
+          $ref: '#/components/schemas/Supi'
+        failedPcscf:
+          $ref: '#/components/schemas/PcscfAddress'
+    SmfRegistrationInfo:
+      type: object
+      required:
+      - smfRegistrationList
+      properties:
+        smfRegistrationList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmfRegistration'
+          minItems: 1
+    IpSmGwRegistration:
+      type: object
+      anyOf:
+      - required:
+        - ipSmGwMapAddress
+      - required:
+        - ipSmGwDiameterAddress
+      - required:
+        - ipsmgwIpv4
+      - required:
+        - ipsmgwIpv6
+      - required:
+        - ipsmgwFqdn
+      properties:
+        ipSmGwMapAddress:
+          $ref: '#/components/schemas/E164Number'
+        ipSmGwDiameterAddress:
+          $ref: '#/components/schemas/NetworkNodeDiameterAddress'
+        ipsmgwIpv4:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipsmgwIpv6:
+          $ref: '#/components/schemas/Ipv6Addr'
+        ipsmgwFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        unriIndicator:
+          type: boolean
+          default: false
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        ipSmGwSbiSupInd:
+          type: boolean
+          default: false
+    AmfDeregInfo:
+      type: object
+      required:
+      - deregReason
+      properties:
+        deregReason:
+          $ref: '#/components/schemas/DeregistrationReason'
+    LocationInfo:
+      type: object
+      required:
+      - registrationLocationInfoList
+      properties:
+        supi:
+          $ref: '#/components/schemas/Supi'
+        gpsi:
+          $ref: '#/components/schemas/Gpsi'
+        registrationLocationInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegistrationLocationInfo'
+          minItems: 1
+          maxItems: 2
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    RegistrationLocationInfo:
+      type: object
+      required:
+      - amfInstanceId
+      - accessTypeList
+      properties:
+        amfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        guami:
+          $ref: '#/components/schemas/Guami'
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        vgmlcAddress:
+          $ref: '#/components/schemas/VgmlcAddress'
+        accessTypeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessType'
+          minItems: 1
+          maxItems: 2
+    VgmlcAddress:
+      type: object
+      properties:
+        vgmlcAddressIpv4:
+          $ref: '#/components/schemas/Ipv4Addr'
+        vgmlcAddressIpv6:
+          $ref: '#/components/schemas/Ipv6Addr'
+        vgmlcFqdn:
+          $ref: '#/components/schemas/Fqdn'
+    PeiUpdateInfo:
+      type: object
+      required:
+      - pei
+      properties:
+        pei:
+          $ref: '#/components/schemas/Pei'
+    RegistrationDatasetNames:
+      type: array
+      items:
+        $ref: '#/components/schemas/RegistrationDataSetName'
+      minItems: 2
+      uniqueItems: true
+    RegistrationDataSets:
+      type: object
+      properties:
+        amf3Gpp:
+          $ref: '#/components/schemas/Amf3GppAccessRegistration'
+        amfNon3Gpp:
+          $ref: '#/components/schemas/AmfNon3GppAccessRegistration'
+        smfRegistration:
+          $ref: '#/components/schemas/SmfRegistrationInfo'
+        smsf3Gpp:
+          $ref: '#/components/schemas/SmsfRegistration'
+        smsfNon3Gpp:
+          $ref: '#/components/schemas/SmsfRegistration'
+        ipSmGw:
+          $ref: '#/components/schemas/IpSmGwRegistration'
+        nwdafRegistration:
+          $ref: '#/components/schemas/NwdafRegistrationInfo'
+    NwdafRegistration:
+      description: The complete set of information relevant to an NWDAF serving the
+        UE
+      type: object
+      required:
+      - nwdafInstanceId
+      - analyticsIds
+      properties:
+        nwdafInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        analyticsIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventId'
+          minItems: 1
+        nwdafSetId:
+          $ref: '#/components/schemas/NfSetId'
+        registrationTime:
+          $ref: '#/components/schemas/DateTime'
+        contextInfo:
+          $ref: '#/components/schemas/ContextInfo'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+    NwdafRegistrationModification:
+      description: Contains attributes of NwdafRegistration that can be modified using
+        PATCH
+      type: object
+      required:
+      - nwdafInstanceId
+      properties:
+        nwdafInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nwdafSetId:
+          $ref: '#/components/schemas/NfSetId'
+        analyticsIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventId'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    SmfRegistrationModification:
+      description: Contains attributes of SmfRegistration that can be modified using
+        PATCH
+      type: object
+      required:
+      - smfInstanceId
+      properties:
+        smfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        smfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        pgwFqdn:
+          $ref: '#/components/schemas/FqdnRm'
+    DataRestorationNotification:
+      description: Contains identities representing those UEs potentially affected
+        by a data-loss event at the UDR
+      type: object
+      properties:
+        lastReplicationTime:
+          $ref: '#/components/schemas/DateTime'
+        recoveryTime:
+          $ref: '#/components/schemas/DateTime'
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        supiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupiRange'
+          minItems: 1
+        gpsiRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRange'
+          minItems: 1
+        resetIds:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        sNssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        dnnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dnn'
+          minItems: 1
+        udmGroupId:
+          $ref: '#/components/schemas/NfGroupId'
+    RoamingInfoUpdate:
+      description: Contains the Roaming Information Update
+      type: object
+      required:
+      - servingPlmn
+      properties:
+        roaming:
+          type: boolean
+        servingPlmn:
+          $ref: '#/components/schemas/PlmnId'
+    PcscfAddress:
+      description: Contains the addressing information (IP addresses and/or FQDN)
+        of the P-CSCF
+      type: object
+      anyOf:
+      - required:
+        - ipv4Addrs
+      - required:
+        - ipv6Addrs
+      - required:
+        - fqdn
+      properties:
+        ipv4Addrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          minItems: 1
+        ipv6Addrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        fqdn:
+          $ref: '#/components/schemas/Fqdn'
+    NwdafRegistrationInfo:
+      description: List of NwdafRegistration
+      type: object
+      required:
+      - nwdafRegistrationList
+      properties:
+        nwdafRegistrationList:
+          type: array
+          items:
+            $ref: '#/components/schemas/NwdafRegistration'
+          minItems: 1
+    RoutingInfoSmRequest:
+      description: Request body of the send-routing-info-sm custom operation
+      type: object
+      properties:
+        ipSmGwInd:
+          type: boolean
+          default: false
+        correlationId:
+          type: string
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+    RoutingInfoSmResponse:
+      description: Addressing information of available nodes for SMS delivery
+      type: object
+      properties:
+        supi:
+          $ref: '#/components/schemas/Supi'
+        smsf3Gpp:
+          $ref: '#/components/schemas/SmsfRegistration'
+        smsfNon3Gpp:
+          $ref: '#/components/schemas/SmsfRegistration'
+        ipSmGw:
+          $ref: '#/components/schemas/IpSmGwInfo'
+        smsRouter:
+          $ref: '#/components/schemas/SmsRouterInfo'
+    IpSmGwInfo:
+      description: Contains the IP-SM-GW Information
+      type: object
+      properties:
+        ipSmGwRegistration:
+          $ref: '#/components/schemas/IpSmGwRegistration'
+        ipSmGwGuidance:
+          $ref: '#/components/schemas/IpSmGwGuidance'
+    IpSmGwGuidance:
+      description: 'Contains guidance information (e.g. minimum and recommended delivery
+        times) of the IP-SM-GW
+
+        '
+      type: object
+      required:
+      - minDeliveryTime
+      - recommDeliveryTime
+      properties:
+        minDeliveryTime:
+          type: integer
+          minimum: 30
+          maximum: 600
+        recommDeliveryTime:
+          type: integer
+          minimum: 30
+          maximum: 600
+    SmsRouterInfo:
+      description: Addressing information of the SMS Router configured at the UDM
+      type: object
+      properties:
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        diameterAddress:
+          $ref: '#/components/schemas/NetworkNodeDiameterAddress'
+        mapAddress:
+          $ref: '#/components/schemas/E164Number'
+        routerIpv4:
+          $ref: '#/components/schemas/Ipv4Addr'
+        routerIpv6:
+          $ref: '#/components/schemas/Ipv6Addr'
+        routerFqdn:
+          $ref: '#/components/schemas/Fqdn'
+    PurgeFlag:
+      type: boolean
+    E164Number:
+      type: string
+      pattern: ^[0-9]{1,15}$
+    DualRegistrationFlag:
+      type: boolean
+    ImsVoPs:
+      anyOf:
+      - type: string
+        enum:
+        - HOMOGENEOUS_SUPPORT
+        - HOMOGENEOUS_NON_SUPPORT
+        - NON_HOMOGENEOUS_OR_UNKNOWN
+      - type: string
+    DeregistrationReason:
+      anyOf:
+      - type: string
+        enum:
+        - UE_INITIAL_REGISTRATION
+        - UE_REGISTRATION_AREA_CHANGE
+        - SUBSCRIPTION_WITHDRAWN
+        - 5GS_TO_EPS_MOBILITY
+        - 5GS_TO_EPS_MOBILITY_UE_INITIAL_REGISTRATION
+        - REREGISTRATION_REQUIRED
+        - SMF_CONTEXT_TRANSFERRED
+        - DUPLICATE_PDU_SESSION
+        - DISASTER_CONDITION_TERMINATED
+      - type: string
+    RegistrationReason:
+      anyOf:
+      - type: string
+        enum:
+        - SMF_CONTEXT_TRANSFERRED
+      - type: string
+    RegistrationDataSetName:
+      anyOf:
+      - type: string
+        enum:
+        - AMF_3GPP
+        - AMF_NON_3GPP
+        - SMF_PDU_SESSIONS
+        - SMSF_3GPP
+        - SMSF_NON_3GPP
+        - IP_SM_GW
+        - NWDAF
+      - type: string
+    UeReachableInd:
+      description: UE Reachable Indication
+      anyOf:
+      - type: string
+        enum:
+        - REACHABLE
+        - NOT_REACHABLE
+        - UNKNOWN
+      - type: string
+    VarUeId:
+      type: string
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|msisdn-[0-9]{5,15}|extid-[^@]+@[^@]+|gci-.+|gli-.+|.+)$
+      description: String represents the SUPI or GPSI
+    SupportedFeatures:
+      type: string
+      pattern: ^[A-Fa-f0-9]*$
+      description: "A string used to indicate the features supported by an API that\
+        \ is used as defined in clause  6.6 in 3GPP TS 29.500. The string shall contain\
+        \ a bitmask indicating supported features in  hexadecimal representation Each\
+        \ character in the string shall take a value of \"0\" to \"9\",  \"a\" to\
+        \ \"f\" or \"A\" to \"F\" and shall represent the support of 4 features as\
+        \ described in  table\_5.2.2-3. The most significant character representing\
+        \ the highest-numbered features shall  appear first in the string, and the\
+        \ character representing features 1 to 4 shall appear last  in the string.\
+        \ The list of features and their numbering (starting with 1) are defined \
+        \ separately for each API. If the string contains a lower number of characters\
+        \ than there are  defined features for an API, all features that would be\
+        \ represented by characters that are not  present in the string are not supported.\n"
+    Snssai:
+      type: object
+      properties:
+        sst:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: "Unsigned integer, within the range 0 to 255, representing\
+            \ the Slice/Service Type.  It indicates the expected Network Slice behaviour\
+            \ in terms of features and services. Values 0 to 127 correspond to the\
+            \ standardized SST range. Values 128 to 255 correspond  to the Operator-specific\
+            \ range. See clause 28.4.2 of 3GPP TS 23.003. Standardized values are\
+            \ defined in clause 5.15.2.2 of 3GPP TS 23.501. \n"
+        sd:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: '3-octet string, representing the Slice Differentiator, in
+            hexadecimal representation. Each character in the string shall take a
+            value of "0" to "9", "a" to "f" or "A" to "F" and shall represent 4 bits.
+            The most significant character representing the 4 most significant bits
+            of the SD shall appear first in the string, and the character representing
+            the 4 least significant bit of the SD shall appear last in the string.
+            This is an optional parameter that complements the Slice/Service type(s)
+            to allow to  differentiate amongst multiple Network Slices of the same
+            Slice/Service type. This IE shall be absent if no SD value is associated
+            with the SST.
+
+            '
+      description: 'When Snssai needs to be converted to string (e.g. when used in
+        maps as key), the string shall be composed of one to three digits "sst" optionally
+        followed by "-" and 6 hexadecimal digits "sd".
+
+        '
+      required:
+      - sst
+    Dnn:
+      type: string
+      description: 'String representing a Data Network as defined in clause 9A of
+        3GPP TS 23.003;  it shall contain either a DNN Network Identifier, or a full
+        DNN with both the Network  Identifier and Operator Identifier, as specified
+        in 3GPP TS 23.003 clause 9.1.1 and 9.1.2. It shall be coded as string in which
+        the labels are separated by dots  (e.g. "Label1.Label2.Label3").
+
+        '
+    NfInstanceId:
+      type: string
+      format: uuid
+      description: "String uniquely identifying a NF instance. The format of the NF\
+        \ Instance ID shall be a  Universally Unique Identifier (UUID) version 4,\
+        \ as described in IETF RFC 4122. \n"
+    Pei:
+      type: string
+      pattern: ^(imei-[0-9]{15}|imeisv-[0-9]{16}|mac((-[0-9a-fA-F]{2}){6})(-untrusted)?|eui((-[0-9a-fA-F]{2}){8})|.+)$
+      description: "String representing a Permanent Equipment Identifier that may\
+        \ contain - an IMEI or IMEISV, as  specified in clause 6.2 of 3GPP TS 23.003;\
+        \ a MAC address for a 5G-RG or FN-RG via  wireline  access, with an indication\
+        \ that this address cannot be trusted for regulatory purpose if this  address\
+        \ cannot be used as an Equipment Identifier of the FN-RG, as specified in\
+        \ clause 4.7.7  of 3GPP TS23.316. Examples are imei-012345678901234 or imeisv-0123456789012345.\
+        \ \n"
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+    ServiceName:
+      description: Service names known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - nnrf-nfm
+        - nnrf-disc
+        - nnrf-oauth2
+        - nudm-sdm
+        - nudm-uecm
+        - nudm-ueau
+        - nudm-ee
+        - nudm-pp
+        - nudm-niddau
+        - nudm-mt
+        - nudm-ssau
+        - nudm-rsds
+        - nudm-ueid
+        - namf-comm
+        - namf-evts
+        - namf-mt
+        - namf-loc
+        - namf-mbs-comm
+        - namf-mbs-bc
+        - nsmf-pdusession
+        - nsmf-event-exposure
+        - nsmf-nidd
+        - nausf-auth
+        - nausf-sorprotection
+        - nausf-upuprotection
+        - nnef-pfdmanagement
+        - nnef-smcontext
+        - nnef-eventexposure
+        - nnef-eas-deployment
+        - 3gpp-cp-parameter-provisioning
+        - 3gpp-device-triggering
+        - 3gpp-bdt
+        - 3gpp-traffic-influence
+        - 3gpp-chargeable-party
+        - 3gpp-as-session-with-qos
+        - 3gpp-msisdn-less-mo-sms
+        - 3gpp-service-parameter
+        - 3gpp-monitoring-event
+        - 3gpp-nidd-configuration-trigger
+        - 3gpp-nidd
+        - 3gpp-analyticsexposure
+        - 3gpp-racs-parameter-provisioning
+        - 3gpp-ecr-control
+        - 3gpp-applying-bdt-policy
+        - 3gpp-mo-lcs-notify
+        - 3gpp-time-sync
+        - 3gpp-am-influence
+        - 3gpp-am-policyauthorization
+        - 3gpp-akma
+        - 3gpp-eas-deployment
+        - 3gpp-iptvconfiguration
+        - 3gpp-mbs-tmgi
+        - 3gpp-mbs-session
+        - 3gpp-authentication
+        - 3gpp-asti
+        - npcf-am-policy-control
+        - npcf-smpolicycontrol
+        - npcf-policyauthorization
+        - npcf-bdtpolicycontrol
+        - npcf-eventexposure
+        - npcf-ue-policy-control
+        - npcf-am-policyauthorization
+        - npcf-mbspolicycontrol
+        - npcf-mbspolicyauth
+        - nsmsf-sms
+        - nnssf-nsselection
+        - nnssf-nssaiavailability
+        - nudr-dr
+        - nudr-group-id-map
+        - nlmf-loc
+        - n5g-eir-eic
+        - nbsf-management
+        - nchf-spendinglimitcontrol
+        - nchf-convergedcharging
+        - nchf-offlineonlycharging
+        - nnwdaf-eventssubscription
+        - nnwdaf-analyticsinfo
+        - nnwdaf-datamanagement
+        - nnwdaf-mlmodelprovision
+        - ngmlc-loc
+        - nucmf-provisioning
+        - nucmf-uecapabilitymanagement
+        - nhss-sdm
+        - nhss-uecm
+        - nhss-ueau
+        - nhss-ee
+        - nhss-ims-sdm
+        - nhss-ims-uecm
+        - nhss-ims-ueau
+        - nhss-gba-sdm
+        - nhss-gba-ueau
+        - nsepp-telescopic
+        - nsoraf-sor
+        - nspaf-secured-packet
+        - nudsf-dr
+        - nudsf-timer
+        - nnssaaf-nssaa
+        - nnssaaf-aiw
+        - naanf-akma
+        - n5gddnmf-discovery
+        - nmfaf-3dadatamanagement
+        - nmfaf-3cadatamanagement
+        - neasdf-dnscontext
+        - neasdf-baselinednspattern
+        - ndccf-datamanagement
+        - ndccf-contextmanagement
+        - nnsacf-nsac
+        - nnsacf-slice-ee
+        - nmbsmf-tmgi
+        - nmbsmf-mbssession
+        - nadrf-datamanagement
+        - nbsp-gba
+        - ntsctsf-time-sync
+        - ntsctsf-qos-tscai
+        - ntsctsf-asti
+        - npkmf-keyreq
+        - npkmf-userid
+        - npkmf-discovery
+        - nmnpf-npstatus
+        - niwmsc-smservice
+        - nmbsf-mbs-us
+        - nmbsf-mbs-ud-ingest
+        - nmbstf-distsession
+        - npanf-prosekey
+        - npanf-userid
+      - type: string
+    Mcc:
+      type: string
+      pattern: ^\d{3}$
+      description: "Mobile Country Code part of the PLMN, comprising 3 digits, as\
+        \ defined in clause 9.3.3.5 of 3GPP TS 38.413. \n"
+    Mnc:
+      type: string
+      pattern: ^\d{2,3}$
+      description: Mobile Network Code part of the PLMN, comprising 2 or 3 digits,
+        as defined in clause 9.3.3.5 of 3GPP TS 38.413.
+    Nid:
+      type: string
+      pattern: ^[A-Fa-f0-9]{11}$
+      description: "This represents the Network Identifier, which together with a\
+        \ PLMN ID is used to identify an SNPN (see 3GPP TS 23.003 and 3GPP TS 23.501\
+        \ clause 5.30.2.1). \n"
+    PlmnIdNid:
+      description: 'Contains the serving core network operator PLMN ID and, for an
+        SNPN, the NID that together with the PLMN ID identifies the SNPN.
+
+        '
+      type: object
+      required:
+      - mcc
+      - mnc
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+        nid:
+          $ref: '#/components/schemas/Nid'
+    AmfId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{6}$
+      description: "String identifying the AMF ID composed of AMF Region ID (8 bits),\
+        \ AMF Set ID (10 bits) and AMF  Pointer (6 bits) as specified in clause 2.10.1\
+        \ of 3GPP TS 23.003. It is encoded as a string of  6 hexadecimal characters\
+        \ (i.e., 24 bits). \n"
+    Guami:
+      type: object
+      properties:
+        plmnId:
+          $ref: '#/components/schemas/PlmnIdNid'
+        amfId:
+          $ref: '#/components/schemas/AmfId'
+      required:
+      - plmnId
+      - amfId
+      description: Globally Unique AMF Identifier constructed out of PLMN, Network
+        and AMF identity.
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: ^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$
+      minLength: 4
+      maxLength: 253
+    BackupAmfInfo:
+      description: Provides details of the Backup AMF.
+      type: object
+      properties:
+        backupAmf:
+          $ref: '#/components/schemas/Fqdn'
+        guamiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guami'
+          minItems: 1
+          description: 'If present, this IE shall contain the list of GUAMI(s) (supported
+            by the AMF) for which the backupAmf IE applies.
+
+            '
+      required:
+      - backupAmf
+    RatType:
+      anyOf:
+      - type: string
+        enum:
+        - NR
+        - EUTRA
+        - WLAN
+        - VIRTUAL
+        - NBIOT
+        - WIRELINE
+        - WIRELINE_CABLE
+        - WIRELINE_BBF
+        - LTE-M
+        - NR_U
+        - EUTRA_U
+        - TRUSTED_N3GA
+        - TRUSTED_WLAN
+        - UTRA
+        - GERA
+        - NR_LEO
+        - NR_MEO
+        - NR_GEO
+        - NR_OTHER_SAT
+        - NR_REDCAP
+        - WB_E_UTRAN_LEO
+        - WB_E_UTRAN_MEO
+        - WB_E_UTRAN_GEO
+        - WB_E_UTRAN_OTHERSAT
+        - NB_IOT_LEO
+        - NB_IOT_MEO
+        - NB_IOT_GEO
+        - NB_IOT_OTHERSAT
+        - LTE_M_LEO
+        - LTE_M_MEO
+        - LTE_M_GEO
+        - LTE_M_OTHERSAT
+      - type: string
+      description: Indicates the radio access used.
+    PlmnId:
+      type: object
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+      description: 'When PlmnId needs to be converted to string (e.g. when used in
+        maps as key), the string  shall be composed of three digits "mcc" followed
+        by "-" and two or three digits "mnc".
+
+        '
+      required:
+      - mcc
+      - mnc
+    DateTime:
+      format: date-time
+      type: string
+      description: string with format 'date-time' as defined in OpenAPI.
+    Ipv4Addr:
+      type: string
+      pattern: ^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
+      example: 198.51.100.1
+      description: 'String identifying a IPv4 address formatted in the ''dotted decimal''
+        notation as defined in RFC 1166.
+
+        '
+    Ipv6Addr:
+      type: string
+      allOf:
+      - pattern: ^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))$
+      - pattern: ^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))$
+      example: 2001:db8:85a3::8a2e:370:7334
+      description: 'String identifying an IPv6 address formatted according to clause
+        4 of RFC5952. The mixed IPv4 IPv6 notation according to clause 5 of RFC5952
+        shall not be used.
+
+        '
+    ContextInfo:
+      type: object
+      properties:
+        origHeaders:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        requestHeaders:
+          type: array
+          items:
+            type: string
+          minItems: 1
+    Supi:
+      type: string
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|gci-.+|gli-.+|.+)$
+      description: "String identifying a Supi that shall contain either an IMSI, a\
+        \ network specific identifier,\na Global Cable Identifier (GCI) or a Global\
+        \ Line Identifier (GLI) as specified in clause \n2.2A of 3GPP TS 23.003. It\
+        \ shall be formatted as follows\n - for an IMSI \"imsi-<imsi>\", where <imsi>\
+        \ shall be formatted according to clause 2.2\n   of 3GPP TS 23.003 that describes\
+        \ an IMSI.\n - for a network specific identifier \"nai-<nai>, where <nai>\
+        \ shall be formatted\n   according to clause 28.7.2 of 3GPP TS 23.003 that\
+        \ describes an NAI.\n - for a GCI \"gci-<gci>\", where <gci> shall be formatted\
+        \ according to clause 28.15.2\n   of 3GPP TS 23.003.\n - for a GLI \"gli-<gli>\"\
+        , where <gli> shall be formatted according to clause 28.16.2 of\n   3GPP TS\
+        \ 23.003.To enable that the value is used as part of an URI, the string shall\n\
+        \   only contain characters allowed according to the \"lower-with-hyphen\"\
+        \ naming convention\n   defined in 3GPP TS 29.501.\n"
+    NfSetId:
+      type: string
+      description: "NF Set Identifier (see clause 28.12 of 3GPP TS 23.003), formatted\
+        \ as the following string \"set<Set ID>.<nftype>set.5gc.mnc<MNC>.mcc<MCC>\"\
+        , or  \"set<SetID>.<NFType>set.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\" with  <MCC>\
+        \ encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)  <MNC>\
+        \ encoding the Mobile Network Code part of the PLMN, comprising 3 digits.\
+        \ \n  If there are only 2 significant digits in the MNC, one \"0\" digit shall\
+        \ be inserted \n  at the left side to fill the 3 digits coding of MNC.  Pattern:\
+        \ '^[0-9]{3}$'\n<NFType> encoded as a value defined in Table 6.1.6.3.3-1 of\
+        \ 3GPP TS 29.510 but \n  with lower case characters <Set ID> encoded as a\
+        \ string of characters consisting of \n  alphabetic characters (A-Z and a-z),\
+        \ digits (0-9) and/or the hyphen (-) and that \n  shall end with either an\
+        \ alphabetic character or a digit. \n"
+    PduSessionId:
+      type: integer
+      minimum: 0
+      maximum: 255
+      description: "Unsigned integer identifying a PDU session, within the range 0\
+        \ to 255, as specified in  clause 11.2.3.1b, bits 1 to 8, of 3GPP TS 24.007.\
+        \ If the PDU Session ID is allocated by the  Core Network for UEs not supporting\
+        \ N1 mode, reserved range 64 to 95 is used. PDU Session ID  within the reserved\
+        \ range is only visible in the Core Network. \n"
+    Ipv6Prefix:
+      type: string
+      allOf:
+      - pattern: ^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$
+      - pattern: ^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)$
+      example: 2001:db8:abcd:12::0/64
+      description: 'String identifying an IPv6 address prefix formatted according
+        to clause 4 of RFC 5952. IPv6Prefix data type may contain an individual /128
+        IPv6 address.
+
+        '
+    IpAddress:
+      type: object
+      oneOf:
+      - required:
+        - ipv4Addr
+      - required:
+        - ipv6Addr
+      - required:
+        - ipv6Prefix
+      properties:
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Addr:
+          $ref: '#/components/schemas/Ipv6Addr'
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+    EventId:
+      anyOf:
+      - type: string
+        enum:
+        - LOAD_LEVEL_INFORMATION
+        - NETWORK_PERFORMANCE
+        - NF_LOAD
+        - SERVICE_EXPERIENCE
+        - UE_MOBILITY
+        - UE_COMMUNICATION
+        - QOS_SUSTAINABILITY
+        - ABNORMAL_BEHAVIOUR
+        - USER_DATA_CONGESTION
+        - NSI_LOAD_LEVEL
+        - SM_CONGESTION
+        - DISPERSION
+        - RED_TRANS_EXP
+        - WLAN_PERFORMANCE
+        - DN_PERFORMANCE
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are:
+
+        - LOAD_LEVEL_INFORMATION: Represent the analytics of load level information
+        of corresponding network slice.
+
+        - NETWORK_PERFORMANCE: Represent the analytics of network performance information.
+
+        - NF_LOAD: Indicates that the event subscribed is NF Load.
+
+        - SERVICE_EXPERIENCE: Represent the analytics of service experience information
+        of the specific applications.
+
+        - UE_MOBILITY: Represent the analytics of UE mobility.
+
+        - UE_COMMUNICATION: Represent the analytics of UE communication.
+
+        - QOS_SUSTAINABILITY: Represent the analytics of QoS sustainability information
+        in the certain area.
+
+        - ABNORMAL_BEHAVIOUR: Indicates that the event subscribed is abnormal behaviour
+        information.
+
+        - USER_DATA_CONGESTION: Represent the analytics of the user data congestion
+        in the certain area.
+
+        - NSI_LOAD_LEVEL: Represent the analytics of Network Slice and the optionally
+        associated Network Slice Instance.
+
+        - SM_CONGESTION: Represent the analytics of Session Management congestion
+        control experience information for specific DNN and/or S-NSSAI.
+
+        - DISPERSION: Represents the analytics of dispersion.
+
+        - RED_TRANS_EXP: Represents the analytics of Redundant Transmission Experience.
+
+        - WLAN_PERFORMANCE: Represents the analytics of WLAN performance.
+
+        - DN_PERFORMANCE: Represents the analytics of DN performance.
+
+        '
+    InvalidParam:
+      type: object
+      properties:
+        param:
+          type: string
+          description: 'If the invalid parameter is an attribute in a JSON body, this
+            IE shall contain the  attribute''s name and shall be encoded as a JSON
+            Pointer. If the invalid parameter is  an HTTP header, this IE shall be
+            formatted as the concatenation of the string "header "  plus the name
+            of such header. If the invalid parameter is a query parameter, this IE  shall
+            be formatted as the concatenation of the string "query " plus the name
+            of such  query parameter. If the invalid parameter is a variable part
+            in the path of a resource  URI, this IE shall contain the name of the
+            variable, including the symbols "{" and "}"  used in OpenAPI specification
+            as the notation to represent variable path segments.
+
+            '
+        reason:
+          type: string
+          description: 'A human-readable reason, e.g. "must be a positive integer".
+            In cases involving failed  operations in a PATCH request, the reason string
+            should identify the operation that  failed using the operation''s array
+            index to assist in correlation of the invalid  parameter with the failed
+            operation, e.g." Replacement value invalid for attribute  (failed operation
+            index= 4)"
+
+            '
+      required:
+      - param
+      description: It contains an invalid parameter and a related description.
+    AccessTokenErr:
+      description: Error returned in the access token response message
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+          - invalid_scope
+        error_description:
+          type: string
+        error_uri:
+          type: string
+    NFType:
+      description: NF types known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - NRF
+        - UDM
+        - AMF
+        - SMF
+        - AUSF
+        - NEF
+        - PCF
+        - SMSF
+        - NSSF
+        - UDR
+        - LMF
+        - GMLC
+        - 5G_EIR
+        - SEPP
+        - UPF
+        - N3IWF
+        - AF
+        - UDSF
+        - BSF
+        - CHF
+        - NWDAF
+        - PCSCF
+        - CBCF
+        - HSS
+        - UCMF
+        - SOR_AF
+        - SPAF
+        - MME
+        - SCSAS
+        - SCEF
+        - SCP
+        - NSSAAF
+        - ICSCF
+        - SCSCF
+        - DRA
+        - IMS_AS
+        - AANF
+        - 5G_DDNMF
+        - NSACF
+        - MFAF
+        - EASDF
+        - DCCF
+        - MB_SMF
+        - TSCTSF
+        - ADRF
+        - GBA_BSF
+        - CEF
+        - MB_UPF
+        - NSWOF
+        - PKMF
+        - MNPF
+        - SMS_GMSC
+        - SMS_IWMSC
+        - MBSF
+        - MBSTF
+        - PANF
+        - IP_SM_GW
+        - SMS_ROUTER
+      - type: string
+    NfServiceSetId:
+      type: string
+      description: "NF Service Set Identifier (see clause 28.12 of 3GPP TS 23.003)\
+        \ formatted as the following  string \"set<Set ID>.sn<Service Name>.nfi<NF\
+        \ Instance ID>.5gc.mnc<MNC>.mcc<MCC>\", or  \"set<SetID>.sn<ServiceName>.nfi<NFInstanceID>.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\"\
+        \ with  <MCC> encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)\
+        \   <MNC> encoding the Mobile Network Code part of the PLMN, comprising 3\
+        \ digits. \n  If there are only 2 significant digits in the MNC, one \"0\"\
+        \ digit shall be inserted \n  at the left side to fill the 3 digits coding\
+        \ of MNC.  Pattern: '^[0-9]{3}$'\n<NID> encoded as defined in clause\_5.4.2\
+        \ (\"Nid\" data type definition)  <NFInstanceId> encoded as defined in clause\
+        \ 5.3.2  <ServiceName> encoded as defined in 3GPP TS 29.510  <Set ID> encoded\
+        \ as a string of characters consisting of alphabetic \n  characters (A-Z and\
+        \ a-z), digits (0-9) and/or the hyphen (-) and that shall end \n  with either\
+        \ an alphabetic character or a digit.\n"
+    AccessTokenReq:
+      description: Contains information related to the access token request
+      type: object
+      required:
+      - grant_type
+      - nfInstanceId
+      - scope
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfType:
+          $ref: '#/components/schemas/NFType'
+        targetNfType:
+          $ref: '#/components/schemas/NFType'
+        scope:
+          type: string
+          pattern: ^([a-zA-Z0-9_:-]+)( [a-zA-Z0-9_:-]+)*$
+        targetNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        requesterPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        requesterPlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 2
+        requesterSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        requesterFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        requesterSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        targetPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        targetSnpn:
+          $ref: '#/components/schemas/PlmnIdNid'
+        targetSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        targetNsiList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        targetNfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        targetNfServiceSetId:
+          $ref: '#/components/schemas/NfServiceSetId'
+        hnrfAccessTokenUri:
+          $ref: '#/components/schemas/Uri'
+        sourceNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+    ProblemDetails:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+        instance:
+          $ref: '#/components/schemas/Uri'
+        cause:
+          type: string
+          description: 'A machine-readable application error cause specific to this
+            occurrence of the problem.  This IE should be present and provide application-related
+            error information, if available.
+
+            '
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+          minItems: 1
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        accessTokenError:
+          $ref: '#/components/schemas/AccessTokenErr'
+        accessTokenRequest:
+          $ref: '#/components/schemas/AccessTokenReq'
+        nrfId:
+          $ref: '#/components/schemas/Fqdn'
+    AccessType:
+      type: string
+      enum:
+      - 3GPP_ACCESS
+      - NON_3GPP_ACCESS
+      description: Indicates whether the access is  via 3GPP or via non-3GPP.
+    RedirectResponse:
+      description: 'The response shall include a Location header field containing
+        a different URI  (pointing to a different URI of an other service instance),
+        or the same URI if a request  is redirected to the same target resource via
+        a different SCP.
+
+        '
+      type: object
+      properties:
+        cause:
+          type: string
+        targetScp:
+          $ref: '#/components/schemas/Uri'
+        targetSepp:
+          $ref: '#/components/schemas/Uri'
+    SupiRange:
+      description: 'A range of SUPIs (subscriber identities), either based on a numeric
+        range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]+$
+        end:
+          type: string
+          pattern: ^[0-9]+$
+        pattern:
+          type: string
+    IdentityRange:
+      description: 'A range of GPSIs (subscriber identities), either based on a numeric
+        range, or based on regular-expression matching
+
+        '
+      type: object
+      properties:
+        start:
+          type: string
+          pattern: ^[0-9]+$
+        end:
+          type: string
+          pattern: ^[0-9]+$
+        pattern:
+          type: string
+    NfGroupId:
+      type: string
+      description: Identifier of a group of NFs.
+    ReportItem:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: 'Contains a JSON pointer value (as defined in IETF RFC 6901)
+            that references a  location of a resource to which the modification is
+            subject.
+
+            '
+        reason:
+          type: string
+          description: 'A human-readable reason providing details on the reported
+            modification failure.  The reason string should identify the operation
+            that failed using the operation''s  array index to assist in correlation
+            of the invalid parameter with the failed  operation, e.g. "Replacement
+            value invalid for attribute (failed operation index= 4)".
+
+            '
+      description: indicates performed modivications.
+    PatchResult:
+      description: The execution report result on failed modification.
+      type: object
+      required:
+      - report
+      properties:
+        report:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportItem'
+          minItems: 1
+          description: 'The execution report contains an array of report items. Each
+            report item indicates one  failed modification.
+
+            '
+    NullValue:
+      enum:
+      - null
+      description: JSON's null value.
+    FqdnRm:
+      description: Fully Qualified Domain Name, but it also allows the null value
+      anyOf:
+      - $ref: '#/components/schemas/Fqdn'
+      - $ref: '#/components/schemas/NullValue'
+    Gpsi:
+      type: string
+      pattern: ^(msisdn-[0-9]{5,15}|extid-[^@]+@[^@]+|.+)$
+      description: "String identifying a Gpsi shall contain either an External Id\
+        \ or an MSISDN.  It shall be formatted as follows -External Identifier= \"\
+        extid-'extid', where 'extid'  shall be formatted according to clause 19.7.2\
+        \ of 3GPP TS 23.003 that describes an  External Identifier. \n"
+  responses:
+    '307':
+      description: Temporary Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: Identifier of target NF (service) instance towards which the
+            request is redirected
+          schema:
+            type: string
+    '308':
+      description: Permanent Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: '''Identifier of target NF (service) instance towards which
+            the request is redirected''
+
+            '
+          schema:
+            type: string
+    '400':
+      description: Bad request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '403':
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '404':
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '409':
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '500':
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '501':
+      description: Not Implemented
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '503':
+      description: Service Unavailable
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'

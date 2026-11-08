@@ -1,0 +1,1959 @@
+openapi: 3.0.0
+info:
+  version: 1.2.2
+  title: Nsmf_EventExposure
+  description: "Session Management Event Exposure Service.  \n\xA9 2023, 3GPP Organizational\
+    \ Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  \nAll rights reserved.\n"
+servers:
+- url: http://smf:8000/nsmf-event-exposure/v1
+security:
+- {}
+- oAuth2ClientCredentials:
+  - nsmf-event-exposure
+externalDocs:
+  description: 3GPP TS 29.508 V17.10.0; 5G System; Session Management Event Exposure
+    Service.
+  url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.508/
+paths:
+  /subscriptions:
+    post:
+      operationId: CreateIndividualSubcription
+      summary: Create an individual subscription for event notifications from the
+        SMF
+      tags:
+      - Subscriptions (Collection)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NsmfEventExposure'
+      responses:
+        '201':
+          description: Created.
+          headers:
+            Location:
+              description: 'Contains the URI of the newly created resource, according
+                to the structure {apiRoot}/nsmf-event-exposure/v1/subscriptions/{subId}
+
+                '
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NsmfEventExposure'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+      callbacks:
+        myNotification:
+          '{$request.body#/notifUri}':
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/NsmfEventExposureNotification'
+              responses:
+                '204':
+                  description: No Content, Notification was successful.
+                '307':
+                  $ref: '#/components/responses/307'
+                '308':
+                  $ref: '#/components/responses/308'
+                '400':
+                  $ref: '#/components/responses/400'
+                '401':
+                  $ref: '#/components/responses/401'
+                '403':
+                  $ref: '#/components/responses/403'
+                '404':
+                  $ref: '#/components/responses/404'
+                '411':
+                  $ref: '#/components/responses/411'
+                '413':
+                  $ref: '#/components/responses/413'
+                '415':
+                  $ref: '#/components/responses/415'
+                '429':
+                  $ref: '#/components/responses/429'
+                '500':
+                  $ref: '#/components/responses/500'
+                '503':
+                  $ref: '#/components/responses/503'
+                default:
+                  $ref: '#/components/responses/default'
+              callbacks:
+                afAcknowledgement:
+                  '{request.body#/ackUri}':
+                    post:
+                      requestBody:
+                        required: true
+                        content:
+                          application/json:
+                            schema:
+                              $ref: '#/components/schemas/AckOfNotify'
+                      responses:
+                        '204':
+                          description: No Content (successful acknowledgement)
+                        '307':
+                          $ref: '#/components/responses/307'
+                        '308':
+                          $ref: '#/components/responses/308'
+                        '400':
+                          $ref: '#/components/responses/400'
+                        '401':
+                          $ref: '#/components/responses/401'
+                        '403':
+                          $ref: '#/components/responses/403'
+                        '404':
+                          $ref: '#/components/responses/404'
+                        '411':
+                          $ref: '#/components/responses/411'
+                        '413':
+                          $ref: '#/components/responses/413'
+                        '415':
+                          $ref: '#/components/responses/415'
+                        '429':
+                          $ref: '#/components/responses/429'
+                        '500':
+                          $ref: '#/components/responses/500'
+                        '503':
+                          $ref: '#/components/responses/503'
+                        default:
+                          $ref: '#/components/responses/default'
+  /subscriptions/{subId}:
+    get:
+      operationId: GetIndividualSubcription
+      summary: Read an individual subscription for event notifications from the SMF
+      tags:
+      - IndividualSubscription (Document)
+      parameters:
+      - name: subId
+        in: path
+        description: Event Subscription ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. Resource representation is returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NsmfEventExposure'
+        '307':
+          $ref: '#/components/responses/307'
+        '308':
+          $ref: '#/components/responses/308'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+    put:
+      operationId: ReplaceIndividualSubcription
+      summary: Replace an individual subscription for event notifications from the
+        SMF
+      tags:
+      - IndividualSubscription (Document)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NsmfEventExposure'
+      parameters:
+      - name: subId
+        in: path
+        description: Event Subscription ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. Resource was successfully modified and representation is
+            returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NsmfEventExposure'
+        '204':
+          description: No Content. Resource was successfully modified
+        '307':
+          $ref: '#/components/responses/307'
+        '308':
+          $ref: '#/components/responses/308'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '411':
+          $ref: '#/components/responses/411'
+        '413':
+          $ref: '#/components/responses/413'
+        '415':
+          $ref: '#/components/responses/415'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+    delete:
+      operationId: DeleteIndividualSubcription
+      summary: Delete an individual subscription for event notifications from the
+        SMF
+      tags:
+      - IndividualSubscription (Document)
+      parameters:
+      - name: subId
+        in: path
+        description: Event Subscription ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content. Resource was successfully deleted
+        '307':
+          $ref: '#/components/responses/307'
+        '308':
+          $ref: '#/components/responses/308'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+        '503':
+          $ref: '#/components/responses/503'
+        default:
+          $ref: '#/components/responses/default'
+components:
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: http://nrf:8000/oauth2/token
+          scopes:
+            nsmf-event-exposure: Access to the Nsmf_EventExposure API
+  schemas:
+    NsmfEventExposure:
+      description: 'Represents an Individual SMF Notification Subscription resource.
+        The serviveName property corresponds to the serviceName in the main body of
+        the specification.
+
+        '
+      type: object
+      properties:
+        supi:
+          $ref: '#/components/schemas/Supi'
+        gpsi:
+          $ref: '#/components/schemas/Gpsi'
+        anyUeInd:
+          type: boolean
+          description: 'Any UE indication. This IE shall be present if the event subscription
+            is applicable to  any UE. Default value "false" is used, if not present.
+
+            '
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+        pduSeId:
+          $ref: '#/components/schemas/PduSessionId'
+        dnn:
+          $ref: '#/components/schemas/Dnn'
+        snssai:
+          $ref: '#/components/schemas/Snssai'
+        subId:
+          $ref: '#/components/schemas/SubId'
+        notifId:
+          type: string
+          description: Notification Correlation ID assigned by the NF service consumer.
+        notifUri:
+          $ref: '#/components/schemas/Uri'
+        altNotifIpv4Addrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv4Addr'
+          description: Alternate or backup IPv4 address(es) where to send Notifications.
+          minItems: 1
+        altNotifIpv6Addrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          description: Alternate or backup IPv6 address(es) where to send Notifications.
+          minItems: 1
+        altNotifFqdns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fqdn'
+          minItems: 1
+          description: Alternate or backup FQDN(s) where to send Notifications.
+        eventSubs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventSubscription'
+          minItems: 1
+          description: Subscribed events
+        eventNotifs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventNotification'
+          minItems: 1
+        ImmeRep:
+          type: boolean
+        notifMethod:
+          $ref: '#/components/schemas/NotificationMethod'
+        maxReportNbr:
+          $ref: '#/components/schemas/Uinteger'
+        expiry:
+          $ref: '#/components/schemas/schemas-DateTime'
+        repPeriod:
+          $ref: '#/components/schemas/DurationSec'
+        guami:
+          $ref: '#/components/schemas/Guami'
+        serviveName:
+          $ref: '#/components/schemas/ServiceName'
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        sampRatio:
+          $ref: '#/components/schemas/SamplingRatio'
+        partitionCriteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartitioningCriteria'
+          minItems: 1
+          description: Criteria for partitioning the UEs before applying the sampling
+            ratio.
+        grpRepTime:
+          $ref: '#/components/schemas/DurationSec'
+        notifFlag:
+          $ref: '#/components/schemas/NotificationFlag'
+      required:
+      - notifId
+      - notifUri
+      - eventSubs
+    NsmfEventExposureNotification:
+      description: Represents notifications on events that occurred.
+      type: object
+      properties:
+        notifId:
+          type: string
+          description: Notification correlation ID
+        eventNotifs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventNotification'
+          minItems: 1
+          description: Notifications about Individual Events
+        ackUri:
+          $ref: '#/components/schemas/Uri'
+      required:
+      - notifId
+      - eventNotifs
+    EventSubscription:
+      description: Represents a subscription to a single event.
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/SmfEvent'
+        dnaiChgType:
+          $ref: '#/components/schemas/DnaiChangeType'
+        dddTraDescriptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/DddTrafficDescriptor'
+          minItems: 1
+        dddStati:
+          type: array
+          items:
+            $ref: '#/components/schemas/DlDataDeliveryStatus'
+          minItems: 1
+        appIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationId'
+          minItems: 1
+        targetPeriod:
+          $ref: '#/components/schemas/TimeWindow'
+        transacDispInd:
+          type: boolean
+          description: 'Indicates the subscription for UE transaction dispersion collectionon,
+            if it is included and set to "true". Default value is "false".
+
+            '
+        transacMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionMetric'
+          description: Indicates Session Management Transaction metrics.
+          minItems: 1
+        ueIpAddr:
+          $ref: '#/components/schemas/IpAddr'
+      required:
+      - event
+    EventNotification:
+      description: Represents a notification related to a single event that occurred.
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/SmfEvent'
+        timeStamp:
+          $ref: '#/components/schemas/schemas-DateTime'
+        supi:
+          $ref: '#/components/schemas/Supi'
+        gpsi:
+          $ref: '#/components/schemas/Gpsi'
+        ueIpAddr:
+          $ref: '#/components/schemas/IpAddr'
+        transacInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionInfo'
+          description: Transaction Information.
+          minItems: 1
+        sourceDnai:
+          $ref: '#/components/schemas/Dnai'
+        targetDnai:
+          $ref: '#/components/schemas/Dnai'
+        dnaiChgType:
+          $ref: '#/components/schemas/DnaiChangeType'
+        sourceUeIpv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        sourceUeIpv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+        targetUeIpv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        targetUeIpv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+        sourceTraRouting:
+          $ref: '#/components/schemas/RouteToLocation'
+        targetTraRouting:
+          $ref: '#/components/schemas/RouteToLocation'
+        ueMac:
+          $ref: '#/components/schemas/MacAddr48'
+        adIpv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        adIpv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+        reIpv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        reIpv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+        plmnId:
+          $ref: '#/components/schemas/PlmnId'
+        accType:
+          $ref: '#/components/schemas/AccessType'
+        pduSeId:
+          $ref: '#/components/schemas/PduSessionId'
+        ratType:
+          $ref: '#/components/schemas/RatType'
+        dddStatus:
+          $ref: '#/components/schemas/DlDataDeliveryStatus'
+        dddTraDescriptor:
+          $ref: '#/components/schemas/DddTrafficDescriptor'
+        maxWaitTime:
+          $ref: '#/components/schemas/schemas-DateTime'
+        commFailure:
+          $ref: '#/components/schemas/CommunicationFailure'
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Prefixes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Prefix'
+          minItems: 1
+        ipv6Addrs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ipv6Addr'
+          minItems: 1
+        pduSessType:
+          $ref: '#/components/schemas/PduSessionType'
+        qfi:
+          $ref: '#/components/schemas/Qfi'
+        appId:
+          $ref: '#/components/schemas/ApplicationId'
+        ethFlowDescs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EthFlowDescription'
+          minItems: 1
+          description: 'Descriptor(s) for non-IP traffic. It allows the encoding of
+            multiple UL and/or DL flows. Each entry of the array describes a single
+            Ethernet flow.
+
+            '
+        ethfDescs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EthFlowDescription'
+          minItems: 1
+          maxItems: 2
+          description: 'Contains the UL and/or DL Ethernet flows. Each entry of the
+            array describes a single Ethernet flow.
+
+            '
+        flowDescs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowDescription'
+          minItems: 1
+          description: 'Descriptor(s) for IP traffic. It allows the encoding of multiple
+            UL and/or DL flows. Each entry of the array describes a single IP flow.
+
+            '
+        fDescs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowDescription'
+          minItems: 1
+          maxItems: 2
+          description: 'Contains the UL and/or DL IP flows. Each entry of the array
+            describes a single IP flow.
+
+            '
+        dnn:
+          $ref: '#/components/schemas/Dnn'
+        snssai:
+          $ref: '#/components/schemas/Snssai'
+        ulDelays:
+          type: array
+          items:
+            $ref: '#/components/schemas/Uinteger'
+          minItems: 1
+        dlDelays:
+          type: array
+          items:
+            $ref: '#/components/schemas/Uinteger'
+          minItems: 1
+        rtDelays:
+          type: array
+          items:
+            $ref: '#/components/schemas/Uinteger'
+          minItems: 1
+        pdmf:
+          type: boolean
+          description: Represents the packet delay measurement failure indicator.
+        timeWindow:
+          $ref: '#/components/schemas/TimeWindow'
+        smNasFromUe:
+          $ref: '#/components/schemas/SmNasFromUe'
+        smNasFromSmf:
+          $ref: '#/components/schemas/SmNasFromSmf'
+        upRedTrans:
+          type: boolean
+          description: 'Indicates whether the redundant transmission is setup or terminated.
+            Set to "true" if  the redundant transmission is setup, otherwise set to
+            "false" if the redundant  transmission is terminated. Default value is
+            set to "false".
+
+            '
+        ssId:
+          type: string
+        bssId:
+          type: string
+        startWlan:
+          $ref: '#/components/schemas/schemas-DateTime'
+        endWlan:
+          $ref: '#/components/schemas/schemas-DateTime'
+        pduSessInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/PduSessionInformation'
+          minItems: 1
+        upfInfo:
+          $ref: '#/components/schemas/UpfInformation'
+      required:
+      - event
+      - timeStamp
+    SubId:
+      type: string
+      format: SubId
+      description: 'Identifies an Individual SMF Notification Subscription. To enable
+        that the value is used as part of a URI, the string shall only contain characters
+        allowed according to the "lower-with-hyphen" naming convention defined in
+        3GPP TS 29.501. In an OpenAPI schema, the format shall be designated as "SubId".
+
+        '
+    AckOfNotify:
+      description: Represents an acknowledgement information of an event notification.
+      type: object
+      properties:
+        notifId:
+          type: string
+        ackResult:
+          $ref: '#/components/schemas/AfResultInfo'
+        supi:
+          $ref: '#/components/schemas/Supi'
+        gpsi:
+          $ref: '#/components/schemas/Gpsi'
+      required:
+      - notifId
+      - ackResult
+    SmNasFromUe:
+      description: 'Represents information on the SM NAS messages that SMF receives
+        from UE for PDU Session.
+
+        '
+      type: object
+      properties:
+        smNasType:
+          type: string
+        timeStamp:
+          $ref: '#/components/schemas/schemas-DateTime'
+      required:
+      - smNasType
+      - timeStamp
+    SmNasFromSmf:
+      description: 'Represents information on the SM congestion control applied SM
+        NAS messages that SMF sends  to UE for PDU Session.
+
+        '
+      type: object
+      properties:
+        smNasType:
+          type: string
+        timeStamp:
+          $ref: '#/components/schemas/schemas-DateTime'
+        backoffTimer:
+          $ref: '#/components/schemas/DurationSec'
+        appliedSmccType:
+          $ref: '#/components/schemas/AppliedSmccType'
+      required:
+      - smNasType
+      - timeStamp
+      - backoffTimer
+      - appliedSmccType
+    TransactionInfo:
+      description: Represents SMF Transaction Information.
+      type: object
+      properties:
+        transaction:
+          $ref: '#/components/schemas/Uinteger'
+        snssai:
+          $ref: '#/components/schemas/Snssai'
+        appIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationId'
+          minItems: 1
+        transacMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionMetric'
+          minItems: 1
+      required:
+      - transaction
+    PduSessionInformation:
+      description: Represents the PDU session related information.
+      type: object
+      properties:
+        pduSessId:
+          $ref: '#/components/schemas/PduSessionId'
+        sessInfo:
+          $ref: '#/components/schemas/PduSessionInfo'
+    PduSessionInfo:
+      description: Represents session information.
+      type: object
+      properties:
+        n4SessId:
+          type: string
+          description: The identifier of the N4 session for the reported PDU Session.
+        sessInactiveTimer:
+          $ref: '#/components/schemas/DurationSec'
+        pduSessStatus:
+          $ref: '#/components/schemas/PduSessionStatus'
+    UpfInformation:
+      description: Represents the ID/address/FQDN of the UPF.
+      type: object
+      properties:
+        upfId:
+          type: string
+        upfAddr:
+          $ref: '#/components/schemas/AddrFqdn'
+    SmfEvent:
+      anyOf:
+      - type: string
+        enum:
+        - AC_TY_CH
+        - UP_PATH_CH
+        - PDU_SES_REL
+        - PLMN_CH
+        - UE_IP_CH
+        - RAT_TY_CH
+        - DDDS
+        - COMM_FAIL
+        - PDU_SES_EST
+        - QFI_ALLOC
+        - QOS_MON
+        - SMCC_EXP
+        - DISPERSION
+        - RED_TRANS_EXP
+        - WLAN_INFO
+        - UPF_INFO
+        - UP_STATUS_INFO
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: "Possible values are:\n- AC_TY_CH: Access Type Change\n- UP_PATH_CH:\
+        \ UP Path Change\n- PDU_SES_REL: PDU Session Release\n- PLMN_CH: PLMN Change\n\
+        - UE_IP_CH: UE IP address change\n- RAT_TY_CH: RAT Type Change\n- DDDS: Downlink\
+        \ data delivery status\n- COMM_FAIL: Communication Failure\n- PDU_SES_EST:\
+        \ PDU Session Establishment\n- QFI_ALLOC: QFI allocation\n- QOS_MON: QoS Monitoring\n\
+        - SMCC_EXP: SM congestion control experience for PDU Session\n- DISPERSION:\
+        \ Session Management transaction dispersion\n- RED_TRANS_EXP: Redundant transmission\
+        \ experience for PDU Session\n- WLAN_INFO: WLAN information on PDU session\
+        \ for which Access Type is NON_3GPP_ACCESS and\n  RAT Type is TRUSTED_WLAN\n\
+        - UPF_INFO: The UPF information, including the UPF ID/address/FQDN information.\n\
+        - UP_STATUS_INFO: The User Plane status information.\n"
+    NotificationMethod:
+      anyOf:
+      - type: string
+        enum:
+        - PERIODIC
+        - ONE_TIME
+        - ON_EVENT_DETECTION
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are:
+
+        - PERIODIC
+
+        - ONE_TIME
+
+        - ON_EVENT_DETECTION
+
+        '
+    AppliedSmccType:
+      anyOf:
+      - type: string
+        enum:
+        - DNN_CC
+        - SNSSAI_CC
+        description: 'This string indicates the type of applied SM congestion control.
+
+          '
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are:
+
+        - DNN_CC: Indicates the DNN based congestion control.
+
+        - SNSSAI_CC: Indicates the S-NSSAI based congestion control.
+
+        '
+    TransactionMetric:
+      anyOf:
+      - type: string
+        enum:
+        - PDU_SES_EST
+        - PDU_SES_AUTH
+        - PDU_SES_MODIF
+        - PDU_SES_REL
+      - type: string
+        description: 'This string Indicates Session Management Transaction metrics.
+
+          '
+      description: 'Possible values are:
+
+        - PDU_SES_EST: PDU Session Establishment
+
+        - PDU_SES_AUTH: PDU Session Authentication
+
+        - PDU_SES_MODIF: PDU Session Modification
+
+        - PDU_SES_REL: PDU Session Release
+
+        '
+    PduSessionStatus:
+      anyOf:
+      - type: string
+        enum:
+        - ACTIVATED
+        - DEACTIVATED
+      - type: string
+        description: 'This string Indicates the status of the PDU Session.
+
+          '
+      description: 'Possible values are:
+
+        - ACTIVATED: PDU Session status is activated.
+
+        - DEACTIVATED: PDU Session status is deactivated.
+
+        '
+    Supi:
+      type: string
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|gci-.+|gli-.+|.+)$
+      description: "String identifying a Supi that shall contain either an IMSI, a\
+        \ network specific identifier,\na Global Cable Identifier (GCI) or a Global\
+        \ Line Identifier (GLI) as specified in clause \n2.2A of 3GPP TS 23.003. It\
+        \ shall be formatted as follows\n - for an IMSI \"imsi-<imsi>\", where <imsi>\
+        \ shall be formatted according to clause 2.2\n   of 3GPP TS 23.003 that describes\
+        \ an IMSI.\n - for a network specific identifier \"nai-<nai>, where <nai>\
+        \ shall be formatted\n   according to clause 28.7.2 of 3GPP TS 23.003 that\
+        \ describes an NAI.\n - for a GCI \"gci-<gci>\", where <gci> shall be formatted\
+        \ according to clause 28.15.2\n   of 3GPP TS 23.003.\n - for a GLI \"gli-<gli>\"\
+        , where <gli> shall be formatted according to clause 28.16.2 of\n   3GPP TS\
+        \ 23.003.To enable that the value is used as part of an URI, the string shall\n\
+        \   only contain characters allowed according to the \"lower-with-hyphen\"\
+        \ naming convention\n   defined in 3GPP TS 29.501.\n"
+    Gpsi:
+      type: string
+      pattern: ^(msisdn-[0-9]{5,15}|extid-[^@]+@[^@]+|.+)$
+      description: "String identifying a Gpsi shall contain either an External Id\
+        \ or an MSISDN.  It shall be formatted as follows -External Identifier= \"\
+        extid-'extid', where 'extid'  shall be formatted according to clause 19.7.2\
+        \ of 3GPP TS 23.003 that describes an  External Identifier. \n"
+    GroupId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{8}-[0-9]{3}-[0-9]{2,3}-([A-Fa-f0-9][A-Fa-f0-9]){1,10}$
+      description: "String identifying a group of devices network internal globally\
+        \ unique ID which identifies a set of IMSIs, as specified in clause 19.9 of\
+        \ 3GPP TS 23.003. \n"
+    PduSessionId:
+      type: integer
+      minimum: 0
+      maximum: 255
+      description: "Unsigned integer identifying a PDU session, within the range 0\
+        \ to 255, as specified in  clause 11.2.3.1b, bits 1 to 8, of 3GPP TS 24.007.\
+        \ If the PDU Session ID is allocated by the  Core Network for UEs not supporting\
+        \ N1 mode, reserved range 64 to 95 is used. PDU Session ID  within the reserved\
+        \ range is only visible in the Core Network. \n"
+    Dnn:
+      type: string
+      description: 'String representing a Data Network as defined in clause 9A of
+        3GPP TS 23.003;  it shall contain either a DNN Network Identifier, or a full
+        DNN with both the Network  Identifier and Operator Identifier, as specified
+        in 3GPP TS 23.003 clause 9.1.1 and 9.1.2. It shall be coded as string in which
+        the labels are separated by dots  (e.g. "Label1.Label2.Label3").
+
+        '
+    Snssai:
+      type: object
+      properties:
+        sst:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: "Unsigned integer, within the range 0 to 255, representing\
+            \ the Slice/Service Type.  It indicates the expected Network Slice behaviour\
+            \ in terms of features and services. Values 0 to 127 correspond to the\
+            \ standardized SST range. Values 128 to 255 correspond  to the Operator-specific\
+            \ range. See clause 28.4.2 of 3GPP TS 23.003. Standardized values are\
+            \ defined in clause 5.15.2.2 of 3GPP TS 23.501. \n"
+        sd:
+          type: string
+          pattern: ^[A-Fa-f0-9]{6}$
+          description: '3-octet string, representing the Slice Differentiator, in
+            hexadecimal representation. Each character in the string shall take a
+            value of "0" to "9", "a" to "f" or "A" to "F" and shall represent 4 bits.
+            The most significant character representing the 4 most significant bits
+            of the SD shall appear first in the string, and the character representing
+            the 4 least significant bit of the SD shall appear last in the string.
+            This is an optional parameter that complements the Slice/Service type(s)
+            to allow to  differentiate amongst multiple Network Slices of the same
+            Slice/Service type. This IE shall be absent if no SD value is associated
+            with the SST.
+
+            '
+      description: 'When Snssai needs to be converted to string (e.g. when used in
+        maps as key), the string shall be composed of one to three digits "sst" optionally
+        followed by "-" and 6 hexadecimal digits "sd".
+
+        '
+      required:
+      - sst
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+    Ipv4Addr:
+      type: string
+      pattern: ^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
+      example: 198.51.100.1
+      description: 'String identifying a IPv4 address formatted in the ''dotted decimal''
+        notation as defined in RFC 1166.
+
+        '
+    Ipv6Addr:
+      type: string
+      allOf:
+      - pattern: ^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))$
+      - pattern: ^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))$
+      example: 2001:db8:85a3::8a2e:370:7334
+      description: 'String identifying an IPv6 address formatted according to clause
+        4 of RFC5952. The mixed IPv4 IPv6 notation according to clause 5 of RFC5952
+        shall not be used.
+
+        '
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: ^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$
+      minLength: 4
+      maxLength: 253
+    DnaiChangeType:
+      anyOf:
+      - type: string
+        enum:
+        - EARLY
+        - EARLY_LATE
+        - LATE
+      - type: string
+        description: "This string provides forward-compatibility with future extensions\
+          \ to the enumeration but is not used to encode  content defined in the present\
+          \ version of this API. \n"
+      description: "Possible values are:\n- EARLY: Early notification of UP path reconfiguration.\n\
+        - EARLY_LATE: Early and late notification of UP path reconfiguration. This\
+        \ value shall\n  only be present in the subscription to the DNAI change event.\n\
+        - LATE: Late notification of UP path reconfiguration. \n"
+    Uinteger:
+      type: integer
+      minimum: 0
+      description: Unsigned Integer, i.e. only value 0 and integers above 0 are permissible.
+    MacAddr48:
+      type: string
+      pattern: ^([0-9a-fA-F]{2})((-[0-9a-fA-F]{2}){5})$
+      description: 'String identifying a MAC address formatted in the hexadecimal
+        notation according to clause 1.1 and clause 2.1 of RFC 7042.
+
+        '
+    DddTrafficDescriptor:
+      description: Contains a Traffic Descriptor.
+      type: object
+      properties:
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Addr:
+          $ref: '#/components/schemas/Ipv6Addr'
+        portNumber:
+          $ref: '#/components/schemas/Uinteger'
+        macAddr:
+          $ref: '#/components/schemas/MacAddr48'
+    DlDataDeliveryStatus:
+      anyOf:
+      - type: string
+        enum:
+        - BUFFERED
+        - TRANSMITTED
+        - DISCARDED
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: "Possible values are:\n- BUFFERED: The first downlink data is buffered\
+        \ with extended buffering matching the\n  source of the downlink traffic.\n\
+        - TRANSMITTED: The first downlink data matching the source of the downlink\
+        \ traffic is\n  transmitted after previous buffering or discarding of corresponding\
+        \ packet(s) because\n  the UE of the PDU Session becomes ACTIVE, and buffered\
+        \ data can be delivered to UE.\n- DISCARDED: The first downlink data matching\
+        \ the source of the downlink traffic is\n  discarded because the Extended\
+        \ Buffering time, as determined by the SMF, expires or\n  the amount of downlink\
+        \ data to be buffered is exceeded.\n"
+    ApplicationId:
+      type: string
+      description: String providing an application identifier.
+    DateTime:
+      format: date-time
+      type: string
+      description: string with format "date-time" as defined in OpenAPI.
+    TimeWindow:
+      description: Represents a time window identified by a start time and a stop
+        time.
+      type: object
+      properties:
+        startTime:
+          $ref: '#/components/schemas/DateTime'
+        stopTime:
+          $ref: '#/components/schemas/DateTime'
+      required:
+      - startTime
+      - stopTime
+    Ipv6Prefix:
+      type: string
+      allOf:
+      - pattern: ^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$
+      - pattern: ^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)$
+      example: 2001:db8:abcd:12::0/64
+      description: 'String identifying an IPv6 address prefix formatted according
+        to clause 4 of RFC 5952. IPv6Prefix data type may contain an individual /128
+        IPv6 address.
+
+        '
+    IpAddr:
+      description: Contains an IP adresse.
+      type: object
+      oneOf:
+      - required:
+        - ipv4Addr
+      - required:
+        - ipv6Addr
+      - required:
+        - ipv6Prefix
+      properties:
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Addr:
+          $ref: '#/components/schemas/Ipv6Addr'
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+    schemas-DateTime:
+      format: date-time
+      type: string
+      description: string with format 'date-time' as defined in OpenAPI.
+    Dnai:
+      type: string
+      description: DNAI (Data network access identifier), see clause 5.6.7 of 3GPP
+        TS 23.501.
+    RouteInformation:
+      type: object
+      properties:
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Addr:
+          $ref: '#/components/schemas/Ipv6Addr'
+        portNumber:
+          $ref: '#/components/schemas/Uinteger'
+      required:
+      - portNumber
+      nullable: true
+      description: "At least one of the \"ipv4Addr\" attribute and the \"ipv6Addr\"\
+        \ attribute shall be included in the \"RouteInformation\" data type. \n"
+    RouteToLocation:
+      type: object
+      properties:
+        dnai:
+          $ref: '#/components/schemas/Dnai'
+        routeInfo:
+          $ref: '#/components/schemas/RouteInformation'
+        routeProfId:
+          type: string
+          nullable: true
+          description: Identifies the routing profile Id.
+      required:
+      - dnai
+      anyOf:
+      - required:
+        - routeInfo
+      - required:
+        - routeProfId
+      nullable: true
+      description: 'At least one of the "routeInfo" attribute and the "routeProfId"
+        attribute shall be included in the "RouteToLocation" data type.
+
+        '
+    Mcc:
+      type: string
+      pattern: ^\d{3}$
+      description: "Mobile Country Code part of the PLMN, comprising 3 digits, as\
+        \ defined in clause 9.3.3.5 of 3GPP TS 38.413. \n"
+    Mnc:
+      type: string
+      pattern: ^\d{2,3}$
+      description: Mobile Network Code part of the PLMN, comprising 2 or 3 digits,
+        as defined in clause 9.3.3.5 of 3GPP TS 38.413.
+    PlmnId:
+      type: object
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+      description: 'When PlmnId needs to be converted to string (e.g. when used in
+        maps as key), the string  shall be composed of three digits "mcc" followed
+        by "-" and two or three digits "mnc".
+
+        '
+      required:
+      - mcc
+      - mnc
+    AccessType:
+      type: string
+      enum:
+      - 3GPP_ACCESS
+      - NON_3GPP_ACCESS
+      description: Indicates whether the access is  via 3GPP or via non-3GPP.
+    RatType:
+      anyOf:
+      - type: string
+        enum:
+        - NR
+        - EUTRA
+        - WLAN
+        - VIRTUAL
+        - NBIOT
+        - WIRELINE
+        - WIRELINE_CABLE
+        - WIRELINE_BBF
+        - LTE-M
+        - NR_U
+        - EUTRA_U
+        - TRUSTED_N3GA
+        - TRUSTED_WLAN
+        - UTRA
+        - GERA
+        - NR_LEO
+        - NR_MEO
+        - NR_GEO
+        - NR_OTHER_SAT
+        - NR_REDCAP
+        - WB_E_UTRAN_LEO
+        - WB_E_UTRAN_MEO
+        - WB_E_UTRAN_GEO
+        - WB_E_UTRAN_OTHERSAT
+        - NB_IOT_LEO
+        - NB_IOT_MEO
+        - NB_IOT_GEO
+        - NB_IOT_OTHERSAT
+        - LTE_M_LEO
+        - LTE_M_MEO
+        - LTE_M_GEO
+        - LTE_M_OTHERSAT
+      - type: string
+      description: Indicates the radio access used.
+    NgApCause:
+      description: Represents the NGAP cause.
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/Uinteger'
+        value:
+          $ref: '#/components/schemas/Uinteger'
+      required:
+      - group
+      - value
+    CommunicationFailure:
+      description: Describes a communication failure detected by AMF
+      type: object
+      properties:
+        nasReleaseCode:
+          type: string
+        ranReleaseCode:
+          $ref: '#/components/schemas/NgApCause'
+    PduSessionType:
+      anyOf:
+      - type: string
+        enum:
+        - IPV4
+        - IPV6
+        - IPV4V6
+        - UNSTRUCTURED
+        - ETHERNET
+      - type: string
+      description: "PduSessionType indicates the type of a PDU session. It shall comply\
+        \ with the provisions defined in table 5.4.3.3-1. \n"
+    Qfi:
+      type: integer
+      minimum: 0
+      maximum: 63
+      description: Unsigned integer identifying a QoS flow, within the range 0 to
+        63.
+    FlowDescription:
+      description: Defines a packet filter of an IP flow.
+      type: string
+    FlowDirection:
+      anyOf:
+      - type: string
+        enum:
+        - DOWNLINK
+        - UPLINK
+        - BIDIRECTIONAL
+        - UNSPECIFIED
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are
+
+        - DOWNLINK: The corresponding filter applies for traffic to the UE.
+
+        - UPLINK: The corresponding filter applies for traffic from the UE.
+
+        - BIDIRECTIONAL: The corresponding filter applies for traffic both to and
+        from the UE.
+
+        - UNSPECIFIED: The corresponding filter applies for traffic to the UE (downlink),
+        but has no specific direction declared. The service data flow detection shall
+        apply the filter for uplink traffic as if the filter was bidirectional. The
+        PCF shall not use the value UNSPECIFIED in filters created by the network
+        in NW-initiated procedures. The PCF shall only include the value UNSPECIFIED
+        in filters in UE-initiated procedures if the same value is received from the
+        SMF.
+
+        '
+    EthFlowDescription:
+      description: Identifies an Ethernet flow.
+      type: object
+      required:
+      - ethType
+      properties:
+        destMacAddr:
+          $ref: '#/components/schemas/MacAddr48'
+        ethType:
+          type: string
+        fDesc:
+          $ref: '#/components/schemas/FlowDescription'
+        fDir:
+          $ref: '#/components/schemas/FlowDirection'
+        sourceMacAddr:
+          $ref: '#/components/schemas/MacAddr48'
+        vlanTags:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 2
+        srcMacAddrEnd:
+          $ref: '#/components/schemas/MacAddr48'
+        destMacAddrEnd:
+          $ref: '#/components/schemas/MacAddr48'
+    DurationSec:
+      type: integer
+      description: indicating a time in seconds.
+    AddrFqdn:
+      description: IP address and/or FQDN.
+      type: object
+      properties:
+        ipAddr:
+          $ref: '#/components/schemas/IpAddr'
+        fqdn:
+          type: string
+          description: Indicates an FQDN.
+    Nid:
+      type: string
+      pattern: ^[A-Fa-f0-9]{11}$
+      description: "This represents the Network Identifier, which together with a\
+        \ PLMN ID is used to identify an SNPN (see 3GPP TS 23.003 and 3GPP TS 23.501\
+        \ clause 5.30.2.1). \n"
+    PlmnIdNid:
+      description: 'Contains the serving core network operator PLMN ID and, for an
+        SNPN, the NID that together with the PLMN ID identifies the SNPN.
+
+        '
+      type: object
+      required:
+      - mcc
+      - mnc
+      properties:
+        mcc:
+          $ref: '#/components/schemas/Mcc'
+        mnc:
+          $ref: '#/components/schemas/Mnc'
+        nid:
+          $ref: '#/components/schemas/Nid'
+    AmfId:
+      type: string
+      pattern: ^[A-Fa-f0-9]{6}$
+      description: "String identifying the AMF ID composed of AMF Region ID (8 bits),\
+        \ AMF Set ID (10 bits) and AMF  Pointer (6 bits) as specified in clause 2.10.1\
+        \ of 3GPP TS 23.003. It is encoded as a string of  6 hexadecimal characters\
+        \ (i.e., 24 bits). \n"
+    Guami:
+      type: object
+      properties:
+        plmnId:
+          $ref: '#/components/schemas/PlmnIdNid'
+        amfId:
+          $ref: '#/components/schemas/AmfId'
+      required:
+      - plmnId
+      - amfId
+      description: Globally Unique AMF Identifier constructed out of PLMN, Network
+        and AMF identity.
+    ServiceName:
+      description: Service names known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - nnrf-nfm
+        - nnrf-disc
+        - nnrf-oauth2
+        - nudm-sdm
+        - nudm-uecm
+        - nudm-ueau
+        - nudm-ee
+        - nudm-pp
+        - nudm-niddau
+        - nudm-mt
+        - nudm-ssau
+        - nudm-rsds
+        - nudm-ueid
+        - namf-comm
+        - namf-evts
+        - namf-mt
+        - namf-loc
+        - namf-mbs-comm
+        - namf-mbs-bc
+        - nsmf-pdusession
+        - nsmf-event-exposure
+        - nsmf-nidd
+        - nausf-auth
+        - nausf-sorprotection
+        - nausf-upuprotection
+        - nnef-pfdmanagement
+        - nnef-smcontext
+        - nnef-eventexposure
+        - nnef-eas-deployment
+        - 3gpp-cp-parameter-provisioning
+        - 3gpp-device-triggering
+        - 3gpp-bdt
+        - 3gpp-traffic-influence
+        - 3gpp-chargeable-party
+        - 3gpp-as-session-with-qos
+        - 3gpp-msisdn-less-mo-sms
+        - 3gpp-service-parameter
+        - 3gpp-monitoring-event
+        - 3gpp-nidd-configuration-trigger
+        - 3gpp-nidd
+        - 3gpp-analyticsexposure
+        - 3gpp-racs-parameter-provisioning
+        - 3gpp-ecr-control
+        - 3gpp-applying-bdt-policy
+        - 3gpp-mo-lcs-notify
+        - 3gpp-time-sync
+        - 3gpp-am-influence
+        - 3gpp-am-policyauthorization
+        - 3gpp-akma
+        - 3gpp-eas-deployment
+        - 3gpp-iptvconfiguration
+        - 3gpp-mbs-tmgi
+        - 3gpp-mbs-session
+        - 3gpp-authentication
+        - 3gpp-asti
+        - npcf-am-policy-control
+        - npcf-smpolicycontrol
+        - npcf-policyauthorization
+        - npcf-bdtpolicycontrol
+        - npcf-eventexposure
+        - npcf-ue-policy-control
+        - npcf-am-policyauthorization
+        - npcf-mbspolicycontrol
+        - npcf-mbspolicyauth
+        - nsmsf-sms
+        - nnssf-nsselection
+        - nnssf-nssaiavailability
+        - nudr-dr
+        - nudr-group-id-map
+        - nlmf-loc
+        - n5g-eir-eic
+        - nbsf-management
+        - nchf-spendinglimitcontrol
+        - nchf-convergedcharging
+        - nchf-offlineonlycharging
+        - nnwdaf-eventssubscription
+        - nnwdaf-analyticsinfo
+        - nnwdaf-datamanagement
+        - nnwdaf-mlmodelprovision
+        - ngmlc-loc
+        - nucmf-provisioning
+        - nucmf-uecapabilitymanagement
+        - nhss-sdm
+        - nhss-uecm
+        - nhss-ueau
+        - nhss-ee
+        - nhss-ims-sdm
+        - nhss-ims-uecm
+        - nhss-ims-ueau
+        - nhss-gba-sdm
+        - nhss-gba-ueau
+        - nsepp-telescopic
+        - nsoraf-sor
+        - nspaf-secured-packet
+        - nudsf-dr
+        - nudsf-timer
+        - nnssaaf-nssaa
+        - nnssaaf-aiw
+        - naanf-akma
+        - n5gddnmf-discovery
+        - nmfaf-3dadatamanagement
+        - nmfaf-3cadatamanagement
+        - neasdf-dnscontext
+        - neasdf-baselinednspattern
+        - ndccf-datamanagement
+        - ndccf-contextmanagement
+        - nnsacf-nsac
+        - nnsacf-slice-ee
+        - nmbsmf-tmgi
+        - nmbsmf-mbssession
+        - nadrf-datamanagement
+        - nbsp-gba
+        - ntsctsf-time-sync
+        - ntsctsf-qos-tscai
+        - ntsctsf-asti
+        - npkmf-keyreq
+        - npkmf-userid
+        - npkmf-discovery
+        - nmnpf-npstatus
+        - niwmsc-smservice
+        - nmbsf-mbs-us
+        - nmbsf-mbs-ud-ingest
+        - nmbstf-distsession
+        - npanf-prosekey
+        - npanf-userid
+      - type: string
+    SupportedFeatures:
+      type: string
+      pattern: ^[A-Fa-f0-9]*$
+      description: "A string used to indicate the features supported by an API that\
+        \ is used as defined in clause  6.6 in 3GPP TS 29.500. The string shall contain\
+        \ a bitmask indicating supported features in  hexadecimal representation Each\
+        \ character in the string shall take a value of \"0\" to \"9\",  \"a\" to\
+        \ \"f\" or \"A\" to \"F\" and shall represent the support of 4 features as\
+        \ described in  table\_5.2.2-3. The most significant character representing\
+        \ the highest-numbered features shall  appear first in the string, and the\
+        \ character representing features 1 to 4 shall appear last  in the string.\
+        \ The list of features and their numbering (starting with 1) are defined \
+        \ separately for each API. If the string contains a lower number of characters\
+        \ than there are  defined features for an API, all features that would be\
+        \ represented by characters that are not  present in the string are not supported.\n"
+    SamplingRatio:
+      type: integer
+      minimum: 1
+      maximum: 100
+      description: "Unsigned integer indicating Sampling Ratio (see clauses 4.15.1\
+        \ of 3GPP TS 23.502), expressed in percent. \n"
+    PartitioningCriteria:
+      anyOf:
+      - type: string
+        enum:
+        - TAC
+        - SUBPLMN
+        - GEOAREA
+        - SNSSAI
+        - DNN
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are:
+
+        - "TAC": Type Allocation Code
+
+        - "SUBPLMN": Subscriber PLMN ID
+
+        - "GEOAREA": Geographical area, i.e. list(s) of TAI(s)
+
+        - "SNSSAI": S-NSSAI
+
+        - "DNN": DNN
+
+        '
+    NotificationFlag:
+      anyOf:
+      - type: string
+        enum:
+        - ACTIVATE
+        - DEACTIVATE
+        - RETRIEVAL
+      - type: string
+        description: "This string provides forward-compatibility with future extensions\
+          \ to the enumeration but is not used to encode content defined in the present\
+          \ version of this API. \n"
+      description: "Possible values are:\n- ACTIVATE: The event notification is activated.\n\
+        - DEACTIVATE: The event notification is deactivated and shall be muted. The\
+        \ available\n   event(s) shall be stored.\n- RETRIEVAL: The event notification\
+        \ shall be sent to the NF service consumer(s),\n  after that, is muted again.\
+        \ \n"
+    InvalidParam:
+      type: object
+      properties:
+        param:
+          type: string
+          description: 'If the invalid parameter is an attribute in a JSON body, this
+            IE shall contain the  attribute''s name and shall be encoded as a JSON
+            Pointer. If the invalid parameter is  an HTTP header, this IE shall be
+            formatted as the concatenation of the string "header "  plus the name
+            of such header. If the invalid parameter is a query parameter, this IE  shall
+            be formatted as the concatenation of the string "query " plus the name
+            of such  query parameter. If the invalid parameter is a variable part
+            in the path of a resource  URI, this IE shall contain the name of the
+            variable, including the symbols "{" and "}"  used in OpenAPI specification
+            as the notation to represent variable path segments.
+
+            '
+        reason:
+          type: string
+          description: 'A human-readable reason, e.g. "must be a positive integer".
+            In cases involving failed  operations in a PATCH request, the reason string
+            should identify the operation that  failed using the operation''s array
+            index to assist in correlation of the invalid  parameter with the failed
+            operation, e.g." Replacement value invalid for attribute  (failed operation
+            index= 4)"
+
+            '
+      required:
+      - param
+      description: It contains an invalid parameter and a related description.
+    AccessTokenErr:
+      description: Error returned in the access token response message
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+          - invalid_scope
+        error_description:
+          type: string
+        error_uri:
+          type: string
+    NfInstanceId:
+      type: string
+      format: uuid
+      description: "String uniquely identifying a NF instance. The format of the NF\
+        \ Instance ID shall be a  Universally Unique Identifier (UUID) version 4,\
+        \ as described in IETF RFC 4122. \n"
+    NFType:
+      description: NF types known to NRF
+      anyOf:
+      - type: string
+        enum:
+        - NRF
+        - UDM
+        - AMF
+        - SMF
+        - AUSF
+        - NEF
+        - PCF
+        - SMSF
+        - NSSF
+        - UDR
+        - LMF
+        - GMLC
+        - 5G_EIR
+        - SEPP
+        - UPF
+        - N3IWF
+        - AF
+        - UDSF
+        - BSF
+        - CHF
+        - NWDAF
+        - PCSCF
+        - CBCF
+        - HSS
+        - UCMF
+        - SOR_AF
+        - SPAF
+        - MME
+        - SCSAS
+        - SCEF
+        - SCP
+        - NSSAAF
+        - ICSCF
+        - SCSCF
+        - DRA
+        - IMS_AS
+        - AANF
+        - 5G_DDNMF
+        - NSACF
+        - MFAF
+        - EASDF
+        - DCCF
+        - MB_SMF
+        - TSCTSF
+        - ADRF
+        - GBA_BSF
+        - CEF
+        - MB_UPF
+        - NSWOF
+        - PKMF
+        - MNPF
+        - SMS_GMSC
+        - SMS_IWMSC
+        - MBSF
+        - MBSTF
+        - PANF
+        - IP_SM_GW
+        - SMS_ROUTER
+      - type: string
+    NfSetId:
+      type: string
+      description: "NF Set Identifier (see clause 28.12 of 3GPP TS 23.003), formatted\
+        \ as the following string \"set<Set ID>.<nftype>set.5gc.mnc<MNC>.mcc<MCC>\"\
+        , or  \"set<SetID>.<NFType>set.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\" with  <MCC>\
+        \ encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)  <MNC>\
+        \ encoding the Mobile Network Code part of the PLMN, comprising 3 digits.\
+        \ \n  If there are only 2 significant digits in the MNC, one \"0\" digit shall\
+        \ be inserted \n  at the left side to fill the 3 digits coding of MNC.  Pattern:\
+        \ '^[0-9]{3}$'\n<NFType> encoded as a value defined in Table 6.1.6.3.3-1 of\
+        \ 3GPP TS 29.510 but \n  with lower case characters <Set ID> encoded as a\
+        \ string of characters consisting of \n  alphabetic characters (A-Z and a-z),\
+        \ digits (0-9) and/or the hyphen (-) and that \n  shall end with either an\
+        \ alphabetic character or a digit. \n"
+    NfServiceSetId:
+      type: string
+      description: "NF Service Set Identifier (see clause 28.12 of 3GPP TS 23.003)\
+        \ formatted as the following  string \"set<Set ID>.sn<Service Name>.nfi<NF\
+        \ Instance ID>.5gc.mnc<MNC>.mcc<MCC>\", or  \"set<SetID>.sn<ServiceName>.nfi<NFInstanceID>.5gc.nid<NID>.mnc<MNC>.mcc<MCC>\"\
+        \ with  <MCC> encoded as defined in clause 5.4.2 (\"Mcc\" data type definition)\
+        \   <MNC> encoding the Mobile Network Code part of the PLMN, comprising 3\
+        \ digits. \n  If there are only 2 significant digits in the MNC, one \"0\"\
+        \ digit shall be inserted \n  at the left side to fill the 3 digits coding\
+        \ of MNC.  Pattern: '^[0-9]{3}$'\n<NID> encoded as defined in clause\_5.4.2\
+        \ (\"Nid\" data type definition)  <NFInstanceId> encoded as defined in clause\
+        \ 5.3.2  <ServiceName> encoded as defined in 3GPP TS 29.510  <Set ID> encoded\
+        \ as a string of characters consisting of alphabetic \n  characters (A-Z and\
+        \ a-z), digits (0-9) and/or the hyphen (-) and that shall end \n  with either\
+        \ an alphabetic character or a digit.\n"
+    AccessTokenReq:
+      description: Contains information related to the access token request
+      type: object
+      required:
+      - grant_type
+      - nfInstanceId
+      - scope
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+        nfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        nfType:
+          $ref: '#/components/schemas/NFType'
+        targetNfType:
+          $ref: '#/components/schemas/NFType'
+        scope:
+          type: string
+          pattern: ^([a-zA-Z0-9_:-]+)( [a-zA-Z0-9_:-]+)*$
+        targetNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+        requesterPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        requesterPlmnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnId'
+          minItems: 2
+        requesterSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        requesterFqdn:
+          $ref: '#/components/schemas/Fqdn'
+        requesterSnpnList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlmnIdNid'
+          minItems: 1
+        targetPlmn:
+          $ref: '#/components/schemas/PlmnId'
+        targetSnpn:
+          $ref: '#/components/schemas/PlmnIdNid'
+        targetSnssaiList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snssai'
+          minItems: 1
+        targetNsiList:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        targetNfSetId:
+          $ref: '#/components/schemas/NfSetId'
+        targetNfServiceSetId:
+          $ref: '#/components/schemas/NfServiceSetId'
+        hnrfAccessTokenUri:
+          $ref: '#/components/schemas/Uri'
+        sourceNfInstanceId:
+          $ref: '#/components/schemas/NfInstanceId'
+    ProblemDetails:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+        instance:
+          $ref: '#/components/schemas/Uri'
+        cause:
+          type: string
+          description: 'A machine-readable application error cause specific to this
+            occurrence of the problem.  This IE should be present and provide application-related
+            error information, if available.
+
+            '
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+          minItems: 1
+        supportedFeatures:
+          $ref: '#/components/schemas/SupportedFeatures'
+        accessTokenError:
+          $ref: '#/components/schemas/AccessTokenErr'
+        accessTokenRequest:
+          $ref: '#/components/schemas/AccessTokenReq'
+        nrfId:
+          $ref: '#/components/schemas/Fqdn'
+    RedirectResponse:
+      description: 'The response shall include a Location header field containing
+        a different URI  (pointing to a different URI of an other service instance),
+        or the same URI if a request  is redirected to the same target resource via
+        a different SCP.
+
+        '
+      type: object
+      properties:
+        cause:
+          type: string
+        targetScp:
+          $ref: '#/components/schemas/Uri'
+        targetSepp:
+          $ref: '#/components/schemas/Uri'
+    AfResultStatus:
+      anyOf:
+      - type: string
+        enum:
+        - SUCCESS
+        - TEMPORARY_CONGESTION
+        - RELOC_NO_ALLOWED
+        - OTHER
+      - type: string
+        description: 'This string provides forward-compatibility with future extensions
+          to the enumeration but is not used to encode content defined in the present
+          version of this API.
+
+          '
+      description: 'Possible values are:
+
+        - SUCCESS: The application layer is ready or the relocation is completed.
+
+        - TEMPORARY_CONGESTION: The application relocation fails due to temporary
+        congestion.
+
+        - RELOC_NO_ALLOWED: The application relocation fails because application relocation
+        is not allowed.
+
+        - OTHER: The application relocation fails due to other reason.
+
+        '
+    EasServerAddress:
+      description: Represents the IP address and port of an EAS server.
+      type: object
+      properties:
+        ip:
+          $ref: '#/components/schemas/IpAddr'
+        port:
+          $ref: '#/components/schemas/Uinteger'
+      required:
+      - ip
+      - port
+    EasIpReplacementInfo:
+      description: Contains EAS IP replacement information for a Source and a Target
+        EAS.
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/EasServerAddress'
+        target:
+          $ref: '#/components/schemas/EasServerAddress'
+      required:
+      - source
+      - target
+    AfResultInfo:
+      description: Identifies the result of application layer handling.
+      type: object
+      properties:
+        afStatus:
+          $ref: '#/components/schemas/AfResultStatus'
+        trafficRoute:
+          $ref: '#/components/schemas/RouteToLocation'
+        upBuffInd:
+          type: boolean
+          description: 'If present and set to "true" it indicates that buffering of
+            uplink traffic to the target DNAI is needed.
+
+            '
+        easIpReplaceInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/EasIpReplacementInfo'
+          minItems: 1
+          description: Contains EAS IP replacement information.
+      required:
+      - afStatus
+  responses:
+    '307':
+      description: Temporary Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: Identifier of target NF (service) instance towards which the
+            request is redirected
+          schema:
+            type: string
+    '308':
+      description: Permanent Redirect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectResponse'
+      headers:
+        Location:
+          description: The URI pointing to the resource located on the redirect target
+          required: true
+          schema:
+            type: string
+        3gpp-Sbi-Target-Nf-Id:
+          description: '''Identifier of target NF (service) instance towards which
+            the request is redirected''
+
+            '
+          schema:
+            type: string
+    '400':
+      description: Bad request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '401':
+      description: Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '403':
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '404':
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '406':
+      description: 406 Not Acceptable
+    '411':
+      description: Length Required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '413':
+      description: Payload Too Large
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '415':
+      description: Unsupported Media Type
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '429':
+      description: Too Many Requests
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '500':
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    '503':
+      description: Service Unavailable
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    default:
+      description: Generic Error

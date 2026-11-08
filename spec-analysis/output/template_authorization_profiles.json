@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "endpoint_id": "Nudm_UECM PATCH /{ueId}/registrations/amf-3gpp-access",
+  "target": {
+    "service": "Nudm_UECM",
+    "method": "PATCH",
+    "path": "/{ueId}/registrations/amf-3gpp-access",
+    "operation_id": "Update3GppRegistration"
+  },
+  "expected_binding": {
+    "requester_nf_types": [
+      "AMF"
+    ],
+    "resource_identifiers": [
+      "ueId"
+    ],
+    "relation_type": "registered_nf",
+    "relation_statement": "Only the AMF currently registered for the UE should modify or purge that UE's AMF registration.",
+    "strength": "implicit"
+  },
+  "existing_protection": {
+    "operation_level": {
+      "oauth_scopes": [
+        "nudm-uecm"
+      ]
+    },
+    "resource_binding": {
+      "coverage": "condition_scoped",
+      "mechanism": "The received GUAMI must match the stored GUAMI.",
+      "applies_when": [
+        "The PATCH performs the purgeFlag deregistration update."
+      ],
+      "failure_codes": [
+        403
+      ],
+      "failure_causes": [
+        "INVALID_GUAMI"
+      ]
+    }
+  },
+  "confidence": "medium",
+  "evidence_refs": [
+    {
+      "context_id": "TS29503:6.2.3.2",
+      "role": "resource_and_method"
+    },
+    {
+      "context_id": "TS29503:5.3.2.4.2",
+      "role": "procedure_and_protection"
+    }
+  ]
+}
+
+
+test_expectation = cosa dovrebbe succedere
+runtime_result   = cosa è successo
+final_verdict    = confronto tra i due
+
+Possibili Risultati: 
+
+Protezione esplicita applicabile + operazione bloccata come previsto: protezione confermata.
+Expected binding violato + operazione riuscita: possibile vulnerabilità resource-level. -> Specification gap: il binding dovrebbe esistere, ma nelle TS non è stata identificata una protezione esplicita
+Protezione esplicita applicabile + operazione riuscita: possibile non conformità dell’implementazione. -> Implementation non-conformance: la TS prescrive una protezione applicabile, ma l’implementazione non la applica
+
+

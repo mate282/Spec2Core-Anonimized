@@ -1,0 +1,3823 @@
+[
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/5mbs-data",
+      "operation_id": "Query5mbsData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_5mbs_subscription_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_access_to_ue_subscription_data",
+          "relation_statement": "The authenticated UDM may retrieve the 5MBS subscription data for the UE identified by {ueId} when acting as the UDM for that UE's subscription data.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE subscription resource and describes general data-access authorization, but does not specify a check binding the requesting UDM to the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data::TS29505:5.2.46:resource-5mbssubscriptiondata:resource-with-children",
+            "role": "Identifies the resource, UE identifier, and stated data recipient"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data::TS29505:5.2.46:resource-5mbssubscriptiondata:resource-with-children",
+            "role": "Defines the addressed UE identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies UDM as a UDR service consumer"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data::TS29505:5.2.46:resource-5mbssubscriptiondata:resource-with-children",
+            "role": "Identifies the requester and addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limits the general authorization language"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_ue_5mbs_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "identifies UDM as a Nudr_DataRepository consumer",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a supported requester for the UDR query."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/5mbs-data::TS29505:5.2.46:resource-5mbssubscriptiondata:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a request body or mandatory query parameter",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/5mbs-data",
+              "rationale": "A UDM GET to this URI, using the addressed UE's ueId, selects the 5MBS subscription resource. The resource's GET specification lists no request-body data structure and marks supported-features optional."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+      "operation_id": "CreateIndividualAuthenticationStatus"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_authentication_status",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingNetworkName"
+          ],
+          "relation_type": "authorized_ue_authentication_status_consumer",
+          "relation_statement": "The authenticated UDM requester may store the authentication-status record for the addressed UE and serving network only if it is authorized to access that subscription-data instance.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE and serving network in the resource URI and describes general data-access authorization, but does not require a check binding the authenticated UDM to this UE's authentication-status resource."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.24A:resource-individualauthenticationstatus:resource-with-children",
+            "role": "method and resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.24A:resource-individualauthenticationstatus:resource-with-children",
+            "role": "resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "potential requester NF"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.24A:resource-individualauthenticationstatus:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "store_5g_aka_authentication_status",
+          "body_required_fields": [
+            "authType",
+            "success"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {
+            "authType": "5G_AKA"
+          },
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The UDR supports the PerUePerSnAuthStatus feature.",
+            "The addressed ueId and servingNetworkName identify the authentication-status resource used by the fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a supported Nudr_DataRepository consumer and is the sole requester type in this case."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.1:overview",
+              "evidence_role": "feature condition and operation",
+              "quoted_text": "When the feature \"PerUePerSnAuthStatus\" is supported, store a UE's Individual authentication status",
+              "rationale": "The feature condition applies to storing status at the individual UE-and-serving-network resource."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.24A:resource-individualauthenticationstatus:resource-with-children",
+              "evidence_role": "request trigger and body",
+              "quoted_text": "AuthEvent\nM\n1\nTo store the authentication status of the UE.",
+              "rationale": "A PUT with a mandatory AuthEvent body exercises storage of the addressed authentication status. The OpenAPI AuthEvent inventory supplies the success field and permits authType 5G_AKA; its remaining required fields must also be constructed for a valid request."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}",
+      "operation_id": "QueryIndividualAuthenticationStatus"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authentication_status_access_unspecified",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingNetworkName"
+          ],
+          "relation_type": "data_access_authorization_unspecified",
+          "relation_statement": "The requester must be authorized to access the addressed authentication-status data. The supplied text does not identify which known NF consumer types are entitled to this resource or bind the authenticated requester to the UE or serving network.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data-access authorization but does not require a check binding the requesting consumer to the authentication-status resource identified by ueId and servingNetworkName."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.24A:resource-individualauthenticationstatus:resource-with-children",
+            "role": "addressed resource and GET contract"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known consumer types"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.24A:resource-individualauthenticationstatus:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "consumer-specific check limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "retrieve_individual_authentication_status",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The UDR supports the PerUePerSnAuthStatus feature."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.1:overview",
+              "evidence_role": "feature condition for the selected retrieval",
+              "quoted_text": "When the feature \"PerUePerSnAuthStatus\" is supported, retrieve a UE's Individual authentication status",
+              "rationale": "Selects retrieval of the individual authentication-status resource when the feature is supported."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29505:5.2.24A:resource-individualauthenticationstatus:resource-with-children",
+              "evidence_role": "path-and-method request trigger",
+              "quoted_text": "Table 5.2.24A.3.2-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "GET on the addressed individual authentication-status resource exercises retrieval without a request body; the listed query parameters are conditional or optional."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-status/{servingNetworkName}::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is one explicitly identified Nudr_DataRepository consumer and is selected as the concrete requester, without assuming that it is entitled to this particular data."
+            }
+          ],
+          "gaps": [
+            "The supplied TS evidence does not specify which known consumer types are authorized to access this particular resource."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "high",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/authentication-data/authentication-subscription",
+      "operation_id": "QueryAuthSubsData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data:authentication-subscription:read"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_authentication_subscription_reader",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_ue_subscription_access",
+          "relation_statement": "The authenticated UDM requester may read the authentication subscription for the UE identified by ueId only when it is authorized to access that UE's authentication data.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification discusses data access authorization and OAuth2, but does not require a check binding the authenticated reader to the UE identified by ueId."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29505:5.2.2:resource-authenticationsubscription:resource-with-children",
+            "role": "Identifies the addressed resource and its UE identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies a candidate requester NF type"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Establishes that data-access authorization can differ by data type"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29505:5.2.2:resource-authenticationsubscription:resource-with-children",
+            "role": "Resource-specific authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "General data-access authorization context"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_authentication_subscription",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects the requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a supported consumer and is the requester type specified by this case."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29505:5.2.2:resource-authenticationsubscription:resource-with-children",
+              "evidence_role": "defines the executable request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/authentication-data/authentication-subscription",
+              "rationale": "A GET on this URI, with ueId identifying the addressed UE, selects the authentication subscription resource."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/authentication-data/authentication-subscription::TS29505:5.2.2:resource-authenticationsubscription:resource-with-children",
+              "evidence_role": "establishes that no body or query parameter is needed",
+              "quoted_text": "Table 5.2.2.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET has no request-body data structure; supported-features is optional, so the path and method provide the concrete trigger."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/coverage-restriction-data",
+      "operation_id": "QueryCoverageRestrictionData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_coverage_restriction_data",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_authorized_for_ue_subscription_data",
+          "relation_statement": "The authenticated UDM may retrieve this resource only when it is authorized to access subscription data for the UE identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UDM as the requester and ueId as the resource identifier, but does not specify a check binding the requesting UDM to the addressed UE's data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29505:5.2.39:resource-coveragerestrictiondata:resource-with-children",
+            "role": "resource subject and requester"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29505:5.2.39:resource-coveragerestrictiondata:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29505:5.2.39:resource-coveragerestrictiondata:resource-with-children",
+            "role": "Identifies the requester and addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of general data-access authorization"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_coverage_restriction_data_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29505:5.2.39:resource-coveragerestrictiondata:resource-with-children",
+              "evidence_role": "selects the requester and procedure",
+              "quoted_text": "It is queried by the UDM during Enhanced Coverage Restriction Data Retrieval.",
+              "rationale": "A UDM GET exercises the specified retrieval procedure."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29505:5.2.39:resource-coveragerestrictiondata:resource-with-children",
+              "evidence_role": "identifies the resource trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/coverage-restriction-data",
+              "rationale": "The GET resource URI identifies the UE through ueId."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/coverage-restriction-data::TS29505:5.2.39:resource-coveragerestrictiondata:resource-with-children",
+              "evidence_role": "establishes that no request body is needed",
+              "quoted_text": "Table 5.2.39.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The path and GET method trigger the retrieval without a request body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/ee-profile-data",
+      "operation_id": "QueryEEData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_ee_profile_read",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_access_to_ue_profile",
+          "relation_statement": "The authenticated UDM requester may retrieve the Event Exposure Profile Data associated with the addressed UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UDM as a consumer and ueId as the identifier of the requested EE profile, but does not require a check binding the requesting UDM to that UE's resource instance."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data::TS29505:5.2.28:resource-eeprofiledata:resource-with-children",
+            "role": "Requester and addressed-resource semantics"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data::TS29505:5.2.28:resource-eeprofiledata:resource-with-children",
+            "role": "GET result binding"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data::TS29505:5.2.28:resource-eeprofiledata:resource-with-children",
+            "role": "Resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Authorization context and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "full_ee_profile_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "fields"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data::TS29505:5.2.28:resource-eeprofiledata:resource-with-children",
+              "evidence_role": "Selects the requester and addressed UE",
+              "quoted_text": "It is queried by the UDM by either GPSI or SUPI.",
+              "rationale": "Use a UDM requester and the addressed UE's SUPI or GPSI as ueId."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data::TS29505:5.2.28:resource-eeprofiledata:resource-with-children",
+              "evidence_role": "Establishes the path-and-method trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/ee-profile-data",
+              "rationale": "GET on this resource retrieves the addressed UE's EE profile without a request body."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ee-profile-data::TS29505:5.2.28:resource-eeprofiledata:resource-with-children",
+              "evidence_role": "Distinguishes full retrieval from subset retrieval",
+              "quoted_text": "When the NF consumer only retrieves a subset of the resource, the \" fields \" query parameter shall be included.",
+              "rationale": "Omit fields for the selected full-profile retrieval."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/identity-data",
+      "operation_id": "GetIdentityData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_identity_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_ue_identity_data_access",
+          "relation_statement": "The authenticated UDM may retrieve the identity data for the UE identified by ueId when it is authorized to access that UE's identity data.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is queried by the UDM using a SUPI or GPSI, and the specification describes general data-access authorization, but it does not state a check binding the authenticated UDM to the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29505:5.2.23:resource-identitydata:resource-with-children",
+            "role": "Identifies the requester, addressed subject, and GET resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29505:5.2.23:resource-identitydata:resource-with-children",
+            "role": "Defines the resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Qualifies data access authorization"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29505:5.2.23:resource-identitydata:resource-with-children",
+            "role": "Identifies the requester and addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of general authorization language"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limits inference of consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "get_identity_data_by_supi",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the SUPI of a provisioned target UE as the ueId path value; the concrete SUPI comes from the lab fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29505:5.2.23:resource-identitydata:resource-with-children",
+              "evidence_role": "selects the requester and path identifier",
+              "quoted_text": "This resource represents the identity data. It is queried by the UDM by GPSI or SUPI.",
+              "rationale": "A UDM request using the target UE's SUPI is a TS-supported representative variant."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29505:5.2.23:resource-identitydata:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a body",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/identity-data",
+              "rationale": "GET on this URI selects the identity-data retrieval operation. The supplied OpenAPI has no request body, and the TS lists no GET request-body data structure."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/identity-data::TS29505:5.2.23:resource-identitydata:resource-with-children",
+              "evidence_role": "establishes that the query parameter is optional",
+              "quoted_text": "app-port-id\nAppPortId\nO\n0..1",
+              "rationale": "The representative request does not need a query parameter."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/lcs-mo-data",
+      "operation_id": "QueryLcsMoData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_lcs_mo_subscription_read",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_ue_subscription_data_access",
+          "relation_statement": "The authenticated UDM accesses the LCS Mobile Originated subscription data for the UE identified by ueId as part of the AMF's post-registration query via the UDM.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE subscription resource and describes general data-access authorization, but does not state a check binding the requesting UDM to the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data::TS29505:5.2.37:resource-lcsmobileoriginatedsubscriptiondata:resource-with-children",
+            "role": "resource and requester context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data::TS29505:5.2.37:resource-lcsmobileoriginatedsubscriptiondata:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data::TS29505:5.2.37:resource-lcsmobileoriginatedsubscriptiondata:resource-with-children",
+            "role": "resource and requester description"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_full_lcs_mo_data_read",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The authenticated requester is a UDM, and ueId identifies a UE whose LCS Mobile Originated subscription data is available in the UDR."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data::TS29505:5.2.37:resource-lcsmobileoriginatedsubscriptiondata:resource-with-children",
+              "evidence_role": "selects the UDM requester and UE-specific resource",
+              "quoted_text": "It is queried by the AMF via the UDM after registering.",
+              "rationale": "The UDM is the requester for the described retrieval via UDM."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data::TS29505:5.2.37:resource-lcsmobileoriginatedsubscriptiondata:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a request body",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/lcs-mo-data\nThis resource shall support the resource URI variables defined in table 5.2.37.2-1.\nTable 5.2.37.2-1: Resource URI variables for this resource\nName\nDefinition\napiRoot\nSee 3GPP TS 29.504 [2] clause 6.1.1\nueId\nRepresents the Subscription Identifier SUPI or GPSI (see 3GPP TS 23.501 [4] clause 5.9.2)See pattern of type VarUeId in 3GPP TS 29.571 [3]\n5.2.37.3Resource Standard Methods\n5.2.37.3.1GET",
+              "rationale": "An authenticated UDM GET on the UE-specific resource exercises the read. The GET request-body table specifies n/a, so no body fields are needed."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-mo-data::TS29505:5.2.37:resource-lcsmobileoriginatedsubscriptiondata:resource-with-children",
+              "evidence_role": "supports full-resource retrieval without a query parameter",
+              "quoted_text": "When the NF consumer only retrieves a subset of the resource, the \" fields \" query parameter shall be included.",
+              "rationale": "This variant retrieves the full resource, so the conditional fields parameter is not required."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/lcs-privacy-data",
+      "operation_id": "QueryLcsPrivacyData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_mediated_lcs_privacy_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_mediated_ue_data_access",
+          "relation_statement": "The authenticated UDM requester accesses the addressed UE's LCS Privacy Subscription Data as the UDM through which an HGMLC or NEF query is mediated.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is queried via the UDM, and the specification describes general data access authorization, but the supplied context does not require a check binding the authenticated requester to the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29505:5.2.36:resource-lcsprivacysubscriptiondata:resource-with-children",
+            "role": "Resource, identifier, and requester context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29505:5.2.36:resource-lcsprivacysubscriptiondata:resource-with-children",
+            "role": "Addressed resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29505:5.2.36:resource-lcsprivacysubscriptiondata:resource-with-children",
+            "role": "resource and requester context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "general authorization provision"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "limit on consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "retrieve_full_lcs_privacy_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29505:5.2.36:resource-lcsprivacysubscriptiondata:resource-with-children",
+              "evidence_role": "UDM requester and path-and-method trigger",
+              "quoted_text": "It is queried by the HGMLC or NEF via the UDM.",
+              "rationale": "Construct the Nudr request with UDM as the authenticated requester. GET on the addressed LCS privacy resource exercises retrieval of that UE's data."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29505:5.2.36:resource-lcsprivacysubscriptiondata:resource-with-children",
+              "evidence_role": "no request body",
+              "quoted_text": "Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET request needs no body fields."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/lcs-privacy-data::TS29505:5.2.36:resource-lcsprivacysubscriptiondata:resource-with-children",
+              "evidence_role": "query parameter not needed for full retrieval",
+              "quoted_text": "When the NF consumer only retrieves a subset of the resource, the \" fields \" query parameter shall be included.",
+              "rationale": "The selected variant retrieves the full resource, so no query parameter is required."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/nidd-authorization-data",
+      "operation_id": "GetNiddAuData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_nidd_authorization_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_access_for_addressed_subject",
+          "relation_statement": "The requesting UDM accesses NIDD authorization data for the subject identified by ueId as part of its NIDD authorization data retrieval or update-notification procedure.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes data-access authorization generally, but does not state a check binding the requesting UDM to the NIDD Authorization Data identified by ueId. The listed 403 causes do not establish that binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+            "role": "resource-specific requester and subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+            "role": "addressed resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+            "role": "Resource and requester description"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "General authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+            "role": "Forbidden-response limitations"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "nidd_authorization_data_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "single-nssai",
+            "dnn",
+            "mtc-provider-information"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use a fixture with NIDD Authorization Data for the GPSI supplied as ueId. Obtain the single-nssai, dnn, and mtc-provider-information query values from the fixture."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+              "evidence_role": "selects the UDM retrieval procedure",
+              "quoted_text": "It is queried by the UDM during NIDD Authorization Data Retrieval and NIDD Authorization Data Update Notification.",
+              "rationale": "A UDM request for the addressed resource exercises the selected retrieval variant."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+              "evidence_role": "establishes the resource trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/nidd-authorization-data",
+              "rationale": "The GET method on this URI identifies the NIDD Authorization Data resource for ueId."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+              "evidence_role": "establishes mandatory GET query parameters",
+              "quoted_text": "single-nssai\nSnssai\nM\n1\nWhen present without Slice Differentiator (sd), all slices identified by the given Slice/Service Type (sst) and any sd value (if any) shall be considered matching the query parameter.\ndnn\nDnn\nM\n1\nmtc-provider-information\nMtcProviderInformation\nM\n1",
+              "rationale": "These three parameters are mandatory for the GET request; their concrete values depend on the fixture."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/nidd-authorization-data::TS29505:5.2.38:resource-niddauthorizationdata:resource-with-children",
+              "evidence_role": "establishes that no request body is needed",
+              "quoted_text": "Table 5.2.38.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The method, resource URI, and mandatory query parameters provide the request trigger without a body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/operator-determined-barring-data",
+      "operation_id": "GetOdbData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_registration_ue_odb_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_registration_ue_data_access",
+          "relation_statement": "The authenticated UDM requester accesses Operator Determined Barring Data for the UE whose registration it is handling, identified by {ueId}.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is queried by the UDM during registration, but no supplied provision requires the UDR to verify that the requesting UDM is authorized for the UE identified by ueId. General data-access authorization does not specify that requester-to-UE binding."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data::TS29505:5.2.27:resource-operatordeterminedbarringdata:resource-with-children",
+            "role": "resource and requester context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data::TS29505:5.2.27:resource-operatordeterminedbarringdata:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data::TS29505:5.2.27:resource-operatordeterminedbarringdata:resource-with-children",
+            "role": "Resource and consumer context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_registration_odb_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The authenticated requester is a UDM handling registration for the UE identified by {ueId}, and that UE has Operator Determined Barring Data available in the UDR."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data::TS29505:5.2.27:resource-operatordeterminedbarringdata:resource-with-children",
+              "evidence_role": "Selects the UDM registration procedure",
+              "quoted_text": "It is queried by the UDM during registration.",
+              "rationale": "A UDM GET for the UE whose registration it is handling exercises this case."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data::TS29505:5.2.27:resource-operatordeterminedbarringdata:resource-with-children",
+              "evidence_role": "Establishes the path-and-method trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/operator-determined-barring-data",
+              "rationale": "GET on this resource URI selects the ODB retrieval; {ueId} identifies the UE."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-determined-barring-data::TS29505:5.2.27:resource-operatordeterminedbarringdata:resource-with-children",
+              "evidence_role": "Confirms no request body or query parameter is needed",
+              "quoted_text": "Table 5.2.27.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET has no request-body data structure; the same resource-method definition lists its URI query parameters as n/a. The path and GET method therefore suffice."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "DELETE",
+      "path": "/subscription-data/{ueId}/operator-specific-data",
+      "operation_id": "DeleteOperSpecData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_ue_operator_data_consumer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_ue_data_consumer",
+          "relation_statement": "The authenticated NF consumer must be authorized to delete the operator-specific data of the UE identified by {ueId}; being a known consumer type alone does not establish that authorization.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE through the resource path and describes general data access authorization, but does not require a check binding the authenticated consumer to that UE's operator-specific data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "addressed_resource"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "resource_identifier"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known_consumer_types"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization_qualification"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "Identifies the addressed resource and DELETE behavior"
+          },
+          {
+            "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of general authorization language"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_delete_ue_operator_specific_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+              "evidence_role": "path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/operator-specific-data",
+              "rationale": "A DELETE to this UE-specific resource selects the operator-specific data deletion operation. The DELETE request body and query-parameter tables both specify n/a, so no body or query fields are needed."
+            },
+            {
+              "context_id": "Nudr_DR DELETE /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a TS-identified consumer and is one of the case's permitted requester NF types."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not establish whether a particular UDM is authorized to delete the addressed UE's operator-specific data; that binding must be tested against the fixture's authorization policy."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PATCH",
+      "path": "/subscription-data/{ueId}/operator-specific-data",
+      "operation_id": "ModifyOperSpecData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_operator_specific_data_modification",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "not_identified",
+          "relation_statement": "The supplied text does not identify which authenticated NF may modify a particular UE's operator-specific data, or how that NF must relate to the UE identified by ueId.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE through the resource path and describes general data-access authorization and attribute-modification restrictions, but does not state a check binding the NF consumer to the addressed UE's operator-specific data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "resource and method"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known service consumers"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization specificity"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Bounds the general authorization language"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "Distinguishes modification restrictions from resource binding"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a supplied requester type and a known consumer, but this general statement does not establish a requester-specific PATCH payload."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+              "evidence_role": "PATCH body requirement",
+              "quoted_text": "array(PatchItem)\nM\n1..N\nContains the delta data to the operator specific data",
+              "rationale": "PATCH requires at least one modification instruction. The supplied evidence does not define a concrete PatchItem instruction or target attribute, and the OpenAPI field inventory contains no item paths."
+            }
+          ],
+          "gaps": [
+            "A concrete, valid PatchItem operation and target operator-specific data attribute cannot be selected from the supplied TS/OpenAPI evidence."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/operator-specific-data",
+      "operation_id": "CreateOperSpecData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_ue_operator_specific_data_consumer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_access_to_ue_data",
+          "relation_statement": "The authenticated NF consumer may create or update this resource only if it is authorized to access operator-specific data for the UE identified by {ueId}.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE through the resource URI and describes general data-access authorization, but does not state a check binding the NF consumer to the addressed UE's operator-specific data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "Identifies the addressed UE-specific resource and PUT method"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies known NF consumer types"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Supports data-specific authorization"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Connects authorization context to the requested resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects a supported requester type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is an explicitly identified consumer and is listed in the case's expected binding."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+              "evidence_role": "identifies the PUT request body requirement",
+              "quoted_text": "map(OperatorSpecificDataContainer)\nM\n1..N",
+              "rationale": "The PUT procedure requires at least one map entry, so the URI and method alone do not provide an executable request."
+            }
+          ],
+          "gaps": [
+            "The supplied OpenAPI request-schema inventory has no field paths or entry schema for constructing the mandatory OperatorSpecificDataContainer map. No concrete non-empty PUT body can be selected from the supplied evidence."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/operator-specific-data",
+      "operation_id": "QueryOperSpecData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_ue_operator_specific_data_consumer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_consumer_for_ue_data",
+          "relation_statement": "The authenticated NF consumer may retrieve this UE's operator-specific data only if it is authorized to access that data for the UE identified by {ueId}.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes data access authorization generally, but does not state a check binding the NF consumer to the operator-specific data of the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "identifies the addressed UE data"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "identifies known service consumers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "establishes data-specific authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+            "role": "identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "defines the scope of general authorization language"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_ue_operator_specific_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use an authenticated UDM consumer and an addressed {ueId} for which the UDR holds operator-specific data."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "Select UDM as one explicitly identified Nudr_DataRepository consumer."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29505:5.2.10:resource-operatorspecificdata:resource-with-children",
+              "evidence_role": "request trigger",
+              "quoted_text": "This method is used to retrieve operator specific data from the UDR.",
+              "rationale": "GET on the operator-specific-data URI for the addressed {ueId} exercises retrieval. The GET request body is specified as n/a, and the fields query parameter is conditional only when retrieving a subset, so neither a body nor a query parameter is needed for a full-resource request."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/operator-specific-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+              "evidence_role": "authorization context",
+              "quoted_text": "different types of data may have different data access authorizations",
+              "rationale": "Identifies data-access authorization as relevant to this retrieval without establishing a UDM-specific entitlement."
+            }
+          ],
+          "gaps": [
+            "The supplied TS evidence does not specify a UDM-specific authorization rule for this UE's operator-specific data; the fixture must define the expected entitlement."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PATCH",
+      "path": "/subscription-data/{ueId}/pp-data",
+      "operation_id": "ModifyPpData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_provisioned_parameter_update",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_updates_subscriber_provisioned_data",
+          "relation_statement": "The authenticated UDM may modify the provisioned parameter data of the UE identified by ueId when processing that subscriber's provisioned-data update.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data-access authorization and rejection of disallowed attribute modifications, but does not state a check binding the requesting UDM to the addressed UE's provisioned parameter data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+            "role": "resource-specific requester and subject context"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+            "role": "method and resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+            "role": "resource identifier definition"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "general authorization context"
+          },
+          {
+            "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+            "role": "resource-specific rejection scope"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "unresolved",
+          "representative_variant": "",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+              "evidence_role": "identifies the UDM-mediated procedure",
+              "quoted_text": "It is triggered by the AF/NEF via the UDM to update provisioned data stored for the subscriber.",
+              "rationale": "Supports selecting UDM as the requester for this provisioned-data update case."
+            },
+            {
+              "context_id": "Nudr_DR PATCH /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+              "evidence_role": "establishes the mandatory modification body",
+              "quoted_text": "array(PatchItem)\nM\n1..N\nContains the delta data to the provisioned parameter data",
+              "rationale": "PATCH requires at least one modification instruction; the method and URI alone do not provide a complete request trigger."
+            }
+          ],
+          "gaps": [
+            "The supplied OpenAPI inventory gives no PatchItem fields or schema details, and the supplied TS excerpts do not identify a concrete permitted attribute and modification instruction. A valid representative PATCH body cannot be selected reliably."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/pp-data",
+      "operation_id": "GetppData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_provisioned_parameter_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_access_to_ue_data",
+          "relation_statement": "The authenticated NF consumer must be authorized to read provisioned parameter data for the UE identified by {ueId}. The supplied context does not specify a more particular requester-to-UE relationship.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The GET method identifies provisioned data by ueId, but the supplied specification does not state a check binding the authenticated consumer to that UE's data. The general data-access authorization language does not define such a check."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+            "role": "addressed resource and GET semantics"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+            "role": "resource identifier and read semantics"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known consumer types"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+            "role": "resource definition"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization context"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_ue_pp_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+              "evidence_role": "path-and-method request trigger",
+              "quoted_text": "This method retrieves the provisioned data of a given UE.",
+              "rationale": "GET on the addressed UE's pp-data resource exercises the read without a request body."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29505:5.2.14:resource-provisionedparamenterdata:resource-with-children",
+              "evidence_role": "request body and query requirements",
+              "quoted_text": "Data type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET request-body table specifies no body; the supported-features query parameter is optional."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a supplied requester type and a known consumer of the UDR service."
+            }
+          ],
+          "gaps": [
+            "The supplied TS does not define a requester-to-UE authorization relationship or a concrete ueId; use the target UE identifier from the test fixture."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data-store",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/pp-data-store",
+      "operation_id": "Get Multiple PP Data Entries"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_pp_data_store_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_access_to_addressed_pp_data_store",
+          "relation_statement": "The authenticated UDM may retrieve the Provisioned Parameter Data entries for the subject identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is described as invoked by the UDM for a UE, and general data-access authorization is discussed, but no check binding the requesting UDM to the addressed UE's PP data store is specified."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data-store::TS29505:5.2.14C:resource-provisionedparameterdataentries:resource-with-children",
+            "role": "resource consumer and subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data-store::TS29505:5.2.14C:resource-provisionedparameterdataentries:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data-store::TS29505:5.2.14C:resource-provisionedparameterdataentries:resource-with-children",
+            "role": "Resource and requester description"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data-store::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "General authorization context"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "get_ue_pp_data_entries",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data-store::TS29505:5.2.14C:resource-provisionedparameterdataentries:resource-with-children",
+              "evidence_role": "selects the requester and addressed resource",
+              "quoted_text": "It is invoked by the UDM to obtain all or multiple Entries under the Provisioned Parameter Data store for a UE.",
+              "rationale": "A UDM request for the addressed UE's PP data entries exercises this case."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-data-store::TS29505:5.2.14C:resource-provisionedparameterdataentries:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a body",
+              "quoted_text": "5.2.14C.3.1GET\nThis method retrieves the provisioned data of a given UE.",
+              "rationale": "GET on the UE-addressed PP data store selects the retrieval operation; the TS lists no GET request-body data structure."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/pp-profile-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/pp-profile-data",
+      "operation_id": "QueryPPData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_pp_profile_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_access_to_ue_profile",
+          "relation_statement": "An authenticated UDM may retrieve the subscribed Parameter Provision Profile Data for the UE identified by {ueId}. The supplied text does not establish a stronger assignment between a particular UDM and that UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is queried by the UDM and identified by ueId, but no check binding the requesting UDM to the addressed UE's PP profile data is specified."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-profile-data::TS29505:5.2.14A:resource-ppprofiledata:resource-with-children",
+            "role": "Identifies the requester and addressed UE-specific resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-profile-data::TS29505:5.2.14A:resource-ppprofiledata:resource-with-children",
+            "role": "Identifies the resource-instance selector"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-profile-data::TS29505:5.2.14A:resource-ppprofiledata:resource-with-children",
+            "role": "resource and requester context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-profile-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_ue_pp_profile",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use a fixture UE whose subscribed Parameter Provision Profile Data exists in the UDR, and address it using its ueId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-profile-data::TS29505:5.2.14A:resource-ppprofiledata:resource-with-children",
+              "evidence_role": "identifies the consumer and addressed resource",
+              "quoted_text": "This resource represents the subscribed Parameter Provision Profile Data for a UE. It is queried by the UDM.",
+              "rationale": "Selects UDM as the requester and the UE's PP profile as the data being retrieved."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/pp-profile-data::TS29505:5.2.14A:resource-ppprofiledata:resource-with-children",
+              "evidence_role": "establishes the path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/pp-profile-data",
+              "rationale": "A GET to this URI with the fixture's ueId exercises the resource operation. The supplied OpenAPI metadata specifies GET with no request body, and the TS lists no GET request-body data structure."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not establish an assignment between a particular UDM and the addressed UE."
+          ],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/prose-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/prose-data",
+      "operation_id": "QueryPorseData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_prose_subscription_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_retrieves_ue_subscription_data",
+          "relation_statement": "The authenticated UDM accesses the addressed UE's ProSe subscription data for ProSe Subscription Data Retrieval.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE-specific resource and says the UDM queries it, but does not state a check binding the authenticated requester to the addressed UE's ProSe subscription data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/prose-data::TS29505:5.2.41A:resource-prosesubscriptiondata:resource-with-children",
+            "role": "requester and resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/prose-data::TS29505:5.2.41A:resource-prosesubscriptiondata:resource-with-children",
+            "role": "resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/prose-data::TS29505:5.2.41A:resource-prosesubscriptiondata:resource-with-children",
+            "role": "resource and consumer description"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/prose-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "get_ue_prose_subscription_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/prose-data::TS29505:5.2.41A:resource-prosesubscriptiondata:resource-with-children",
+              "evidence_role": "selects the UDM retrieval and its request trigger",
+              "quoted_text": "It is queried by the UDM during ProSe Subscription Data Data Retrieval.",
+              "rationale": "An authenticated UDM exercises this case by sending GET to the UE-specific ProSe subscription data resource."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/prose-data::TS29505:5.2.41A:resource-prosesubscriptiondata:resource-with-children",
+              "evidence_role": "establishes that the path and method suffice without a body or required query parameter",
+              "quoted_text": "Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET request has no request-body data structure; the resource's supported-features query parameter is optional."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/service-specific-authorization-data/{serviceType}",
+      "operation_id": "GetSSAuData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_service_authorization_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "serviceType"
+          ],
+          "relation_type": "authorized_udm_access_to_ue_service_data",
+          "relation_statement": "The authenticated UDM requester may retrieve the addressed GPSI's subscribed authorization data for the specified service when it is authorized to access that data.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UDM as a consumer of this resource and describes general data-access authorization, but does not specify a check binding the authenticated requester to the UE's service-specific authorization data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}::TS29505:5.2.48:resource-servicespecificauthorizationdata:resource-with-children",
+            "role": "Resource subject and requester"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}::TS29505:5.2.48:resource-servicespecificauthorizationdata:resource-with-children",
+            "role": "Resource-specific access context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limit on consumer-specific authorization logic"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_authorization_data_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "single-nssai",
+            "dnn"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use a provisioned GPSI as ueId and AF_GUIDANCE_FOR_URSP as serviceType; obtain compatible single-nssai and dnn query values from the lab's provisioned data."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}::TS29505:5.2.48:resource-servicespecificauthorizationdata:resource-with-children",
+              "evidence_role": "consumer and procedure selection",
+              "quoted_text": "It is queried by the UDM during Authorization Data Retrieval for a specific service and Service Specific Authorization Data Update Notification.",
+              "rationale": "Selects a UDM GET for authorization-data retrieval."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}::TS29505:5.2.48:resource-servicespecificauthorizationdata:resource-with-children",
+              "evidence_role": "path-and-method trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/service-specific-authorization-data/{serviceType}",
+              "rationale": "GET on this addressed resource exercises retrieval without a request body; the TS lists the GET request-body data type as n/a."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/service-specific-authorization-data/{serviceType}::TS29505:5.2.48:resource-servicespecificauthorizationdata:resource-with-children",
+              "evidence_role": "service selector",
+              "quoted_text": "In this release the only defined Service Type is \"AF_GUIDANCE_FOR_URSP\"",
+              "rationale": "Supplies the exact serviceType path value for the representative request."
+            }
+          ],
+          "gaps": [
+            "The OpenAPI inventory marks single-nssai and dnn as required, while the TS marks both optional. Include them for OpenAPI validity; their concrete values depend on lab provisioning."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/uc-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/uc-data",
+      "operation_id": "QueryUserConsentData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_consent_retrieval",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_retrieval_for_addressed_ue",
+          "relation_statement": "The authenticated UDM may retrieve the addressed UE's subscribed User Consent Data when acting in User Consent Data Retrieval for that UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The resource is queried by the UDM for a UE identifier, but the supplied specification does not require a check binding the authenticated UDM requester to that UE's User Consent Data. General data-access authorization does not specify that relation."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/uc-data::TS29505:5.2.51:resource-userconsentdata:resource-with-children",
+            "role": "Resource subject and applicable consumer"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/uc-data::TS29505:5.2.51:resource-userconsentdata:resource-with-children",
+            "role": "Addressed resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/uc-data::TS29505:5.2.51:resource-userconsentdata:resource-with-children",
+            "role": "Identifies the resource and requester without specifying a binding check"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/uc-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the limits of the general authorization language"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_ue_consent_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/uc-data::TS29505:5.2.51:resource-userconsentdata:resource-with-children",
+              "evidence_role": "requester and resource selection",
+              "quoted_text": "It is queried by the UDM during User Consent Data Retrieval.",
+              "rationale": "Select an authenticated UDM retrieving User Consent Data for the UE identified by the resource URI."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/uc-data::TS29505:5.2.51:resource-userconsentdata:resource-with-children",
+              "evidence_role": "path-and-method trigger without a request body",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/uc-data",
+              "rationale": "GET on this UE-specific resource exercises the retrieval; the GET request-body data type is specified as n/a and the listed query parameters are optional."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+      "operation_id": "CreateAuthenticationSoR"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_sor_data",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_to_ue_sor_data",
+          "relation_statement": "The requester is a UDM acting for the UE whose SUPI is the path ueId when storing that UE's SoR acknowledgement information.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE by ueId and discusses data access authorization generally, but does not state a check binding the requesting UDM to that UE's SoR data."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.25:resource-authenticationsor:resource-with-children",
+            "role": "resource subject and PUT contract"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.1:overview",
+            "role": "operation purpose"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "candidate requester NF type"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.25:resource-authenticationsor:resource-with-children",
+            "role": "Resource identifier"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Authorization context and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "store_sor_xmac_iue",
+          "body_required_fields": [
+            "sorXmacIue"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use the SUPI of the fixture UE as the path ueId and a SoR-XMAC-IUE value for that UE."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.1:overview",
+              "evidence_role": "selects the PUT payload variant",
+              "quoted_text": "Store UE's SOR acknowledgement information (SoR-XMAC-IUE) and \"ME support of SOR-CMCI\"",
+              "rationale": "The specified SoR-XMAC-IUE maps to the OpenAPI sorXmacIue field."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.25:resource-authenticationsor:resource-with-children",
+              "evidence_role": "establishes the request method, body and UE identifier",
+              "quoted_text": "SorData\nM\n1\nThe SoR acknowledgement information to be stored temporarily.",
+              "rationale": "PUT requires a SorData body; the resource definition identifies ueId as a SUPI."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "supports the selected requester type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a specified Nudr_DataRepository consumer and is the requester type in this case."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not specify a concrete SoR-XMAC-IUE value; obtain it from the UE fixture. OpenAPI-required provisioningTime and ueUpdateStatus must also be constructed, but the excerpts do not prescribe an exact status enum for this variant."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "low",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+      "operation_id": "QueryAuthSoR"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_sor_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "subscriber_data_access",
+          "relation_statement": "The authenticated UDM requester is authorized to access SoR data for the UE whose SUPI is {ueId}.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE whose SoR data is retrieved and describes general data-access authorization, but does not state a check binding the requesting NF consumer to that UE's resource."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.25:resource-authenticationsor:resource-with-children",
+            "role": "Identifies the addressed resource and UE identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.1:overview",
+            "role": "Identifies the GET operation's data"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Identifies a known NF consumer"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.25:resource-authenticationsor:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of general authorization"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limits inference of consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "get_ue_sor_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use an authenticated UDM requester and the SUPI of a UE with stored SoR data as {ueId}."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects the requester",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a documented consumer and is the case's sole permitted requester type."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.25:resource-authenticationsor:resource-with-children",
+              "evidence_role": "selects the path-and-method trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/ue-update-confirmation-data/sor-data",
+              "rationale": "A GET on this resource addresses the UE's SoR data; the resource definition identifies {ueId} as a SUPI."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/sor-data::TS29505:5.2.25:resource-authenticationsor:resource-with-children",
+              "evidence_role": "establishes that no request body is needed",
+              "quoted_text": "Table 5.2.25.3.2-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET request has no body data structure, so the method and addressed resource exercise the retrieval without body fields."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag",
+      "operation_id": "CreateCagUpdateAck"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_cag_ack_binding_not_identified",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "requester_to_ue_binding_not_identified",
+          "relation_statement": "The supplied text does not specify which authenticated NF may update the SubscribedCAG acknowledgement document for a particular ueId. UDM, PCF, and NEF are known service consumers, but that designation does not establish their access to this resource instance.",
+          "strength": "not_identified"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE resource and discusses general data access authorization, but does not state a check binding the authenticated consumer to the UE whose CAG acknowledgement is stored."
+        },
+        "confidence": "high",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.25C:resource-subscribedcag:resource-with-children",
+            "role": "addressed resource and method"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known service consumers"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "limits of specified authorization relation"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.25C:resource-subscribedcag:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "store_cag_acknowledgement",
+          "body_required_fields": [
+            "provisioningTime"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "Selects a known NF service consumer",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a TS-identified consumer, without implying that it is authorized for this UE resource instance."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.1:overview",
+              "evidence_role": "Identifies the method-and-resource trigger",
+              "quoted_text": "Store UE-acknowledgement info for change of subscribed CAG",
+              "rationale": "A PUT to the addressed subscribed-cag resource exercises the CAG acknowledgement storage operation."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.25C:resource-subscribedcag:resource-with-children",
+              "evidence_role": "Identifies the procedure-specific request content",
+              "quoted_text": "Contains the provisioning time stamp of the acknowledged CAG",
+              "rationale": "The CagAckData body carries the provisioning timestamp for the selected acknowledgement procedure; OpenAPI supplies the remaining structural requirements."
+            }
+          ],
+          "gaps": [
+            "The supplied TS text does not identify a UDM-to-ueId authorization binding or a UDM-specific rule for this resource."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "high",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag",
+      "operation_id": "QueryCagAck"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_cag_acknowledgement_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "ue_subscription_data_access",
+          "relation_statement": "A UDM accessing this document is expected to be authorized for the subscription data of the UE identified by ueId. The supplied text does not establish an exclusive UDM-to-UE instance binding.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE by ueId and describes general data access authorization, but does not state a check binding the authenticated consumer to this UE's CAG acknowledgement resource."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.25C:resource-subscribedcag:resource-with-children",
+            "role": "resource subject and method"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.1:overview",
+            "role": "GET operation purpose"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "possible requester NF"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.25C:resource-subscribedcag:resource-with-children",
+            "role": "Resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "retrieve_ue_cag_acknowledgement",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.1:overview",
+              "evidence_role": "selects the retrieval operation",
+              "quoted_text": "GET\nRetrieve UE-acknowledgement info for change of subscribed CAG",
+              "rationale": "A GET on the subscribed-cag resource for the addressed ueId exercises the CAG acknowledgement retrieval case."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29505:5.2.25C:resource-subscribedcag:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a body or required query parameter",
+              "quoted_text": "Table 5.2.25C.3.2-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET request has no body; the resource definition lists supported-features as optional, so neither body fields nor query parameters are needed to trigger it."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/subscribed-cag::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "supports the selected requester type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a known Nudr_DataRepository consumer and is the case's specified requester type."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "PUT",
+      "path": "/subscription-data/{ueId}/ue-update-confirmation-data/upu-data",
+      "operation_id": "CreateAuthenticationUPU"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_upu_acknowledgement_writer",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_ue_upu_data_consumer",
+          "relation_statement": "The authenticated UDM requester is authorized to store UPU acknowledgement information for the UE identified by ueId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification context identifies the UE-specific resource and describes general data-access authorization, but does not require a check binding the authenticated writer to the addressed UE."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+            "role": "PUT resource and UE subject"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+            "role": "PUT data purpose"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "consumer identification"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+            "role": "Identifies the addressed resource and PUT operation"
+          },
+          {
+            "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of general authorization language"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "store_upu_xmac_iue",
+          "body_required_fields": [
+            "upuXmacIue"
+          ],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.1:overview",
+              "evidence_role": "selects the UPU acknowledgement content",
+              "quoted_text": "Store UE Parameter Update acknowledgement information (UPU-XMAC-IUE)",
+              "rationale": "The OpenAPI upuXmacIue field carries the acknowledgement information identified for this PUT operation."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+              "evidence_role": "establishes the request method, UE-specific resource, and body type",
+              "quoted_text": "UpuData\nM\n1\nThe UPU acknowledgement information to be stored temporarily.",
+              "rationale": "Send a valid UpuData body by PUT to the resource addressed by the fixture UE's ueId."
+            },
+            {
+              "context_id": "Nudr_DR PUT /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "supports the selected requester type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is the requester type specified by this authorization case and is a known Nudr_DataRepository consumer."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not specify a particular ueUpdateStatus enum value for storing UPU-XMAC-IUE; use a valid value consistent with the fixture."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "low",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/ue-update-confirmation-data/upu-data",
+      "operation_id": "QueryAuthUPU"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "ue_upu_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "authorized_for_ue_upu_data",
+          "relation_statement": "The authenticated UDM should be authorized to access UPU acknowledgement information for the UE identified by ueId.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UE through ueId and describes general data-access authorization, but does not require a check binding the authenticated requester to that UE's UPU data."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+            "role": "identifies the addressed resource and UE identifier"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "identifies a possible requester NF type"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "establishes that data access authorization is resource-dependent"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+            "role": "Resource identification and GET behavior"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "get_ue_upu_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed ueId identifies a UE with retrievable UPU acknowledgement information in the UDR."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+              "evidence_role": "path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/ue-update-confirmation-data/upu-data",
+              "rationale": "A GET to this UE-specific resource selects the UPU acknowledgement information to retrieve."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29505:5.2.25A:resource-authenticationupu:resource-with-children",
+              "evidence_role": "GET request requirements",
+              "quoted_text": "Table 5.2.25A.3.2-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET has no request body; its supported-features query parameter is optional, so neither body fields nor query parameters are needed to trigger it."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/ue-update-confirmation-data/upu-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "requester selection",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is a documented consumer and is the case's sole permitted requester type."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "low",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/v2x-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/v2x-data",
+      "operation_id": "QueryV2xData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_v2x_subscription_data",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId"
+          ],
+          "relation_type": "udm_retrieves_ue_subscription_data",
+          "relation_statement": "The authenticated UDM requester may retrieve the V2X subscription data for the UE identified by ueId when performing V2X Subscription Data Retrieval for that UE.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UDM as the consumer of this UE-specific resource and describes general data-access authorization, but does not define a check binding the requesting UDM to the UE identified by ueId."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/v2x-data::TS29505:5.2.41:resource-v2xsubscriptiondata:resource-with-children",
+            "role": "Identifies the resource subject and procedure-specific requester."
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/v2x-data::TS29505:5.2.41:resource-v2xsubscriptiondata:resource-with-children",
+            "role": "Identifies the resource-instance key."
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/v2x-data::TS29505:5.2.41:resource-v2xsubscriptiondata:resource-with-children",
+            "role": "resource and consumer identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/v2x-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_ue_v2x_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/v2x-data::TS29505:5.2.41:resource-v2xsubscriptiondata:resource-with-children",
+              "evidence_role": "selects the UDM consumer and UE-specific resource",
+              "quoted_text": "This resource represents UE's subscribed V2X Data for a UE identifier. It is queried by the UDM during V2X Subscription Data Retrieval.",
+              "rationale": "An authenticated UDM exercises the case by sending GET to the V2X data URI with the fixture UE identifier as ueId."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/v2x-data::TS29505:5.2.41:resource-v2xsubscriptiondata:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a request body",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/v2x-data",
+              "rationale": "GET on this UE-specific resource selects the retrieval operation; the resource definition specifies no request-body data structure and lists supported-features as optional."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data",
+      "operation_id": "QueryProvisionedData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "authorized_consumer_provisioned_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM",
+            "PCF",
+            "NEF"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "authorized_nf_access_to_ue_provisioned_data",
+          "relation_statement": "The authenticated NF consumer may retrieve the addressed UE's provisioned data only if its NF type is authorized to access the requested data for that resource.",
+          "strength": "ambiguous"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data-access authorization but does not state a check binding the NF consumer to the addressed UE's provisioned data or serving PLMN."
+        },
+        "confidence": "low",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29505:5.2.26:resource-provisioneddata:resource-with-children",
+            "role": "resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "known consumer types"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data access authorization"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29505:5.2.26:resource-provisioneddata:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of stated authorization"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Limits inference of consumer-specific checks"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_retrieve_am_provisioned_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "dataset-names"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {
+            "dataset-names": "AM"
+          },
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "selects a supported requester NF type",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is an identified consumer of the UDR service."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29505:5.2.26:resource-provisioneddata:resource-with-children",
+              "evidence_role": "defines the GET request trigger",
+              "quoted_text": "If included, this IE shall contain the names of data sets to the retrieved.",
+              "rationale": "GET on the addressed provisioned-data resource with dataset-names=AM selects the AM data set; AM is an enumerated OpenAPI query item. The TS lists the GET request body data type as n/a."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+              "evidence_role": "connects the request to data-access authorization",
+              "quoted_text": "different types of data may have different data access authorizations",
+              "rationale": "The specified data set and addressed UE and PLMN provide a concrete data-access request for the UDR to authorize."
+            }
+          ],
+          "gaps": [
+            "The supplied evidence does not specify the UDR policy that determines whether UDM is authorized to access AM data for a particular UE and serving PLMN."
+          ],
+          "confidence": "medium"
+        }
+      }
+    ],
+    "confidence": "low",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data",
+      "operation_id": "QueryAmData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_serving_plmn_subscription_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "udm_access_for_registered_ue",
+          "relation_statement": "The authenticated UDM requests the addressed UE's access and mobility subscription data for use by an AMF serving that UE in the indicated serving PLMN after registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data-access authorization but does not specify a check binding the requesting UDM to the addressed UE and serving PLMN subscription data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29505:5.2.3:resource-accessandmobilitysubscriptiondata:resource-with-children",
+            "role": "resource subject and requester relationship"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29505:5.2.3:resource-accessandmobilitysubscriptiondata:resource-with-children",
+            "role": "addressed resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29505:5.2.3:resource-accessandmobilitysubscriptiondata:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the limits of stated authorization"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "full_am_subscription_data_get",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "fields"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use ueId and servingPlmnId from the ordinary registered-UE fixture, with an existing Access and Mobility Subscription Data resource for that UE and serving PLMN."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29505:5.2.3:resource-accessandmobilitysubscriptiondata:resource-with-children",
+              "evidence_role": "Selects the registered-UE subscription-data retrieval and its request trigger",
+              "quoted_text": "It is queried by the AMF via the UDM after registering.",
+              "rationale": "The UDM is the requester to the UDR for this AMF-facing retrieval."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29505:5.2.3:resource-accessandmobilitysubscriptiondata:resource-with-children",
+              "evidence_role": "Establishes that the resource URI and GET suffice without a request body",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data",
+              "rationale": "GET on this URI addresses the UE and serving PLMN; the same resource's GET Request Body table specifies n/a."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29505:5.2.3:resource-accessandmobilitysubscriptiondata:resource-with-children",
+              "evidence_role": "Distinguishes full retrieval from subset retrieval",
+              "quoted_text": "When the NF consumer only retrieves a subset of the resource, the \"fields \" query parameter shall be included.",
+              "rationale": "Omitting fields selects a full-resource GET rather than the conditional subset variant."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/am-data::TS29504:5.2.1.1:service-and-operation-description",
+              "evidence_role": "Confirms the selected requester is a known UDR service consumer",
+              "quoted_text": "The known NF Service Consumers are the UDM, PCF and NEF.",
+              "rationale": "UDM is supported as the concrete consumer for the selected variant."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data",
+      "operation_id": "QueryLcsBcaData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_lcs_bca_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "udm_authorized_for_ue_subscription_data",
+          "relation_statement": "The authenticated UDM requester may retrieve the addressed LCS Broadcast Assistance subscription data only when it is authorized to access that UE's subscription data for the indicated serving PLMN.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes general data-access authorization but does not state a check binding the UDM requester to the addressed UE and serving PLMN's LCS Broadcast Assistance subscription data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data::TS29505:5.2.42:resource-lcsbroadcastassistancesubscriptiondata:resource-with-children",
+            "role": "resource subject and requester path"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data::TS29505:5.2.42:resource-lcsbroadcastassistancesubscriptiondata:resource-with-children",
+            "role": "resource-instance identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "data-access authorization context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data::TS29505:5.2.42:resource-lcsbroadcastassistancesubscriptiondata:resource-with-children",
+            "role": "Resource and requester description"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "General authorization context and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_lcs_bca_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use a UDM-authenticated requester and an addressed UE and serving PLMN with provisioned LCS Broadcast Assistance subscription data."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data::TS29505:5.2.42:resource-lcsbroadcastassistancesubscriptiondata:resource-with-children",
+              "evidence_role": "selects the requester and addressed resource",
+              "quoted_text": "This resource represents the subscribed LcsBroadcast Assistance Subscription Data for an UE for use in a serving PLMN. It is queried by the LMF via the UDM.",
+              "rationale": "A UDM request for the addressed UE and serving PLMN exercises this resource's retrieval procedure."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/lcs-bca-data::TS29505:5.2.42:resource-lcsbroadcastassistancesubscriptiondata:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a request body",
+              "quoted_text": "5.2.42.3.1GET",
+              "rationale": "GET on the specified resource URI selects the operation. The same section lists the GET request-body data type as n/a and supported-features as optional, so no body or query field is needed."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data",
+      "operation_id": "QuerySmData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_sm_subscription_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "udm_serving_ue_subscription",
+          "relation_statement": "The authenticated UDM may retrieve the addressed Session Management subscription data when acting for the UE whose subscription is identified by ueId, in the context of the specified servingPlmnId.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification identifies the UDM as a consumer that queries this UE subscription resource and discusses data access authorization generally, but does not state a check binding the requesting UDM to the addressed UE's Session Management subscription data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data::TS29505:5.2.5:resource-sessionmanagementsubscriptiondata:resource-with-children",
+            "role": "resource subject and applicable requester"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data::TS29505:5.2.5:resource-sessionmanagementsubscriptiondata:resource-with-children",
+            "role": "addressed resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data::TS29505:5.2.5:resource-sessionmanagementsubscriptiondata:resource-with-children",
+            "role": "resource and consumer description"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "general authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_query_by_dnn",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [
+            "dnn"
+          ],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "single-nssai"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use an addressed UE subscription with a provisioned DNN; obtain the dnn query value from that subscription.",
+            "The UDM query is triggered by the SMF during normal session setup."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data::TS29505:5.2.5:resource-sessionmanagementsubscriptiondata:resource-with-children",
+              "evidence_role": "UDM consumer and procedural trigger",
+              "quoted_text": "It is queried by the UDM triggered by the SMF during session setup, using one or both of query parameters representing the selected network slice and the DNN.",
+              "rationale": "Selects a UDM request with the DNN query parameter for this Session Management subscription resource."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data::TS29505:5.2.5:resource-sessionmanagementsubscriptiondata:resource-with-children",
+              "evidence_role": "concrete query variant",
+              "quoted_text": "If \"single-nssai\" is not included, and \"dnn\" is included, UDR shall return all DNN configurations identified by \"dnn\" for all network slices where such DNN is available.",
+              "rationale": "Defines the selected dnn-only variant without requiring an invented query value."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data::TS29505:5.2.5:resource-sessionmanagementsubscriptiondata:resource-with-children",
+              "evidence_role": "bodyless GET trigger",
+              "quoted_text": "Table 5.2.5.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET method and addressed resource, with the selected dnn query parameter, exercise the request without a body."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data",
+      "operation_id": "QuerySmfSelectData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_smf_selection_subscription_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "udm_access_to_ue_subscription_data",
+          "relation_statement": "The authenticated UDM requester may retrieve the addressed UE's SMF selection subscription data for the specified serving PLMN.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes UDM retrieval and general data-access authorization, but does not specify a check binding the requesting UDM to the addressed UE and serving PLMN."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data::TS29505:5.2.4:resource-smfselectionsubscriptiondata:resource-with-children",
+            "role": "resource-specific requester and subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data::TS29505:5.2.4:resource-smfselectionsubscriptiondata:resource-with-children",
+            "role": "addressed resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data::TS29505:5.2.4:resource-smfselectionsubscriptiondata:resource-with-children",
+            "role": "Resource and requester context"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Authorization scope and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_full_smf_selection_retrieval",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [
+            "fields"
+          ],
+          "query_required_values": {},
+          "state_preconditions": [
+            "Use an authenticated UDM requester and a provisioned SMF selection subscription-data resource addressed by the chosen ueId and servingPlmnId."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data::TS29505:5.2.4:resource-smfselectionsubscriptiondata:resource-with-children",
+              "evidence_role": "selects the UDM consumer",
+              "quoted_text": "It is queried by the UDM triggered  by the AMF after registering.",
+              "rationale": "The resource-specific procedure identifies UDM as the requester for this retrieval."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data::TS29505:5.2.4:resource-smfselectionsubscriptiondata:resource-with-children",
+              "evidence_role": "establishes the path-and-method trigger without a request body",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data",
+              "rationale": "A GET on this addressed resource selects the SMF selection subscription-data retrieval; the same resource specification lists the GET request-body data type as n/a."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/smf-selection-subscription-data::TS29505:5.2.4:resource-smfselectionsubscriptiondata:resource-with-children",
+              "evidence_role": "selects full retrieval without a fields query",
+              "quoted_text": "When the NF consumer only retrieves a subset of the resource, the \" fields \" query parameter shall be included.",
+              "rationale": "Omitting fields selects retrieval of the full resource rather than the conditional subset variant."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data",
+      "operation_id": "QuerySmsData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_sms_subscription_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "udm_access_to_ue_subscription_data",
+          "relation_statement": "The authenticated UDM requester may retrieve the addressed UE's SMS subscription data for the specified serving PLMN in its role as intermediary for the AMF.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes data-access authorization generally, but does not state a check binding the requesting UDM to the addressed UE's SMS subscription data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data::TS29505:5.2.15:resource-smssubscriptiondata:resource-with-children",
+            "role": "Resource subject and requester route"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data::TS29505:5.2.15:resource-smssubscriptiondata:resource-with-children",
+            "role": "Addressed resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "Direct UDR consumer identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data::TS29505:5.2.15:resource-smssubscriptiondata:resource-with-children",
+            "role": "Identifies the addressed resource"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "Defines the scope of general authorization language"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_sms_subscription_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed UE has SMS subscription data provisioned for the specified serving PLMN, and the AMF has registered the UE."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data::TS29505:5.2.15:resource-smssubscriptiondata:resource-with-children",
+              "evidence_role": "Selects the UDM requester and SMS subscription resource",
+              "quoted_text": "It is queried by the AMF via the UDM after registering.",
+              "rationale": "The UDM is the requester of the UDR resource on behalf of the AMF."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-data::TS29505:5.2.15:resource-smssubscriptiondata:resource-with-children",
+              "evidence_role": "Establishes the path-and-method trigger without a request body",
+              "quoted_text": "5.2.15.3.1GET\nThis method shall support the URI query parameters specified in table 5.2.15.3.1-1.",
+              "rationale": "GET on the addressed SMSSubscriptionData resource exercises the query; the specified query parameter is optional and the GET request-body data structure is n/a."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data",
+      "operation_id": "QuerySmsMngData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_sms_management_subscription_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "udm_access_to_ue_subscription_data",
+          "relation_statement": "The authenticated UDM requester may retrieve the addressed UE's SMS management subscription data for the specified serving PLMN in its role as intermediary for the SMSF.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The supplied specification identifies the UE and serving PLMN addressed by the request and describes general data-access authorization, but does not specify a check binding the requesting UDM to this UE's SMS management subscription data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29505:5.2.13:resource-smsmanagementsubscriptiondata:resource-with-children",
+            "role": "resource-specific requester and subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29505:5.2.13:resource-smsmanagementsubscriptiondata:resource-with-children",
+            "role": "addressed resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29504:5.2.1.1:service-and-operation-description",
+            "role": "UDR consumer identity"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29505:5.2.13:resource-smsmanagementsubscriptiondata:resource-with-children",
+            "role": "Resource identification"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "General authorization context and limitation"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_sms_management_subscription_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29505:5.2.13:resource-smsmanagementsubscriptiondata:resource-with-children",
+              "evidence_role": "selects the UDM intermediary and addressed resource",
+              "quoted_text": "It is queried by the SMSF via the UDM after registering.",
+              "rationale": "The UDM is the requester of the UDR resource for this representative procedure."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29505:5.2.13:resource-smsmanagementsubscriptiondata:resource-with-children",
+              "evidence_role": "establishes the path-and-method request trigger",
+              "quoted_text": "Resource URI: {apiRoot}/nudr-dr/<apiVersion>/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data",
+              "rationale": "A GET on this URI addresses the UE's SMS management subscription data for the serving PLMN."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sms-mng-data::TS29505:5.2.13:resource-smsmanagementsubscriptiondata:resource-with-children",
+              "evidence_role": "confirms no request body or query field is needed",
+              "quoted_text": "Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET URI and method exercise the operation without a request body; the listed supported-features query parameter is optional."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  },
+  {
+    "schema_version": "1.2",
+    "endpoint_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data",
+    "target": {
+      "service": "Nudr_DR",
+      "method": "GET",
+      "path": "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data",
+      "operation_id": "QueryTraceData"
+    },
+    "operation_level": {
+      "oauth_scopes": [
+        "nudr-dr",
+        "nudr-dr:subscription-data"
+      ]
+    },
+    "authorization_cases": [
+      {
+        "case_id": "udm_ue_trace_data_access",
+        "applies_when": [],
+        "expected_binding": {
+          "requester_nf_types": [
+            "UDM"
+          ],
+          "resource_identifiers": [
+            "ueId",
+            "servingPlmnId"
+          ],
+          "relation_type": "udm_serving_ue_data_access",
+          "relation_statement": "The authenticated UDM accesses trace configuration data for the identified UE and serving PLMN in its role as intermediary for the AMF following registration.",
+          "strength": "implicit"
+        },
+        "existing_protection": {
+          "coverage": "not_identified",
+          "mechanism": "",
+          "failure_codes": [],
+          "failure_causes": [],
+          "protected_relation": "",
+          "coverage_notes": "The specification describes the addressed UE trace-data resource and general data-access authorization, but does not state a check binding the requesting UDM to that UE's trace data."
+        },
+        "confidence": "medium",
+        "evidence_refs": [
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data::TS29505:5.2.22:resource-tracedata:resource-with-children",
+            "role": "resource-specific requester and subject"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data::TS29505:5.2.22:resource-tracedata:resource-with-children",
+            "role": "addressed resource identifiers"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data::TS29505:5.2.22:resource-tracedata:resource-with-children",
+            "role": "resource definition"
+          },
+          {
+            "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data::TS29504:5.2.1.2:service-operation-and-data-access-authorization",
+            "role": "authorization scope"
+          }
+        ],
+        "execution_hint": {
+          "requester_nf_type": "UDM",
+          "status": "executable",
+          "representative_variant": "udm_get_ue_trace_data",
+          "body_required_fields": [],
+          "body_any_of_fields": [],
+          "body_absent_fields": [],
+          "body_required_values": {},
+          "query_required_fields": [],
+          "query_any_of_fields": [],
+          "query_absent_fields": [],
+          "query_required_values": {},
+          "state_preconditions": [
+            "The addressed UE and serving PLMN have an existing trace-data resource, and the requester is authenticated as UDM."
+          ],
+          "evidence_used": [
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data::TS29505:5.2.22:resource-tracedata:resource-with-children",
+              "evidence_role": "selects the UDM requester and path-and-method trigger",
+              "quoted_text": "It is queried by the AMF via the UDM after registering.",
+              "rationale": "A UDM GET of the addressed trace-data resource represents the specified intermediary access."
+            },
+            {
+              "context_id": "Nudr_DR GET /subscription-data/{ueId}/{servingPlmnId}/provisioned-data/trace-data::TS29505:5.2.22:resource-tracedata:resource-with-children",
+              "evidence_role": "establishes that no request body or query parameter selects the operation",
+              "quoted_text": "Table 5.2.22.3.1-2: Data structures supported by the GET Request Body on this resource\nData type\nP\nCardinality\nDescription\nn/a",
+              "rationale": "The GET resource URI and method exercise the operation without a request body; the same section lists query parameters as n/a."
+            }
+          ],
+          "gaps": [],
+          "confidence": "high"
+        }
+      }
+    ],
+    "confidence": "medium",
+    "batch_id": "batch_09"
+  }
+]
